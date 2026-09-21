@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ascendent — Leaderboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">⚔ Ascendent</div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html">🏠 Dashboard</a>
+                <a href="habits.html">📋 Habits</a>
+                <a href="achievements.html">🏆 Achievements</a>
+                <a href="card.html">🎴 Player Card</a>
+                <a href="progress.html">📈 Progress</a>
+                <a href="leaderboard.html" class="nav-active">📊 Leaderboard</a>
+                <a href="settings.html">⚙️ Settings</a>
+            </nav>
+            <div class="sidebar-quote">"Discipline today,<br>freedom tomorrow."</div>
+        </aside>
+
+        <main class="main-content">
+            <header class="content-topbar">
+                <div>
+                    <h2>Leaderboard</h2>
+                    <p class="subtext">See how you rank among other players.</p>
+                </div>
+                <button id="logoutBtn" class="ghost-btn">Log Out</button>
+            </header>
+
+            <div class="leaderboard-tabs">
+                <button class="lb-tab active" data-tab="global">🌍 Global</button>
+                <button class="lb-tab" data-tab="friends">👥 Friends</button>
+                <button class="lb-tab" data-tab="squad">⚔️ Squad</button>
+            </div>
+
+            <div id="podium" class="podium"></div>
+
+            <div id="leaderboardList" class="leaderboard-list"></div>
+        </main>
+    </div>
+
+    <script src="js/demo-data.js"></script>
+    <script src="js/leaderboard-data.js"></script>
+    <script src="js/leaderboard.js"></script>
+</body>
+
+</html>

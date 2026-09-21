@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ascendent — Progress</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">⚔ Ascendent</div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html">🏠 Dashboard</a>
+                <a href="habits.html">📋 Habits</a>
+                <a href="achievements.html">🏆 Achievements</a>
+                <a href="card.html">🎴 Player Card</a>
+                <a href="progress.html" class="nav-active">📈 Progress</a>
+                <a href="leaderboard.html">📊 Leaderboard</a>
+                <a href="settings.html">⚙️ Settings</a>
+            </nav>
+            <div class="sidebar-quote">"Discipline today,<br>freedom tomorrow."</div>
+        </aside>
+
+        <main class="main-content">
+            <header class="content-topbar">
+                <div>
+                    <h2>Progress</h2>
+                    <p class="subtext">Your consistency, visualized.</p>
+                </div>
+                <button id="logoutBtn" class="ghost-btn">Log Out</button>
+            </header>
+
+            <section class="stat-row">
+                <div class="stat-card">
+                    <span class="stat-icon">✨</span>
+                    <div>
+                        <div class="stat-label">Weekly XP</div>
+                        <div id="weeklyXPStat" class="stat-value">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🔥</span>
+                    <div>
+                        <div class="stat-label">Current Streak</div>
+                        <div id="currentStreakStat" class="stat-value">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🏔️</span>
+                    <div>
+                        <div class="stat-label">Best Streak</div>
+                        <div id="bestStreakStat" class="stat-value">0</div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="content-grid">
+                <section class="progress-panel">
+                    <h3>Activity Heatmap (last 7 days)</h3>
+                    <div id="heatmapRow" class="heatmap-row"></div>
+                </section>
+
+                <section class="progress-panel">
+                    <h3>Weekly Recap</h3>
+                    <div id="weeklyRecap" class="recap-box"></div>
+                </section>
+            </div>
+
+            <section class="progress-panel">
+                <h3>Category Progress</h3>
+                <div id="categoryProgress" class="category-progress-list"></div>
+            </section>
+
+            <div class="content-grid">
+                <section class="progress-panel">
+                    <h3>Excuse History</h3>
+                    <div id="excuseHistory" class="excuse-list"></div>
+                </section>
+
+                <section class="progress-panel">
+                    <h3>Card Evolution</h3>
+                    <div id="cardEvolution" class="evolution-list"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/demo-data.js"></script>
+    <script src="js/progress.js"></script>
+</body>
+
+</html>

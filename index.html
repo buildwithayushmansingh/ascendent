@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ascendent — Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <div class="auth-page">
+    <div class="auth-shell" id="authShell">
+
+      <!-- Persistent chrome: system status + decorative background (unaffected by sliding) -->
+      <div class="system-status"><span class="status-dot"></span> ASCENDENT SYSTEM <span
+          class="status-online">ONLINE</span></div>
+      <div class="journey-bg" aria-hidden="true"></div>
+
+      <!-- Register panel (revealed on the LEFT once slid) -->
+      <div class="form-container register-container">
+        <form id="signupForm">
+          <h1>Ascendent</h1>
+          <p class="tagline">Begin Your Journey</p>
+
+          <input type="text" id="signupUsername" placeholder="Username" required />
+          <input type="email" id="signupEmail" placeholder="Email" required />
+          <input type="password" id="signupPassword" placeholder="Password" required />
+          <input type="password" id="signupConfirmPassword" placeholder="Confirm Password" required />
+
+          <button type="submit">Create Account</button>
+
+          <p>Already have an account? <a href="#" id="showLoginInline">Login →</a></p>
+          <p id="authMessageRegister" class="message"></p>
+        </form>
+      </div>
+
+      <!-- Login panel (visible on the RIGHT initially) -->
+      <div class="form-container login-container">
+        <form id="loginForm">
+          <h1>Ascendent</h1>
+          <p class="tagline">Continue Your Journey</p>
+
+          <input type="text" id="email" placeholder="Username" required />
+          <input type="password" id="password" placeholder="Password" required />
+
+          <button type="submit">Login</button>
+
+          <p>Don't have an account? <a href="#" id="showSignup">Create an account →</a></p>
+          <p id="authMessage" class="message"></p>
+        </form>
+      </div>
+
+      <!-- Sliding golden "portal" overlay -->
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <div class="brand-mark">✦</div>
+            <h1 class="overlay-brand">Ascendent</h1>
+            <p class="overlay-tagline">Your Journey<br>Starts Here</p>
+
+            <div class="journey-path">
+              <span class="path-line"></span>
+              <span class="path-dot"></span>
+            </div>
+            <div class="journey-stages">START <i>→</i> BUILD <i>→</i> GROW</div>
+
+            <p class="overlay-footnote">Small Step. Big Progress.<br>One Day at a Time.</p>
+          </div>
+
+          <div class="overlay-panel overlay-right">
+            <div class="brand-mark">✦</div>
+            <h1 class="overlay-brand">Ascendent</h1>
+            <p class="overlay-tagline">Welcome Back,<br>Ascender.</p>
+            <p class="overlay-sub">Already have an account? Continue your journey.</p>
+            <button type="button" class="overlay-btn" id="showLoginBtn">Login</button>
+          </div>
+
+          <div class="overlay-progress">
+            <span class="step step-1">01 START</span>
+            <span class="step step-2">02 BUILD</span>
+            <span class="step step-3">03 GROW</span>
+            <span class="step step-4">04 ASCEND</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-ticker">
+        <span>START YOUR JOURNEY</span>
+        <span>BUILD CONSISTENCY</span>
+        <span>EARN XP</span>
+        <span>ASCEND</span>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/demo-data.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ascendent — Achievements</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">⚔ Ascendent</div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html">🏠 Dashboard</a>
+                <a href="habits.html">📋 Habits</a>
+                <a href="achievements.html" class="nav-active">🏆 Achievements</a>
+                <a href="card.html">🎴 Player Card</a>
+                <a href="progress.html">📈 Progress</a>
+                <a href="leaderboard.html">📊 Leaderboard</a>
+                <a href="settings.html">⚙️ Settings</a>
+            </nav>
+            <div class="sidebar-quote">"Discipline today,<br>freedom tomorrow."</div>
+        </aside>
+
+        <main class="main-content">
+            <header class="content-topbar">
+                <div>
+                    <h2>Achievements</h2>
+                    <p class="subtext">Unlock badges as you build your legend.</p>
+                </div>
+                <button id="logoutBtn" class="ghost-btn">Log Out</button>
+            </header>
+
+            <div id="achievementGrid" class="achievement-grid"></div>
+        </main>
+    </div>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="js/demo-data.js"></script>
+    <script src="js/rewards.js"></script>
+    <script src="js/achievements.js"></script>
+    <script>
+        function renderAchievements() {
+            const user = getDemoUser();
+            checkAchievements(user); // catch any newly-met conditions on page load too
+            const stats = getAchievementStats(user);
+
+            document.getElementById('achievementGrid').innerHTML = ACHIEVEMENT_LIST.map((ach) => {
+                const unlocked = user.unlockedAchievements.includes(ach.id);
+                return `
+          <div class="achievement-card ${unlocked ? 'unlocked' : 'locked'}">
+            <div class="achievement-icon">${unlocked ? ach.icon : '🔒'}</div>
+            <div class="achievement-name">${ach.name}</div>
+            <div class="achievement-desc">${ach.description}</div>
+            ${unlocked ? '<div class="achievement-badge">Unlocked</div>' : '<div class="achievement-badge locked-badge">Locked</div>'}
+          </div>
+        `;
+            }).join('');
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.clear();
+            window.location.href = 'index.html';
+        });
+
+        renderAchievements();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ascendent — Habits</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">⚔ Ascendent</div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html">🏠 Dashboard</a>
+                <a href="habits.html" class="nav-active">📋 Habits</a>
+                <a href="achievements.html">🏆 Achievements</a>
+                <a href="card.html">🎴 Player Card</a>
+                <a href="progress.html">📈 Progress</a>
+                <a href="leaderboard.html">📊 Leaderboard</a>
+                <a href="settings.html">⚙️ Settings</a>
+            </nav>
+            <div class="sidebar-quote">"Discipline today,<br>freedom tomorrow."</div>
+        </aside>
+
+        <main class="main-content">
+            <header class="content-topbar">
+                <div>
+                    <h2>My Habits</h2>
+                    <p class="subtext">Track, level up, and manage every quest.</p>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <button id="addHabitBtn">➕ Add Habit</button>
+                    <button id="logoutBtn" class="ghost-btn">Log Out</button>
+                </div>
+            </header>
+
+            <div id="habitList" class="habit-list">
+                <!-- filled in by habits.js -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Complete Quest Modal -->
+    <div id="completeModal" class="modal-overlay">
+        <div class="modal-box">
+            <h3>Complete Quest</h3>
+            <div id="completeModalBody"></div>
+            <div class="modal-actions">
+                <button class="ghost-btn" data-close-modal>Cancel</button>
+                <button id="confirmCompleteBtn" class="primary-wide-btn">Complete Quest</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Missed Activity Modal -->
+    <div id="missModal" class="modal-overlay">
+        <div class="modal-box">
+            <h3>Why did you miss it?</h3>
+            <div id="missReasonOptions" class="reason-options">
+                <button type="button" class="reason-tile" data-reason="Busy">Busy</button>
+                <button type="button" class="reason-tile" data-reason="Tired">Tired</button>
+                <button type="button" class="reason-tile" data-reason="Forgot">Forgot</button>
+                <button type="button" class="reason-tile" data-reason="No motivation">No motivation</button>
+                <button type="button" class="reason-tile" data-reason="Other">Other</button>
+            </div>
+            <div id="missImpactBox" style="display:none;">
+                <p id="missImpactText" class="message" style="color:var(--text-secondary);"></p>
+                <button id="useShieldBtn" class="primary-wide-btn">🛡 Use Streak Shield</button>
+                <button id="confirmMissBtn" class="ghost-btn" style="width:100%; margin-top:8px;">Continue Without
+                    Shield</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add / Edit Habit Modal -->
+    <div id="habitFormModal" class="modal-overlay">
+        <div class="modal-box">
+            <h3 id="habitFormTitle">Add Habit</h3>
+            <label class="field-label">Habit Name</label>
+            <input type="text" id="habitNameInput" placeholder="e.g. Guitar Practice" />
+
+            <label class="field-label">Icon (emoji)</label>
+            <input type="text" id="habitIconInput" placeholder="🎸" maxlength="2" />
+
+            <label class="field-label">Target (minutes/day)</label>
+            <input type="number" id="habitTargetInput" min="5" value="30" />
+
+            <label class="field-label">Frequency (days/week)</label>
+            <input type="number" id="habitFrequencyInput" min="1" max="7" value="5" />
+
+            <label class="field-label">Difficulty</label>
+            <select id="habitDifficultyInput">
+                <option value="Easy" data-xp="10">Easy — +10 XP</option>
+                <option value="Normal" data-xp="20" selected>Normal — +20 XP</option>
+                <option value="Hard" data-xp="35">Hard — +35 XP</option>
+                <option value="Extreme" data-xp="50">Extreme — +50 XP</option>
+            </select>
+
+            <div class="modal-actions">
+                <button class="ghost-btn" data-close-modal>Cancel</button>
+                <button id="saveHabitBtn" class="primary-wide-btn">Create Habit</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="js/demo-data.js"></script>
+    <script src="js/rewards.js"></script>
+    <script src="js/achievements.js"></script>
+    <script src="js/habits.js"></script>
+</body>
+
+</html>

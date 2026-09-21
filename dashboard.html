@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ascendent — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">⚔ Ascendent</div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-active">🏠 Dashboard</a>
+        <a href="habits.html">📋 Habits</a>
+        <a href="achievements.html">🏆 Achievements</a>
+        <a href="card.html">🎴 Player Card</a>
+        <a href="progress.html">📈 Progress</a>
+        <a href="leaderboard.html">📊 Leaderboard</a>
+        <a href="settings.html">⚙️ Settings</a>
+      </nav>
+      <div class="sidebar-quote">"Discipline today,<br>freedom tomorrow."</div>
+    </aside>
+
+    <main class="main-content">
+      <header class="content-topbar">
+        <div>
+          <h2 id="greeting">Hey there! 🔥</h2>
+          <p class="subtext">Every habit completed is a step towards your next level.</p>
+        </div>
+        <button id="logoutBtn" class="ghost-btn">Log Out</button>
+      </header>
+
+      <section class="stat-row">
+        <div class="stat-card">
+          <span class="stat-icon">⭐</span>
+          <div>
+            <div class="stat-label">Level</div>
+            <div id="statLevel" class="stat-value">—</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">🔥</span>
+          <div>
+            <div class="stat-label">Streak</div>
+            <div id="statStreak" class="stat-value">—</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">✨</span>
+          <div>
+            <div class="stat-label">Total XP</div>
+            <div id="statXP" class="stat-value">—</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="content-grid">
+        <section class="log-activity">
+          <h3>Today's Quest</h3>
+          <select id="categorySelect">
+            <option value="Coding">Coding</option>
+            <option value="Reading">Reading</option>
+            <option value="Exercise">Exercise</option>
+            <option value="Study">Study</option>
+            <option value="Custom">Custom</option>
+          </select>
+
+          <div class="activity-buttons">
+            <button id="markComplete">✅ Mark Complete</button>
+            <button id="markMissed">❌ Mark Missed</button>
+          </div>
+
+          <div id="excuseBox" style="display:none;">
+            <input type="text" id="excuseReason" placeholder="Why did you miss it? (optional)" />
+            <button id="submitExcuse">Submit</button>
+          </div>
+
+          <p id="dashboardMessage" class="message"></p>
+        </section>
+
+        <section class="boss-battle">
+          <h3>⚔️ Boss Battle: Consistency Dragon</h3>
+          <div class="boss-hp-track">
+            <div id="bossHpFill" class="boss-hp-fill"></div>
+          </div>
+          <p id="bossHpText" class="boss-hp-text">100% HP remaining</p>
+          <p class="boss-hint">Every completed habit chips away at the boss's HP.</p>
+        </section>
+      </div>
+
+      <section class="notes-section">
+        <h3>📝 Notes</h3>
+        <textarea id="notesArea" placeholder="Jot down anything useful..."></textarea>
+        <button id="saveNotesBtn">Save Note</button>
+        <ul id="notesList"></ul>
+      </section>
+    </main>
+  </div>
+
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="js/demo-data.js"></script>
+  <script src="js/rewards.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/activity.js"></script>
+</body>
+
+</html>

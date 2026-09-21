@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ascendent — My Card</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/card.css" />
+</head>
+
+<body>
+  <header class="card-topbar">
+    <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+    <button id="logoutBtn" class="ghost-btn">Log Out</button>
+  </header>
+
+  <main class="card-page">
+    <div class="flip-container">
+      <div id="flipInner" class="flip-inner">
+        <div id="playerCard" class="player-card tier-bronze flip-front">
+          <!-- filled in by card.js -->
+        </div>
+        <div id="futureSelfCard" class="player-card flip-back">
+          <!-- filled in by card.js -->
+        </div>
+      </div>
+    </div>
+
+    <button id="flipCardBtn">🔮 View Future Self</button>
+
+    <div class="card-share-row">
+      <button id="shareCardBtn" class="ghost-btn">🔗 Share Card</button>
+      <button id="downloadCardBtn" class="ghost-btn">⬇️ Download Card</button>
+      <button id="profileLinkBtn" class="ghost-btn">👤 Profile Link</button>
+    </div>
+  </main>
+
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="js/demo-data.js"></script>
+  <script src="js/rewards.js"></script>
+  <script src="js/achievements.js"></script>
+  <script src="js/card.js"></script>
+</body>
+
+</html>

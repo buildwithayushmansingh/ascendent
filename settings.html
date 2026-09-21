@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ascendent — Settings</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-brand">⚔ Ascendent</div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html">🏠 Dashboard</a>
+                <a href="habits.html">📋 Habits</a>
+                <a href="achievements.html">🏆 Achievements</a>
+                <a href="card.html">🎴 Player Card</a>
+                <a href="progress.html">📈 Progress</a>
+                <a href="leaderboard.html">📊 Leaderboard</a>
+                <a href="settings.html" class="nav-active">⚙️ Settings</a>
+            </nav>
+            <div class="sidebar-quote">"Discipline today,<br>freedom tomorrow."</div>
+        </aside>
+
+        <main class="main-content">
+            <header class="content-topbar">
+                <div>
+                    <h2>Settings</h2>
+                    <p class="subtext">Customize your experience.</p>
+                </div>
+                <button id="logoutBtn" class="ghost-btn">Log Out</button>
+            </header>
+
+            <!-- PROFILE -->
+            <section class="settings-panel">
+                <h3>👤 Profile</h3>
+                <label class="field-label">Avatar Initials</label>
+                <input type="text" id="settingsAvatar" maxlength="2" />
+                <label class="field-label">Display Name</label>
+                <input type="text" id="settingsDisplayName" />
+                <label class="field-label">Username</label>
+                <input type="text" id="settingsUsername" disabled />
+                <button id="saveProfileBtn" class="primary-wide-btn">Save Profile</button>
+            </section>
+
+            <!-- APPEARANCE -->
+            <section class="settings-panel">
+                <h3>🎨 Appearance</h3>
+                <label class="field-label">Accent Color</label>
+                <div class="accent-swatches" id="accentSwatches">
+                    <button type="button" class="swatch" data-accent="#e8a33d" style="background:#e8a33d;"></button>
+                    <button type="button" class="swatch" data-accent="#6bcf9d" style="background:#6bcf9d;"></button>
+                    <button type="button" class="swatch" data-accent="#7fb8ff" style="background:#7fb8ff;"></button>
+                    <button type="button" class="swatch" data-accent="#ff6b9d" style="background:#ff6b9d;"></button>
+                </div>
+            </section>
+
+            <!-- SOUND -->
+            <section class="settings-panel">
+                <div class="settings-row">
+                    <div>
+                        <h3 style="margin-bottom:2px;">🔊 Reward Sounds</h3>
+                        <p class="subtext" style="margin:0;">Play a sound on XP gain and level up.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="soundToggle" />
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="settings-row">
+                    <div>
+                        <h3 style="margin-bottom:2px;">🏆 Achievement Sounds</h3>
+                        <p class="subtext" style="margin:0;">Play a sound when a badge unlocks.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="achievementSoundToggle" />
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- ANIMATIONS -->
+            <section class="settings-panel">
+                <div class="settings-row">
+                    <div>
+                        <h3 style="margin-bottom:2px;">✨ Animations</h3>
+                        <p class="subtext" style="margin:0;">Level-up bursts, floating XP, tier upgrade overlays.</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="animationsToggle" checked />
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- NOTIFICATIONS -->
+            <section class="settings-panel">
+                <div class="settings-row">
+                    <div>
+                        <h3 style="margin-bottom:2px;">📅 Daily Quest Reminder</h3>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="dailyQuestToggle" checked />
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="settings-row">
+                    <div>
+                        <h3 style="margin-bottom:2px;">🔥 Streak Reminder</h3>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="streakReminderToggle" checked />
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="settings-row">
+                    <div>
+                        <h3 style="margin-bottom:2px;">🏆 Achievement Notifications</h3>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="achievementNotifToggle" checked />
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- ACCOUNT -->
+            <section class="settings-panel">
+                <h3>🔐 Account</h3>
+                <button id="settingsLogoutBtn" class="ghost-btn" style="width:100%; margin-bottom:8px;">Log Out</button>
+                <button id="changePasswordBtn" class="ghost-btn" style="width:100%; margin-bottom:8px;">Change
+                    Password</button>
+                <button id="deleteAccountBtn" class="ghost-btn danger-text" style="width:100%;">Delete Account</button>
+            </section>
+
+            <p id="settingsMessage" class="message"></p>
+        </main>
+    </div>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="js/demo-data.js"></script>
+    <script src="js/rewards.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+
+</html>

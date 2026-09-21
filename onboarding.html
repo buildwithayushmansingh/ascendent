@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ascendent — Onboarding</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <div class="onboarding-page">
+        <div class="onboarding-container">
+
+            <div class="onboard-progress">
+                <span class="dot active" data-dot="1"></span>
+                <span class="dot" data-dot="2"></span>
+                <span class="dot" data-dot="3"></span>
+                <span class="dot" data-dot="4"></span>
+                <span class="dot" data-dot="5"></span>
+            </div>
+
+            <!-- STEP 1: Welcome -->
+            <section class="onboard-step active" data-step="1">
+                <div class="brand-mark">⚔</div>
+                <h1>Welcome, Player</h1>
+                <p class="tagline">Build consistency. Complete quests.<br>Level up your life.</p>
+                <button type="button" class="primary-wide-btn" data-next>Start Your Journey</button>
+            </section>
+
+            <!-- STEP 2: Choose Habits -->
+            <section class="onboard-step" data-step="2">
+                <h1>Choose Your Habits</h1>
+                <p class="tagline">Pick as many as you want to track.</p>
+
+                <div class="habit-grid" id="habitGrid">
+                    <button type="button" class="habit-tile" data-icon="💻" data-habit="Coding">
+                        <span class="habit-icon">💻</span><span>Coding</span><span class="habit-check">✓</span>
+                    </button>
+                    <button type="button" class="habit-tile" data-icon="📚" data-habit="Reading">
+                        <span class="habit-icon">📚</span><span>Reading</span><span class="habit-check">✓</span>
+                    </button>
+                    <button type="button" class="habit-tile" data-icon="🏋️" data-habit="Exercise">
+                        <span class="habit-icon">🏋️</span><span>Exercise</span><span class="habit-check">✓</span>
+                    </button>
+                    <button type="button" class="habit-tile" data-icon="📝" data-habit="Study">
+                        <span class="habit-icon">📝</span><span>Study</span><span class="habit-check">✓</span>
+                    </button>
+                    <button type="button" class="habit-tile" data-icon="🧘" data-habit="Meditation">
+                        <span class="habit-icon">🧘</span><span>Meditation</span><span class="habit-check">✓</span>
+                    </button>
+                    <button type="button" class="habit-tile" data-icon="😴" data-habit="Sleep">
+                        <span class="habit-icon">😴</span><span>Sleep</span><span class="habit-check">✓</span>
+                    </button>
+                    <button type="button" class="habit-tile" data-icon="➕" data-habit="Custom">
+                        <span class="habit-icon">➕</span><span>Custom</span><span class="habit-check">✓</span>
+                    </button>
+                </div>
+
+                <p id="habitStepMessage" class="message"></p>
+                <div class="onboard-nav">
+                    <button type="button" class="ghost-btn" data-back>Back</button>
+                    <button type="button" class="primary-wide-btn" data-next>Continue</button>
+                </div>
+            </section>
+
+            <!-- STEP 3: Set Target -->
+            <section class="onboard-step" data-step="3">
+                <h1>Set Your Target</h1>
+                <p class="tagline">How much and how often for each habit?</p>
+
+                <div id="targetList" class="target-list"></div>
+
+                <div class="onboard-nav">
+                    <button type="button" class="ghost-btn" data-back>Back</button>
+                    <button type="button" class="primary-wide-btn" data-next>Continue</button>
+                </div>
+            </section>
+
+            <!-- STEP 4: Difficulty -->
+            <section class="onboard-step" data-step="4">
+                <h1>Choose Difficulty</h1>
+                <p class="tagline">Harder difficulty means more XP per quest.</p>
+
+                <div class="difficulty-grid" id="difficultyGrid">
+                    <button type="button" class="difficulty-card" data-difficulty="Easy" data-xp="10">
+                        <span class="diff-name">Easy</span><span class="diff-xp">+10 XP</span>
+                    </button>
+                    <button type="button" class="difficulty-card" data-difficulty="Normal" data-xp="20">
+                        <span class="diff-name">Normal</span><span class="diff-xp">+20 XP</span>
+                    </button>
+                    <button type="button" class="difficulty-card" data-difficulty="Hard" data-xp="35">
+                        <span class="diff-name">Hard</span><span class="diff-xp">+35 XP</span>
+                    </button>
+                    <button type="button" class="difficulty-card" data-difficulty="Extreme" data-xp="50">
+                        <span class="diff-name">Extreme</span><span class="diff-xp">+50 XP</span>
+                    </button>
+                </div>
+
+                <p id="difficultyStepMessage" class="message"></p>
+                <div class="onboard-nav">
+                    <button type="button" class="ghost-btn" data-back>Back</button>
+                    <button type="button" class="primary-wide-btn" data-next>Continue</button>
+                </div>
+            </section>
+
+            <!-- STEP 5: Profile Ready -->
+            <section class="onboard-step" data-step="5">
+                <div class="brand-mark profile-ready-pulse">✨</div>
+                <h1>Player Profile Ready</h1>
+                <p class="tagline">Your journey begins now.</p>
+
+                <div class="stat-row profile-ready-stats">
+                    <div class="stat-card">
+                        <span class="stat-icon">⭐</span>
+                        <div>
+                            <div class="stat-label">Level</div>
+                            <div class="stat-value">01</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">✨</span>
+                        <div>
+                            <div class="stat-label">XP</div>
+                            <div class="stat-value">0</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-icon">🔥</span>
+                        <div>
+                            <div class="stat-label">Streak</div>
+                            <div class="stat-value">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="primary-wide-btn" id="enterDashboardBtn">Enter Dashboard</button>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="js/demo-data.js"></script>
+    <script src="js/onboarding.js"></script>
+</body>
+
+</html>
