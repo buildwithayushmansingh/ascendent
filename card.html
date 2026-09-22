@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ascendent — My Card</title>
+  <title>Ascendent — Player Card</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/card.css" />
@@ -19,11 +19,11 @@
   <main class="card-page">
     <div class="flip-container">
       <div id="flipInner" class="flip-inner">
-        <div id="playerCard" class="player-card tier-bronze flip-front">
-          <!-- filled in by card.js -->
+        <div id="playerCard" class="player-card tier-gold flip-front">
+          <!-- filled in by card.js from SAMPLE_CARD_DATA -->
         </div>
-        <div id="futureSelfCard" class="player-card flip-back">
-          <!-- filled in by card.js -->
+        <div id="futureSelfCard" class="player-card tier-gold flip-back">
+          <!-- filled in by card.js from SAMPLE_CARD_DATA -->
         </div>
       </div>
     </div>
@@ -39,9 +39,7 @@
 
   <div id="toastContainer" class="toast-container"></div>
 
-  <script src="js/demo-data.js"></script>
   <script src="js/rewards.js"></script>
-  <script src="js/achievements.js"></script>
   <script src="js/card.js"></script>
 </body>
 

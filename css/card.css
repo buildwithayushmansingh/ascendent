@@ -1,221 +1,1125 @@
-/* card.css — Fantasy Game player card styling */
+/* =========================================================
+   card.css — Premium Player Identity Card
+   FIXED VERSION — Stable Flip Position
+   ========================================================= */
 
-.player-card {
-  width: 340px;
-  border-radius: 20px;
-  padding: 26px;
-  background: linear-gradient(180deg, #241a10 0%, #14100a 100%);
-  border: 3px solid var(--border-bright, #c9932f);
-  color: #f2e6cf;
-  box-shadow: 0 0 24px rgba(232, 163, 61, 0.3), inset 0 0 18px rgba(0, 0, 0, 0.5);
-  position: relative;
-}
 
-.player-card::before {
-  content: '';
-  position: absolute;
-  inset: 6px;
-  border: 1px solid rgba(232, 163, 61, 0.35);
-  border-radius: 14px;
-  pointer-events: none;
-}
+/* =========================================================
+   FLIP CONTAINER
+   ========================================================= */
 
-/* Tier-specific treatments */
-.player-card.tier-bronze {
-  border-color: #8a5a3c;
-  box-shadow: 0 0 14px rgba(138, 90, 60, 0.4);
-}
-
-.player-card.tier-silver {
-  border-color: #b5b8c0;
-  box-shadow: 0 0 18px rgba(181, 184, 192, 0.4);
-}
-
-.player-card.tier-gold {
-  border-color: #f7c15c;
-  box-shadow: 0 0 26px rgba(247, 193, 92, 0.55);
-}
-
-.player-card.tier-platinum {
-  border-color: #7fd8ff;
-  box-shadow: 0 0 26px rgba(127, 216, 255, 0.5);
-}
-
-.player-card.tier-legendary {
-  border-color: #ff8a3d;
-  box-shadow: 0 0 34px rgba(255, 138, 61, 0.7);
-  animation: legendary-glow 2.5s ease-in-out infinite;
-}
-
-@keyframes legendary-glow {
-
-  0%,
-  100% {
-    box-shadow: 0 0 24px rgba(255, 138, 61, 0.6);
-  }
-
-  50% {
-    box-shadow: 0 0 40px rgba(255, 193, 92, 0.9);
-  }
-}
-
-.card-avatar {
-  width: 66px;
-  height: 66px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #3a2814 0%, #1a1006 100%);
-  border: 2px solid #f7c15c;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-family: 'Cinzel', serif;
-  font-size: 22px;
-  color: #f7c15c;
-}
-
-.card-xp-bar-track {
-  height: 10px;
-  background: #1a1006;
-  border: 1px solid var(--border, #6b4f26);
-  border-radius: 5px;
-  overflow: hidden;
-  margin: 8px 0 16px;
-}
-
-.card-xp-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #e8a33d, #f7c15c);
-  box-shadow: 0 0 8px rgba(247, 193, 92, 0.6);
-}
-
-.card-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 16px;
-}
-
-.card-stat-tile {
-  background: #1a1006;
-  border: 1px solid var(--border, #6b4f26);
-  border-radius: 10px;
-  padding: 10px;
-  text-align: center;
-}
-
-/* Flip container for Future Self card */
 .flip-container {
-  perspective: 1200px;
-  width: 340px;
+  perspective: 1400px;
+  width: 380px;
+  max-width: 100%;
+  position: relative;
+  margin: 0 auto;
 }
+
+
+/* =========================================================
+   FLIP INNER
+   ========================================================= */
 
 .flip-inner {
   position: relative;
+
   width: 100%;
-  transition: transform 0.6s;
+  height: 560px;
+
+  margin: 0;
+  padding: 0;
+
+  transition: transform 0.6s ease;
+
   transform-style: preserve-3d;
+  transform-origin: center center;
+
+  /* Prevent layout movement during flip */
+  display: block;
 }
+
+
+/* FLIPPED STATE */
 
 .flip-inner.flipped {
   transform: rotateY(180deg);
 }
 
+
+/* =========================================================
+   FRONT + BACK
+   IMPORTANT FIX
+   Both sides occupy EXACTLY the same position.
+   ========================================================= */
+
 .flip-front,
 .flip-back {
+  position: absolute;
+
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+
+  transform-style: preserve-3d;
+
+  overflow: hidden;
 }
 
+
+/* FRONT */
+
+.flip-front {
+  transform: rotateY(0deg);
+}
+
+
+/* BACK */
+
 .flip-back {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  border-color: #6bcf9d;
   transform: rotateY(180deg);
 }
 
-#flipCardBtn {
-  display: block;
-  margin: 18px auto 0;
+
+/* =========================================================
+   PLAYER CARD
+   ========================================================= */
+
+.player-card {
+  position: absolute;
+
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(180deg,
+      #1c1436 0%,
+      #0a0714 100%);
+
+  border: 3px solid var(--border-bright, #a855f7);
+
+  color: #e9e4ff;
+
+  box-shadow:
+    0 0 26px rgba(139, 92, 246, 0.35),
+    inset 0 0 18px rgba(0, 0, 0, 0.5);
+
+  overflow: hidden;
 }
 
-/* Card page topbar */
-.card-topbar {
+
+/* =========================================================
+   TILT WRAPPER
+   ========================================================= */
+
+.tilt-wrapper {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+  padding: 22px 24px;
+
+  box-sizing: border-box;
+
+  transition: transform 0.15s ease-out;
+
+  transform-style: preserve-3d;
+}
+
+
+/* =========================================================
+   BACK SIDE SCROLL
+   ========================================================= */
+
+.tilt-wrapper.back-scroll {
+  width: 100%;
+  height: 100%;
+
+  box-sizing: border-box;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    var(--border-bright, #a855f7) transparent;
+
+  /* Important */
+  position: relative;
+}
+
+
+/* Chrome / Safari */
+
+.tilt-wrapper.back-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.tilt-wrapper.back-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tilt-wrapper.back-scroll::-webkit-scrollbar-thumb {
+  background: var(--border-bright, #a855f7);
+  border-radius: 4px;
+}
+
+
+/* =========================================================
+   TIER VARIANTS
+   ========================================================= */
+
+.player-card.tier-bronze {
+  border-color: #b0763f;
+
+  box-shadow:
+    0 0 16px rgba(176, 118, 63, 0.4);
+}
+
+
+.player-card.tier-silver {
+  border-color: #b8bfd6;
+
+  box-shadow:
+    0 0 20px rgba(184, 191, 214, 0.4);
+}
+
+
+.player-card.tier-gold {
+  border-color: #f5c451;
+
+  box-shadow:
+    0 0 26px rgba(245, 196, 81, 0.5);
+
+  animation:
+    goldPulse 3s ease-in-out infinite;
+}
+
+
+.player-card.tier-platinum {
+  border-color: var(--accent-cyan, #22d3ee);
+
+  box-shadow:
+    0 0 28px rgba(34, 211, 238, 0.55);
+}
+
+
+.player-card.tier-legendary {
+  border-color: var(--accent-bright, #c084fc);
+
+  box-shadow:
+    0 0 36px rgba(192, 132, 252, 0.7);
+
+  animation:
+    legendaryPulse 2.5s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes goldPulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 22px rgba(245, 196, 81, 0.45);
+  }
+
+  50% {
+    box-shadow:
+      0 0 36px rgba(245, 196, 81, 0.7);
+  }
+}
+
+
+@keyframes legendaryPulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 26px rgba(139, 92, 246, 0.6);
+  }
+
+  50% {
+    box-shadow:
+      0 0 46px rgba(34, 211, 238, 0.7);
+  }
+}
+
+
+/* =========================================================
+   CORNER ACCENTS
+   ========================================================= */
+
+.card-corner {
+  position: absolute;
+
+  width: 18px;
+  height: 18px;
+
+  border-color: #f5c451;
+
+  opacity: 0.8;
+
+  pointer-events: none;
+
+  z-index: 20;
+}
+
+
+.corner-tl {
+  top: 10px;
+  left: 10px;
+
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+
+
+.corner-tr {
+  top: 10px;
+  right: 10px;
+
+  border-top: 2px solid;
+  border-right: 2px solid;
+}
+
+
+.corner-bl {
+  bottom: 10px;
+  left: 10px;
+
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+}
+
+
+.corner-br {
+  bottom: 10px;
+  right: 10px;
+
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+
+
+/* =========================================================
+   TOP IDENTITY ROW
+   ========================================================= */
+
+.card-top-row {
   display: flex;
+
   justify-content: space-between;
   align-items: center;
+
+  margin-bottom: 16px;
+}
+
+
+.identity-label {
+  font-size: 9px;
+
+  letter-spacing: 1.5px;
+
+  color: var(--text-secondary);
+
+  font-family: 'Orbitron', sans-serif;
+}
+
+
+.tier-pill {
+  font-size: 10px;
+
+  letter-spacing: 1px;
+
+  background:
+    rgba(245, 196, 81, 0.15);
+
+  border:
+    1px solid #f5c451;
+
+  color: #f5c451;
+
+  padding: 3px 10px;
+
+  border-radius: 20px;
+
+  font-family: 'Orbitron', sans-serif;
+}
+
+
+/* =========================================================
+   IDENTITY
+   ========================================================= */
+
+.card-identity-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  margin-bottom: 16px;
+}
+
+
+.card-avatar {
+  width: 60px;
+  height: 60px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(circle,
+      #241a4a 0%,
+      #0a0714 100%);
+
+  border:
+    2px solid #f5c451;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+
+  font-family: 'Orbitron', sans-serif;
+
+  font-size: 18px;
+
+  color: #f5c451;
+
+  flex-shrink: 0;
+}
+
+
+.card-name {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+
+.card-username {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+
+.card-title-pill {
+  display: inline-block;
+
+  margin-top: 4px;
+
+  font-size: 10px;
+
+  background:
+    rgba(192, 132, 252, 0.15);
+
+  border:
+    1px solid var(--accent-bright, #c084fc);
+
+  color:
+    var(--accent-bright, #c084fc);
+
+  padding: 2px 8px;
+
+  border-radius: 10px;
+}
+
+
+/* =========================================================
+   LEVEL
+   ========================================================= */
+
+.card-level-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: baseline;
+
+  margin-bottom: 6px;
+}
+
+
+.card-level-num {
+  font-family: 'Orbitron', sans-serif;
+
+  font-size: 15px;
+
+  color: #f5c451;
+
+  letter-spacing: 1px;
+}
+
+
+.card-level-next {
+  font-size: 10px;
+
+  color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   XP BAR
+   ========================================================= */
+
+.card-xp-bar-track {
+  height: 9px;
+
+  background: #0a0714;
+
+  border:
+    1px solid var(--border, #3d2f66);
+
+  border-radius: 5px;
+
+  overflow: hidden;
+
+  margin: 6px 0 14px;
+}
+
+
+.card-xp-bar-fill {
+  height: 100%;
+
+  background:
+    linear-gradient(90deg,
+      #f5c451,
+      var(--accent-cyan, #22d3ee));
+
+  box-shadow:
+    0 0 10px rgba(245, 196, 81, 0.5);
+
+  transition:
+    width 1s ease-out;
+}
+
+
+/* =========================================================
+   CARD STATS
+   ========================================================= */
+
+.card-stats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 8px;
+
+  margin-bottom: 14px;
+}
+
+
+.card-stat-tile {
+  background: #0a0714;
+
+  border:
+    1px solid var(--border, #3d2f66);
+
+  border-radius: 10px;
+
+  padding: 8px 4px;
+
+  text-align: center;
+}
+
+
+.stat-big {
+  font-size: 16px;
+
+  font-weight: 700;
+
+  font-family: 'Orbitron', sans-serif;
+
+  color: var(--text);
+}
+
+
+.stat-small {
+  font-size: 9px;
+
+  color: var(--text-secondary);
+
+  margin-top: 2px;
+}
+
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.badge-preview-row {
+  display: flex;
+
+  gap: 6px;
+
+  margin-bottom: 14px;
+}
+
+
+.badge-circle {
+  width: 32px;
+  height: 32px;
+
+  border-radius: 50%;
+
+  background: #0a0714;
+
+  border:
+    1px solid #f5c451;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 15px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.badge-circle:hover {
+  transform: scale(1.15);
+
+  box-shadow:
+    0 0 10px rgba(245, 196, 81, 0.6);
+}
+
+
+.badge-more {
+  font-size: 10px;
+
+  color: var(--text-secondary);
+
+  font-family: 'Orbitron', sans-serif;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.card-footer-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: 9.5px;
+
+  color: var(--text-secondary);
+
+  border-top:
+    1px solid var(--border, #3d2f66);
+
+  padding-top: 10px;
+}
+
+
+/* =========================================================
+   BACK SIDE
+   ========================================================= */
+
+.back-section-title {
+  font-family: 'Orbitron', sans-serif;
+
+  font-size: 12px;
+
+  color: #f5c451;
+
+  letter-spacing: 0.5px;
+
+  margin: 14px 0 8px;
+}
+
+
+.back-section-title:first-child {
+  margin-top: 0;
+}
+
+
+.sample-tag {
+  font-size: 8px;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+
+  color: var(--text-secondary);
+
+  padding: 2px 6px;
+
+  border-radius: 8px;
+
+  margin-left: 6px;
+
+  font-family: 'Rajdhani', sans-serif;
+
+  letter-spacing: 0;
+}
+
+
+/* =========================================================
+   STAT GRID
+   ========================================================= */
+
+.stat-grid {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 6px 12px;
+}
+
+
+.stat-grid-item {
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: 10.5px;
+
+  border-bottom:
+    1px solid rgba(61, 47, 102, 0.5);
+
+  padding-bottom: 4px;
+}
+
+
+.stat-grid-item span {
+  color: var(--text-secondary);
+}
+
+
+.stat-grid-item b {
+  color: var(--text);
+}
+
+
+/* =========================================================
+   ACHIEVEMENTS
+   ========================================================= */
+
+.achievement-mini-grid {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+
+.achievement-mini {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  background: #0a0714;
+
+  border:
+    1px solid var(--border, #3d2f66);
+
+  border-radius: 10px;
+
+  padding: 8px 10px;
+
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.achievement-mini:hover {
+  border-color: #f5c451;
+
+  transform: translateX(3px);
+}
+
+
+.achievement-mini-icon {
+  font-size: 20px;
+}
+
+
+.achievement-mini-name {
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+
+.achievement-mini-desc {
+  font-size: 9px;
+
+  color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   CHALLENGE
+   ========================================================= */
+
+.challenge-box {
+  background: #0a0714;
+
+  border:
+    1px solid var(--border, #3d2f66);
+
+  border-radius: 10px;
+
+  padding: 10px 12px;
+}
+
+
+.challenge-label {
+  font-size: 11px;
+
+  margin-bottom: 6px;
+}
+
+
+.challenge-count {
+  font-size: 10px;
+
+  color: var(--text-secondary);
+
+  text-align: right;
+}
+
+
+/* =========================================================
+   MINI STATS
+   ========================================================= */
+
+.mini-stats-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: 10.5px;
+
+  color: var(--text-secondary);
+
+  margin: 8px 0 4px;
+}
+
+
+.mini-stats-row b {
+  color: var(--text);
+}
+
+
+/* =========================================================
+   IDENTITY LIST
+   ========================================================= */
+
+.identity-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+
+.identity-list div {
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: 10.5px;
+
+  border-bottom:
+    1px dashed rgba(61, 47, 102, 0.5);
+
+  padding-bottom: 4px;
+}
+
+
+.identity-list span {
+  color: var(--text-secondary);
+}
+
+
+.identity-list b {
+  color: var(--text);
+}
+
+
+/* =========================================================
+   FUTURE
+   ========================================================= */
+
+.future-note,
+.future-footnote {
+  font-size: 10px;
+
+  color: var(--text-secondary);
+
+  margin: 4px 0;
+}
+
+
+.future-footnote {
+  font-style: italic;
+
+  margin-top: 8px;
+}
+
+
+.future-row {
+  display: flex;
+
+  justify-content: space-between;
+
+  background: #0a0714;
+
+  border:
+    1px solid var(--accent-cyan, #22d3ee);
+
+  border-radius: 8px;
+
+  padding: 6px 10px;
+
+  margin-bottom: 6px;
+
+  font-size: 10px;
+}
+
+
+.future-label {
+  font-family: 'Orbitron', sans-serif;
+
+  color:
+    var(--accent-cyan, #22d3ee);
+
+  font-weight: 700;
+}
+
+
+.future-detail {
+  color: var(--text);
+
+  text-align: right;
+}
+
+
+/* =========================================================
+   TOPBAR / BUTTONS
+   ========================================================= */
+
+.card-topbar {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
   padding: 1rem 2rem;
 }
 
+
 .back-link {
-  color: var(--text-secondary, #b8a687);
+  color:
+    var(--text-secondary, #9d94c4);
+
   text-decoration: none;
+
   font-size: 0.9rem;
 }
 
+
 .back-link:hover {
-  color: var(--accent-bright, #f7c15c);
+  color:
+    var(--accent-bright, #c084fc);
 }
 
-/* Decorative banner inside the card */
-.card-banner {
-  height: 70px;
-  border-radius: 10px;
-  margin-bottom: 16px;
-  background: linear-gradient(135deg, #3a2814 0%, #1a1006 60%, #241a10 100%);
-  border: 1px solid var(--border, #6b4f26);
-}
-
-/* Badges row */
-.badges-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 14px;
-}
-
-.badge-pill {
-  font-size: 11px;
-  background: #1a1006;
-  border: 1px solid var(--border-bright, #c9932f);
-  color: var(--accent-bright, #f7c15c);
-  padding: 5px 10px;
-  border-radius: 20px;
-}
-
-/* Phase 5: hover shine on the player card */
-.player-card {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.player-card:hover {
-  transform: translateY(-4px) scale(1.015);
-}
-
-.player-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.08) 50%, transparent 60%);
-  background-size: 250% 250%;
-  background-position: 200% 0;
-  transition: background-position 0.6s ease;
-  pointer-events: none;
-}
-
-.player-card:hover::after {
-  background-position: -50% 0;
-}
 
 .card-share-row {
   display: flex;
+
   gap: 10px;
-  margin-top: 16px;
+
+  margin-top: 18px;
+
+  flex-wrap: wrap;
+
+  justify-content: center;
 }
+
 
 .card-share-row button {
   font-size: 0.82rem;
+
   padding: 8px 14px;
+}
+
+
+#flipCardBtn {
+  display: block;
+
+  margin: 20px auto 0;
+}
+
+
+/* =========================================================
+   EXTRA FLIP SAFETY
+   ========================================================= */
+
+/*
+   These rules make absolutely sure that the
+   front/back cards NEVER participate in normal
+   document flow.
+*/
+
+.flip-front>.player-card,
+.flip-back>.player-card {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+}
+
+
+/*
+   Prevent any default margins from content
+   inside the flip faces from moving the card.
+*/
+
+.flip-front>*,
+.flip-back>* {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .flip-container {
+    width: 100%;
+    max-width: 340px;
+  }
+
+
+  .flip-inner {
+    height: 520px;
+  }
+
+
+  .flip-front,
+  .flip-back {
+    height: 520px;
+  }
+
+
+  .player-card {
+    height: 520px;
+  }
+
+
+  .tilt-wrapper {
+    padding: 18px 16px;
+  }
+
+
+  .card-share-row {
+    gap: 8px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL SCREEN
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+  .flip-container {
+    max-width: 320px;
+  }
+
+
+  .flip-inner {
+    height: 500px;
+  }
+
+
+  .flip-front,
+  .flip-back,
+  .player-card {
+    height: 500px;
+  }
+
+
+  .tilt-wrapper {
+    padding: 16px 13px;
+  }
+
+
+  .card-identity-row {
+    gap: 10px;
+  }
+
+
+  .card-avatar {
+    width: 52px;
+    height: 52px;
+
+    font-size: 16px;
+  }
+
+
+  .card-name {
+    font-size: 14px;
+  }
+
+
+  .card-stats {
+    gap: 5px;
+  }
 }
