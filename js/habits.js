@@ -284,9 +284,6 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
     });
 });
 
-document.getElementById('logoutBtn').addEventListener('click', () => {
-    localStorage.clear();
-    window.location.href = 'index.html';
-});
+document.getElementById('logoutBtn').addEventListener('click', logoutUser);
 
 renderHabitList();

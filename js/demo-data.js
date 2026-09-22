@@ -97,3 +97,10 @@ function logDemoActivity(status) {
   saveDemoUser(user);
   return { user, xpEarned };
 }
+// logoutUser() — logs the user out WITHOUT erasing their saved progress
+// (habits, XP, level, notes, settings). Only the "who's logged in" flag
+// is removed, so the next login skips onboarding and keeps everything.
+function logoutUser() {
+  localStorage.removeItem('ascendent_username');
+  window.location.href = 'index.html';
+}

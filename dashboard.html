@@ -26,31 +26,43 @@
     </aside>
 
     <main class="main-content">
-      <header class="content-topbar">
-        <div>
-          <h2 id="greeting">Hey there! 🔥</h2>
-          <p class="subtext">Every habit completed is a step towards your next level.</p>
+      <section class="dash-hero">
+        <div class="dash-hero-left">
+          <div class="dash-avatar" id="heroAvatar">?</div>
+          <div>
+            <h2 id="greeting">Hey there! 🔥</h2>
+            <p class="subtext">Every habit completed is a step towards your next level.</p>
+          </div>
         </div>
-        <button id="logoutBtn" class="ghost-btn">Log Out</button>
-      </header>
+        <div class="dash-hero-right">
+          <div class="xp-ring">
+            <svg viewBox="0 0 80 80">
+              <circle class="ring-track" cx="40" cy="40" r="34"></circle>
+              <circle class="ring-fill" id="xpRingFill" cx="40" cy="40" r="34"></circle>
+            </svg>
+            <div class="ring-label"><span id="ringLevel">1</span><small>LVL</small></div>
+          </div>
+          <button id="logoutBtn" class="ghost-btn">Log Out</button>
+        </div>
+      </section>
 
       <section class="stat-row">
         <div class="stat-card">
-          <span class="stat-icon">⭐</span>
+          <span class="stat-icon stat-icon-a">⭐</span>
           <div>
             <div class="stat-label">Level</div>
             <div id="statLevel" class="stat-value">—</div>
           </div>
         </div>
         <div class="stat-card">
-          <span class="stat-icon">🔥</span>
+          <span class="stat-icon stat-icon-b">🔥</span>
           <div>
             <div class="stat-label">Streak</div>
             <div id="statStreak" class="stat-value">—</div>
           </div>
         </div>
         <div class="stat-card">
-          <span class="stat-icon">✨</span>
+          <span class="stat-icon stat-icon-c">✨</span>
           <div>
             <div class="stat-label">Total XP</div>
             <div id="statXP" class="stat-value">—</div>
@@ -60,7 +72,7 @@
 
       <div class="content-grid">
         <section class="log-activity">
-          <h3>Today's Quest</h3>
+          <h3><span class="panel-icon">🎯</span> Today's Quest</h3>
           <select id="categorySelect">
             <option value="Coding">Coding</option>
             <option value="Reading">Reading</option>
@@ -83,7 +95,7 @@
         </section>
 
         <section class="boss-battle">
-          <h3>⚔️ Boss Battle: Consistency Dragon</h3>
+          <h3><span class="panel-icon">⚔️</span> Boss Battle: Consistency Dragon</h3>
           <div class="boss-hp-track">
             <div id="bossHpFill" class="boss-hp-fill"></div>
           </div>
@@ -93,7 +105,7 @@
       </div>
 
       <section class="notes-section">
-        <h3>📝 Notes</h3>
+        <h3><span class="panel-icon">📝</span> Notes</h3>
         <textarea id="notesArea" placeholder="Jot down anything useful..."></textarea>
         <button id="saveNotesBtn">Save Note</button>
         <ul id="notesList"></ul>

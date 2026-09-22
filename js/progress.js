@@ -94,9 +94,6 @@ function renderProgress() {
   `).join('');
 }
 
-document.getElementById('logoutBtn').addEventListener('click', () => {
-    localStorage.clear();
-    window.location.href = 'index.html';
-});
+document.getElementById('logoutBtn').addEventListener('click', logoutUser);
 
 renderProgress();

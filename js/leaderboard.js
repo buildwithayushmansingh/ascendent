@@ -3,18 +3,18 @@
 let activeTab = 'global';
 
 function renderLeaderboard() {
-    const data = getLeaderboardData(activeTab);
-    const top3 = data.slice(0, 3);
-    const rest = data.slice(3);
+  const data = getLeaderboardData(activeTab);
+  const top3 = data.slice(0, 3);
+  const rest = data.slice(3);
 
-    // Podium — order visually as 2nd, 1st, 3rd
-    const podiumOrder = [top3[1], top3[0], top3[2]].filter(Boolean);
-    const podiumRankMap = [2, 1, 3];
+  // Podium — order visually as 2nd, 1st, 3rd
+  const podiumOrder = [top3[1], top3[0], top3[2]].filter(Boolean);
+  const podiumRankMap = [2, 1, 3];
 
-    document.getElementById('podium').innerHTML = podiumOrder.map((player, i) => {
-        if (!player) return '';
-        const rank = podiumRankMap[i];
-        return `
+  document.getElementById('podium').innerHTML = podiumOrder.map((player, i) => {
+    if (!player) return '';
+    const rank = podiumRankMap[i];
+    return `
       <div class="podium-spot podium-rank-${rank} ${player.isCurrentPlayer ? 'is-you' : ''}">
         <div class="podium-medal">${rank === 1 ? '🥇' : rank === 2 ? '🥈' : '🥉'}</div>
         <div class="podium-avatar">${player.name.slice(0, 2).toUpperCase()}</div>
@@ -23,9 +23,9 @@ function renderLeaderboard() {
         <div class="podium-pillar"></div>
       </div>
     `;
-    }).join('');
+  }).join('');
 
-    document.getElementById('leaderboardList').innerHTML = rest.map((player, i) => `
+  document.getElementById('leaderboardList').innerHTML = rest.map((player, i) => `
     <div class="lb-row ${player.isCurrentPlayer ? 'is-you' : ''}">
       <span class="lb-rank">#${i + 4}</span>
       <span class="lb-avatar">${player.name.slice(0, 2).toUpperCase()}</span>
@@ -39,17 +39,14 @@ function renderLeaderboard() {
 }
 
 document.querySelectorAll('.lb-tab').forEach((tab) => {
-    tab.addEventListener('click', () => {
-        document.querySelectorAll('.lb-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        activeTab = tab.dataset.tab;
-        renderLeaderboard();
-    });
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.lb-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    activeTab = tab.dataset.tab;
+    renderLeaderboard();
+  });
 });
 
-document.getElementById('logoutBtn').addEventListener('click', () => {
-    localStorage.clear();
-    window.location.href = 'index.html';
-});
+document.getElementById('logoutBtn').addEventListener('click', logoutUser);
 
 renderLeaderboard();

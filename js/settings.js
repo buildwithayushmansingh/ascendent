@@ -95,8 +95,7 @@ document.getElementById('deleteAccountBtn').addEventListener('click', () => {
 });
 
 function doLogout() {
-    localStorage.clear();
-    window.location.href = 'index.html';
+    logoutUser();
 }
 document.getElementById('logoutBtn').addEventListener('click', doLogout);
 document.getElementById('settingsLogoutBtn').addEventListener('click', doLogout);

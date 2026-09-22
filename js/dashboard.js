@@ -3,10 +3,7 @@
 // Uses demo-data.js for now. Once the backend exists, loadMiniCard()
 // should fetch from GET /api/user/card instead of getDemoUser().
 
-document.getElementById('logoutBtn').addEventListener('click', () => {
-  localStorage.clear();
-  window.location.href = 'index.html';
-});
+document.getElementById('logoutBtn').addEventListener('click', logoutUser);
 
 function loadMiniCard() {
   const user = getDemoUser();
@@ -14,6 +11,16 @@ function loadMiniCard() {
   document.getElementById('statLevel').textContent = `${user.level} (${user.tier})`;
   document.getElementById('statStreak').textContent = `${user.currentStreak} days`;
   document.getElementById('statXP').textContent = `${user.xp} / ${user.xpToNextLevel}`;
+
+  document.getElementById('heroAvatar').textContent = (user.username || '??').slice(0, 2).toUpperCase();
+  document.getElementById('ringLevel').textContent = user.level;
+
+  const circumference = 2 * Math.PI * 34;
+  const percent = Math.min(100, Math.round((user.xp / user.xpToNextLevel) * 100));
+  const ringFill = document.getElementById('xpRingFill');
+  ringFill.style.strokeDasharray = `${circumference}`;
+  ringFill.style.strokeDashoffset = `${circumference * (1 - percent / 100)}`;
+
   updateBossBattle(user);
 }
 

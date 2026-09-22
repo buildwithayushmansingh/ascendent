@@ -1983,3 +1983,147 @@ a:hover {
 a:visited {
   color: var(--accent-bright);
 }
+
+/* ===== Dashboard redesign: hero banner + XP ring ===== */
+.dash-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.4rem 1.8rem;
+  margin-bottom: 24px;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.12);
+}
+
+.dash-hero-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dash-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--surface-2), var(--bg-deep));
+  border: 2px solid var(--accent-bright);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: var(--accent-bright);
+  flex-shrink: 0;
+  box-shadow: 0 0 14px rgba(192, 132, 252, 0.4);
+}
+
+.dash-hero h2 {
+  margin: 0 0 2px;
+}
+
+.dash-hero-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.xp-ring {
+  position: relative;
+  width: 62px;
+  height: 62px;
+}
+
+.xp-ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ring-track {
+  fill: none;
+  stroke: var(--bg-deep);
+  stroke-width: 6;
+}
+
+.ring-fill {
+  fill: none;
+  stroke: url(#none);
+  stroke: var(--accent-cyan);
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.8s ease;
+}
+
+.ring-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1;
+}
+
+.ring-label small {
+  font-size: 7px;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+/* Stat card icon accents */
+.stat-icon-a {
+  color: #f5c451;
+}
+
+.stat-icon-b {
+  color: #ff6b8f;
+}
+
+.stat-icon-c {
+  color: var(--accent-cyan);
+}
+
+.stat-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.15);
+}
+
+.panel-icon {
+  margin-right: 6px;
+}
+
+.log-activity,
+.boss-battle,
+.notes-section {
+  transition: box-shadow 0.2s ease;
+}
+
+.log-activity:hover,
+.boss-battle:hover,
+.notes-section:hover {
+  box-shadow: 0 0 22px rgba(139, 92, 246, 0.18);
+}
+
+@media (max-width: 600px) {
+  .dash-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .dash-hero-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
