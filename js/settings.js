@@ -99,3 +99,35 @@ function doLogout() {
 }
 document.getElementById('logoutBtn').addEventListener('click', doLogout);
 document.getElementById('settingsLogoutBtn').addEventListener('click', doLogout);
+// ---- Theme switching (Neon vs Ember) ----
+// ---- Theme switching (Neon vs Crimson) ----
+const THEME_KEY = 'ascendent_theme';
+
+function getCurrentTheme() {
+    return localStorage.getItem(THEME_KEY) || 'neon';
+}
+
+function applyTheme(theme) {
+    if (theme === 'crimson') {
+        document.documentElement.setAttribute('data-theme', 'crimson');
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+    }
+}
+
+// Apply immediately on load too (theme.js already did this before paint,
+// this just keeps settings.js consistent if it ever runs standalone)
+applyTheme(getCurrentTheme());
+
+document.querySelectorAll('.theme-card').forEach((card) => {
+    card.classList.toggle('active', card.dataset.themeValue === getCurrentTheme());
+
+    card.addEventListener('click', () => {
+        const theme = card.dataset.themeValue;
+        localStorage.setItem(THEME_KEY, theme);
+        applyTheme(theme);
+        document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        showToast(theme === 'crimson' ? '⚔️ Crimson Circuit theme activated' : '⚡ Arcane Neon theme activated');
+    });
+});

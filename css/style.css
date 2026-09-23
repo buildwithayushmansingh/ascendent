@@ -1,8 +1,11 @@
 /* style.css — Ascendent "Arcane Neon" gamified theme */
 
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Chakra+Petch:wght@400;500;600;700&display=swap');
 
 :root {
+  --font-display: 'Orbitron', sans-serif;
+  --font-body: 'Rajdhani', sans-serif;
   --bg: #0a0714;
   --bg-deep: #050310;
   --surface: #150f28;
@@ -24,7 +27,7 @@
 
 body {
   margin: 0;
-  font-family: 'Rajdhani', sans-serif;
+  font-family: var(--font-body), sans-serif;
   background:
     radial-gradient(ellipse at 20% 10%, rgba(139, 92, 246, 0.12) 0%, transparent 45%),
     radial-gradient(ellipse at 80% 90%, rgba(34, 211, 238, 0.08) 0%, transparent 50%),
@@ -36,7 +39,7 @@ body {
 h1,
 h2,
 h3 {
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
 }
 
 /* ===== Auth page (Journey Portal, retheme) ===== */
@@ -94,7 +97,7 @@ h3 {
   align-items: center;
   gap: 6px;
   pointer-events: none;
-  font-family: 'Rajdhani', sans-serif;
+  font-family: var(--font-body), sans-serif;
 }
 
 .status-dot {
@@ -313,7 +316,7 @@ h3 {
   background: transparent;
   color: var(--text);
   font-weight: 700;
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-size: 0.8rem;
   cursor: pointer;
   box-shadow: none;
@@ -447,7 +450,7 @@ select {
   border: 1px solid var(--border);
   background: var(--bg-deep);
   color: var(--text);
-  font-family: 'Rajdhani', sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: 1rem;
 }
 
@@ -466,7 +469,7 @@ button {
   background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent) 100%);
   color: #0a0714;
   font-weight: 700;
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-size: 0.85rem;
   letter-spacing: 0.5px;
   cursor: pointer;
@@ -506,7 +509,7 @@ button:hover {
   margin-left: 18px;
   color: var(--text);
   text-decoration: none;
-  font-family: 'Rajdhani', sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-weight: 600;
   background: none;
   border: none;
@@ -652,7 +655,7 @@ button:hover {
 
 .sidebar-brand {
   color: var(--accent-bright);
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-size: 1.1rem;
   letter-spacing: 1px;
   margin-bottom: 24px;
@@ -768,7 +771,7 @@ button:hover {
   font-size: 1.1rem;
   font-weight: 700;
   color: var(--accent-bright);
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
 }
 
 .content-grid {
@@ -1102,7 +1105,7 @@ button:hover {
 }
 
 .diff-name {
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-weight: 700;
   color: var(--text);
   font-size: 0.9rem;
@@ -1333,7 +1336,7 @@ button:hover {
   background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent) 100%);
   color: #0a0714;
   font-weight: 700;
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-size: 0.8rem;
   padding: 10px 20px;
   border-radius: 30px;
@@ -1351,7 +1354,7 @@ button:hover {
 /* ===== Reward animations ===== */
 .floating-xp {
   position: fixed;
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-weight: 700;
   color: var(--accent-cyan);
   font-size: 1.3rem;
@@ -1434,7 +1437,7 @@ button:hover {
 }
 
 .reward-overlay-title {
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-size: 2.4rem;
   color: var(--accent-bright);
   text-shadow: 0 0 34px rgba(192, 132, 252, 0.9);
@@ -1505,7 +1508,7 @@ button:hover {
 }
 
 .achievement-name {
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-weight: 700;
   color: var(--text);
   margin-bottom: 4px;
@@ -1620,7 +1623,7 @@ button:hover {
 
 .evolution-tier {
   color: var(--accent-bright);
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-weight: 700;
 }
 
@@ -2012,7 +2015,7 @@ a:visited {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-weight: 700;
   color: var(--accent-bright);
   flex-shrink: 0;
@@ -2063,7 +2066,7 @@ a:visited {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-weight: 700;
   color: var(--text);
   font-size: 15px;
@@ -2151,7 +2154,7 @@ a:visited {
   font-size: 0.7rem;
   color: var(--accent-cyan);
   margin-bottom: 4px;
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
   min-height: 12px;
 }
 
@@ -2180,4 +2183,289 @@ a:visited {
   font-size: 0.68rem;
   color: var(--text-secondary);
   margin-top: 6px;
+}
+
+/* ===== CRIMSON CIRCUIT THEME — activated via [data-theme="crimson"] on <html> ===== */
+
+[data-theme="crimson"] {
+  --font-display: 'Audiowide', cursive;
+  --font-body: 'Share Tech Mono', monospace;
+  --bg: #0d0508;
+  --bg-deep: #060305;
+  --surface: #1a0a10;
+  --surface-2: #240e16;
+  --text: #f5e6ea;
+  --text-secondary: #a5828f;
+  --accent: #e11d48;
+  --accent-bright: #ff3d6a;
+  --accent-cyan: #00e0a4;
+  --border: #4a1420;
+  --border-bright: #ff3d6a;
+  --danger: #ff5555;
+  --success: #00e0a4;
+}
+
+[data-theme="crimson"] body {
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(225, 29, 72, 0.12) 0%, transparent 45%),
+    radial-gradient(ellipse at 80% 90%, rgba(0, 224, 164, 0.08) 0%, transparent 50%),
+    var(--bg-deep);
+}
+
+[data-theme="crimson"] .auth-page {
+  background: radial-gradient(ellipse at center, #1a0a10 0%, #0d0508 55%, #060305 100%);
+}
+
+[data-theme="crimson"] .onboarding-page {
+  background: radial-gradient(ellipse at top, #240e16 0%, var(--bg-deep) 70%);
+}
+
+[data-theme="crimson"] .auth-shell {
+  box-shadow: 0 0 60px rgba(225, 29, 72, 0.25), inset 0 0 60px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="crimson"] .brand-mark {
+  text-shadow: 0 0 20px rgba(255, 61, 106, 0.7);
+}
+
+[data-theme="crimson"] .journey-bg {
+  background-image:
+    radial-gradient(1.5px 1.5px at 15% 25%, rgba(255, 61, 106, 0.4), transparent),
+    radial-gradient(1.5px 1.5px at 80% 20%, rgba(0, 224, 164, 0.35), transparent),
+    radial-gradient(1.5px 1.5px at 65% 75%, rgba(255, 61, 106, 0.3), transparent),
+    radial-gradient(1.5px 1.5px at 25% 80%, rgba(0, 224, 164, 0.3), transparent),
+    radial-gradient(1.5px 1.5px at 50% 50%, rgba(255, 61, 106, 0.25), transparent),
+    radial-gradient(1.5px 1.5px at 90% 60%, rgba(0, 224, 164, 0.3), transparent),
+    radial-gradient(1.5px 1.5px at 10% 60%, rgba(255, 61, 106, 0.25), transparent);
+}
+
+[data-theme="crimson"] .journey-bg::before {
+  border-color: rgba(255, 61, 106, 0.14);
+}
+
+[data-theme="crimson"] .journey-bg::after {
+  border-color: rgba(0, 224, 164, 0.14);
+  border-style: dashed;
+}
+
+[data-theme="crimson"] .form-container {
+  background: linear-gradient(180deg, rgba(26, 10, 16, 0.9) 0%, rgba(6, 3, 5, 0.95) 100%);
+}
+
+[data-theme="crimson"] .overlay-container {
+  box-shadow: 0 0 40px rgba(225, 29, 72, 0.35);
+}
+
+[data-theme="crimson"] .overlay {
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 61, 106, 0.18), transparent 60%),
+    radial-gradient(circle at 70% 80%, rgba(0, 224, 164, 0.1), transparent 55%),
+    linear-gradient(135deg, #240e16 0%, #060305 60%, #1a0a10 100%);
+  border-left-color: rgba(255, 61, 106, 0.3);
+  border-right-color: rgba(255, 61, 106, 0.3);
+}
+
+[data-theme="crimson"] .overlay-brand {
+  text-shadow: 0 0 18px rgba(255, 61, 106, 0.6);
+}
+
+[data-theme="crimson"] .overlay-btn:hover {
+  background: rgba(255, 61, 106, 0.15);
+  box-shadow: 0 0 16px rgba(255, 61, 106, 0.3);
+}
+
+[data-theme="crimson"] .path-line {
+  background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+}
+
+[data-theme="crimson"] .path-dot {
+  box-shadow: 0 0 10px rgba(255, 61, 106, 0.9);
+}
+
+[data-theme="crimson"] .overlay-progress {
+  border-top-color: rgba(255, 61, 106, 0.25);
+}
+
+[data-theme="crimson"] .journey-stages i {
+  color: var(--accent-cyan);
+}
+
+[data-theme="crimson"] input:focus,
+[data-theme="crimson"] textarea:focus,
+[data-theme="crimson"] select:focus {
+  box-shadow: 0 0 0 3px rgba(255, 61, 106, 0.18);
+}
+
+[data-theme="crimson"] button {
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent) 100%);
+  color: #060305;
+  box-shadow: 0 0 14px rgba(225, 29, 72, 0.4);
+}
+
+[data-theme="crimson"] button:hover {
+  box-shadow: 0 0 24px rgba(255, 61, 106, 0.6);
+}
+
+[data-theme="crimson"] .sidebar-brand {
+  text-shadow: 0 0 12px rgba(255, 61, 106, 0.4);
+}
+
+[data-theme="crimson"] .sidebar-nav a:hover {
+  background: rgba(255, 61, 106, 0.14);
+}
+
+[data-theme="crimson"] .sidebar-nav a.nav-active {
+  background: linear-gradient(90deg, rgba(255, 61, 106, 0.25), transparent);
+  border-left-color: var(--accent-bright);
+}
+
+[data-theme="crimson"] .onboarding-container {
+  box-shadow: 0 0 40px rgba(225, 29, 72, 0.25);
+}
+
+[data-theme="crimson"] .category-tile.selected,
+[data-theme="crimson"] .habit-tile.selected,
+[data-theme="crimson"] .difficulty-card.selected {
+  box-shadow: 0 0 16px rgba(225, 29, 72, 0.4);
+}
+
+[data-theme="crimson"] .profile-ready-pulse {
+  animation-name: pulse-glow-crimson;
+}
+
+@keyframes pulse-glow-crimson {
+
+  0%,
+  100% {
+    text-shadow: 0 0 12px rgba(255, 61, 106, 0.5);
+  }
+
+  50% {
+    text-shadow: 0 0 30px rgba(0, 224, 164, 0.7);
+  }
+}
+
+[data-theme="crimson"] .modal-box {
+  box-shadow: 0 0 40px rgba(225, 29, 72, 0.3);
+}
+
+[data-theme="crimson"] .game-toast {
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent) 100%);
+  color: #060305;
+  box-shadow: 0 0 24px rgba(225, 29, 72, 0.5);
+}
+
+[data-theme="crimson"] .floating-xp {
+  color: var(--accent-cyan);
+  text-shadow: 0 0 12px rgba(0, 224, 164, 0.8);
+}
+
+[data-theme="crimson"] .reward-overlay-title {
+  text-shadow: 0 0 34px rgba(255, 61, 106, 0.9);
+}
+
+[data-theme="crimson"] .reward-burst {
+  background: radial-gradient(circle, rgba(225, 29, 72, 0.4), transparent 70%);
+}
+
+[data-theme="crimson"] .achievement-card.unlocked {
+  box-shadow: 0 0 20px rgba(225, 29, 72, 0.3);
+}
+
+[data-theme="crimson"] .heat-1 {
+  background: rgba(225, 29, 72, 0.22);
+}
+
+[data-theme="crimson"] .heat-2 {
+  background: rgba(225, 29, 72, 0.5);
+}
+
+[data-theme="crimson"] .heat-3 {
+  background: rgba(255, 61, 106, 0.85);
+  color: #060305;
+}
+
+[data-theme="crimson"] .podium-spot.is-you .podium-avatar {
+  box-shadow: 0 0 18px rgba(225, 29, 72, 0.7);
+}
+
+[data-theme="crimson"] .lb-row.is-you {
+  box-shadow: 0 0 16px rgba(225, 29, 72, 0.3);
+}
+
+[data-theme="crimson"] .lb-tab.active,
+[data-theme="crimson"] .chart-bar,
+[data-theme="crimson"] .card-xp-bar-fill,
+[data-theme="crimson"] .boss-hp-fill {
+  background: linear-gradient(90deg, var(--accent), var(--accent-cyan));
+}
+
+[data-theme="crimson"] .chart-bar {
+  box-shadow: 0 0 10px rgba(225, 29, 72, 0.4);
+}
+
+[data-theme="crimson"] .xp-ring .ring-fill {
+  stroke: var(--accent-cyan);
+}
+
+[data-theme="crimson"] .dash-avatar {
+  box-shadow: 0 0 14px rgba(255, 61, 106, 0.4);
+}
+
+/* Player Card gold-tier glow stays warm even in Crimson theme (tier identity, not site theme) */
+[data-theme="crimson"] .player-card.tier-legendary {
+  border-color: var(--accent-bright);
+  box-shadow: 0 0 36px rgba(255, 61, 106, 0.7);
+}
+
+/* Theme picker cards (Settings page) */
+.theme-options {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.theme-card {
+  flex: 1;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 10px;
+  cursor: pointer;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.theme-card:hover {
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+
+.theme-card.active {
+  border-color: var(--accent-bright);
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.3);
+}
+
+.theme-swatch-row {
+  display: flex;
+  gap: 4px;
+}
+
+.swatch-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.theme-card-name {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.theme-card.active .theme-card-name {
+  color: var(--accent-bright);
 }

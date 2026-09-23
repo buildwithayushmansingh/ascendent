@@ -235,7 +235,10 @@ document.getElementById('flipCardBtn').addEventListener('click', () => {
   document.getElementById('flipInner').classList.toggle('flipped');
 });
 
-document.getElementById('logoutBtn').addEventListener('click', logoutUser);
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  localStorage.removeItem('ascendent_user');
+  window.location.href = 'index.html';
+});
 document.getElementById('shareCardBtn').addEventListener('click', () => {
   showToast('🔗 Share link copied (placeholder — backend needed for real links)');
 });

@@ -353,7 +353,7 @@
 
   color: var(--text-secondary);
 
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
 }
 
 
@@ -374,7 +374,7 @@
 
   border-radius: 20px;
 
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
 }
 
 
@@ -414,7 +414,7 @@
 
   font-weight: 700;
 
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
 
   font-size: 18px;
 
@@ -474,7 +474,7 @@
 
 
 .card-level-num {
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
 
   font-size: 15px;
 
@@ -562,7 +562,7 @@
 
   font-weight: 700;
 
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
 
   color: var(--text);
 }
@@ -627,7 +627,7 @@
 
   color: var(--text-secondary);
 
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
 }
 
 
@@ -656,7 +656,7 @@
    ========================================================= */
 
 .back-section-title {
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
 
   font-size: 12px;
 
@@ -687,7 +687,7 @@
 
   margin-left: 6px;
 
-  font-family: 'Rajdhani', sans-serif;
+  font-family: var(--font-body), sans-serif;
 
   letter-spacing: 0;
 }
@@ -925,7 +925,7 @@
 
 
 .future-label {
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-display), sans-serif;
 
   color:
     var(--accent-cyan, #22d3ee);
