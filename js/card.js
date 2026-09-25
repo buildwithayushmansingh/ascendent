@@ -1,29 +1,28 @@
-// card.js — Player Card, rendered entirely from SAMPLE_CARD_DATA.
-//
-// This is a frontend prototype: real backend/user data isn't available
-// yet, so every value on the card comes from the SAMPLE_CARD_DATA object
-// below instead of being hardcoded into the HTML. When the backend
-// exists, replace the SAMPLE_CARD_DATA assignment with a real
-// GET /api/user/card fetch that returns the same shape — every render
-// function below already reads from a single `data` object, so nothing
-// else needs to change.
+// card.js — Player Card
+// Frontend prototype using SAMPLE_CARD_DATA
+// Rewritten for a smooth, premium flip + gamified page background,
+// while preserving all existing IDs, data structure, and functionality.
 
 const SAMPLE_CARD_DATA = {
   name: "Ayushman Singh",
   username: "ayushmansinghrajput3019",
   initials: "AS",
+
   title: "Consistency Warrior",
   role: "Consistency Player / Habit Builder",
+
   tier: "Gold",
   cardId: "ASC-001293",
 
   level: 8,
   nextLevel: 9,
+
   xp: 7640,
   xpToNextLevel: 10000,
 
   currentStreak: 27,
   longestStreak: 41,
+
   consistency: 86,
 
   completedActivities: 156,
@@ -37,30 +36,45 @@ const SAMPLE_CARD_DATA = {
 
   weeklyXP: 1240,
   monthlyXP: 5680,
+
   favoriteActivity: "Coding",
   dailyGoal: 3,
+
   memberSince: "September 2026",
 
   badges: [
-    { icon: '🏆', name: 'First Step', desc: 'Completed your first activity' },
-    { icon: '🔥', name: '7 Day Warrior', desc: 'Maintained a 7-day streak' },
-    { icon: '⚡', name: '14 Day Streak', desc: 'Maintained a 14-day streak' },
-    { icon: '🛡', name: '30 Day Challenger', desc: 'Took on the 30-day challenge' },
-    { icon: '👑', name: 'Consistency Master', desc: 'Sustained long-term consistency' },
-    { icon: '💎', name: 'XP Hunter', desc: 'Earned massive XP milestones' }
+    { icon: "🏆", name: "First Step", desc: "Completed your first activity" },
+    { icon: "🔥", name: "7 Day Warrior", desc: "Maintained a 7-day streak" },
+    { icon: "⚡", name: "14 Day Streak", desc: "Maintained a 14-day streak" },
+    { icon: "🛡", name: "30 Day Challenger", desc: "Took on the 30-day challenge" },
+    { icon: "👑", name: "Consistency Master", desc: "Sustained long-term consistency" },
+    { icon: "💎", name: "XP Hunter", desc: "Earned massive XP milestones" }
   ],
 
   futureSelf: [
-    { label: '30 Days', level: 10, xp: '9,800+', note: '30 Day Streak' },
-    { label: '60 Days', level: 12, xp: '12,500+', note: 'Consistency Master' },
-    { label: '90 Days', level: 14, xp: '16,000+', note: 'Elite Tier' }
+    { label: "30 Days", level: 10, xp: "9,800+", note: "30 Day Streak" },
+    { label: "60 Days", level: 12, xp: "12,500+", note: "Consistency Master" },
+    { label: "90 Days", level: 14, xp: "16,000+", note: "Elite Tier" }
   ]
 };
 
-// ============== FRONT ==============
+// Read once — used everywhere to decide whether to run decorative motion.
+const PREFERS_REDUCED_MOTION =
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const IS_COARSE_POINTER =
+  window.matchMedia("(pointer: coarse)").matches;
+
+
+// =========================================================
+// FRONT CARD
+// =========================================================
+
 function renderCard() {
   const data = SAMPLE_CARD_DATA;
-  const cardEl = document.getElementById('playerCard');
+  const cardEl = document.getElementById("playerCard");
+  if (!cardEl) return;
+
   cardEl.className = `player-card tier-${data.tier.toLowerCase()} flip-front`;
 
   const xpPercent = Math.min(100, Math.round((data.xp / data.xpToNextLevel) * 100));
@@ -94,48 +108,57 @@ function renderCard() {
       </div>
 
       <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-secondary);">
-        <span>XP</span><span>${data.xp.toLocaleString()} / ${data.xpToNextLevel.toLocaleString()}</span>
+        <span>XP</span>
+        <span>${data.xp.toLocaleString()} / ${data.xpToNextLevel.toLocaleString()}</span>
       </div>
+
       <div class="card-xp-bar-track">
         <div class="card-xp-bar-fill" id="frontXpFill" style="width:0%;" data-target="${xpPercent}"></div>
       </div>
 
       <div class="card-stats">
-        <div class="card-stat-tile">
+        <div class="card-stat-tile stat-pop-in" style="animation-delay:0ms;">
           <div class="stat-big">${data.currentStreak}</div>
           <div class="stat-small">Current Streak</div>
         </div>
-        <div class="card-stat-tile">
+        <div class="card-stat-tile stat-pop-in" style="animation-delay:80ms;">
           <div class="stat-big">${data.longestStreak}</div>
           <div class="stat-small">Longest Streak</div>
         </div>
-        <div class="card-stat-tile">
+        <div class="card-stat-tile stat-pop-in" style="animation-delay:160ms;">
           <div class="stat-big">${data.consistency}%</div>
           <div class="stat-small">Consistency</div>
         </div>
       </div>
 
       <div class="badge-preview-row">
-        ${previewBadges.map(b => `<span class="badge-circle" title="${b.name}">${b.icon}</span>`).join('')}
-        ${extraCount > 0 ? `<span class="badge-circle badge-more">+${extraCount}</span>` : ''}
+        ${previewBadges.map((b, i) => `
+          <span class="badge-circle badge-pop-in" style="animation-delay:${240 + i * 70}ms;" title="${b.name}">${b.icon}</span>
+        `).join("")}
+        ${extraCount > 0 ? `<span class="badge-circle badge-more badge-pop-in" style="animation-delay:${240 + previewBadges.length * 70}ms;">+${extraCount}</span>` : ""}
       </div>
 
       <div class="card-footer-row">
         <span>Card ${data.cardId}</span>
-        <span>${data.currentChallenge.split(' ')[0]}-Day Challenge: ${data.challengeCurrent}/${data.challengeTotal}</span>
+        <span>${data.currentChallenge.split(" ")[0]}-Day Challenge: ${data.challengeCurrent}/${data.challengeTotal}</span>
       </div>
     </div>
   `;
 
-  animateXPBar('frontXpFill');
+  animateXPBar("frontXpFill");
 }
 
-// ============== BACK (Player Profile + Achievements + Progress + Future Self) ==============
+
+// =========================================================
+// BACK CARD
+// =========================================================
+
 function renderBack() {
   const data = SAMPLE_CARD_DATA;
-  const backEl = document.getElementById('futureSelfCard');
-  backEl.className = `player-card tier-${data.tier.toLowerCase()} flip-back`;
+  const backEl = document.getElementById("futureSelfCard");
+  if (!backEl) return;
 
+  backEl.className = `player-card tier-${data.tier.toLowerCase()} flip-back`;
   const challengePercent = Math.round((data.challengeCurrent / data.challengeTotal) * 100);
 
   backEl.innerHTML = `
@@ -162,7 +185,7 @@ function renderBack() {
               <div class="achievement-mini-desc">${b.desc}</div>
             </div>
           </div>
-        `).join('')}
+        `).join("")}
       </div>
 
       <div class="back-section-title">📈 Progress</div>
@@ -173,6 +196,7 @@ function renderBack() {
         </div>
         <div class="challenge-count">${data.challengeCurrent} / ${data.challengeTotal} Days</div>
       </div>
+
       <div class="mini-stats-row">
         <span>Weekly XP: <b>${data.weeklyXP.toLocaleString()}</b></span>
         <span>Monthly XP: <b>${data.monthlyXP.toLocaleString()}</b></span>
@@ -196,27 +220,50 @@ function renderBack() {
           <span class="future-label">${f.label}</span>
           <span class="future-detail">→ Level ${f.level} · ${f.xp} XP · ${f.note}</span>
         </div>
-      `).join('')}
+      `).join("")}
       <p class="future-footnote">Projection based on current activity pattern.</p>
     </div>
   `;
 
-  animateXPBar('challengeFill');
+  animateXPBar("challengeFill");
 }
+
+
+// =========================================================
+// XP BAR ANIMATION
+// =========================================================
 
 function animateXPBar(id) {
   const el = document.getElementById(id);
   if (!el) return;
   const target = el.dataset.target;
+
+  if (PREFERS_REDUCED_MOTION) {
+    el.style.width = `${target}%`;
+    return;
+  }
+
   requestAnimationFrame(() => {
     setTimeout(() => { el.style.width = `${target}%`; }, 100);
   });
 }
 
-// ============== Tilt effect (lightweight, no libraries) ==============
+
+// =========================================================
+// TILT EFFECT — disabled on touch devices and during
+// flip/entrance, and skipped entirely under reduced motion.
+// =========================================================
+
 function attachTilt() {
-  document.querySelectorAll('.tilt-wrapper').forEach((wrapper) => {
-    wrapper.addEventListener('mousemove', (e) => {
+  if (PREFERS_REDUCED_MOTION || IS_COARSE_POINTER) return;
+
+  const flipInner = document.getElementById("flipInner");
+
+  document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
+    wrapper.addEventListener("mousemove", (e) => {
+      if (flipInner.classList.contains("animating") || flipInner.classList.contains("card-enter")) {
+        return;
+      }
       const rect = wrapper.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -224,33 +271,186 @@ function attachTilt() {
       const rotateX = ((y / rect.height) - 0.5) * -8;
       wrapper.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     });
-    wrapper.addEventListener('mouseleave', () => {
-      wrapper.style.transform = 'rotateX(0deg) rotateY(0deg)';
+
+    wrapper.addEventListener("mouseleave", () => {
+      wrapper.style.transform = "rotateX(0deg) rotateY(0deg)";
     });
   });
 }
 
-// ============== Flip / buttons ==============
-document.getElementById('flipCardBtn').addEventListener('click', () => {
-  document.getElementById('flipInner').classList.toggle('flipped');
-});
 
-document.getElementById('logoutBtn').addEventListener('click', () => {
-  localStorage.removeItem('ascendent_user');
-  window.location.href = 'index.html';
-});
-document.getElementById('shareCardBtn').addEventListener('click', () => {
-  showToast('🔗 Share link copied (placeholder — backend needed for real links)');
-});
+// =========================================================
+// FLIP CARD — simplified single-arc rotation (no scale
+// bounce), glow now lives on .flip-inner so it never
+// competes with the tier's own box-shadow animation.
+// =========================================================
 
-document.getElementById('downloadCardBtn').addEventListener('click', () => {
-  showToast('⬇️ Card download coming once backend image export is built');
-});
+function setupFlip() {
+  const flipButton = document.getElementById("flipCardBtn");
+  const flipInner = document.getElementById("flipInner");
+  const frontEl = document.getElementById("playerCard");
+  const backEl = document.getElementById("futureSelfCard");
 
-document.getElementById('profileLinkBtn').addEventListener('click', () => {
-  showToast(`👤 ascendent.app/${SAMPLE_CARD_DATA.username} (placeholder)`);
-});
+  if (!flipButton || !flipInner || !frontEl || !backEl) return;
 
-renderCard();
-renderBack();
-attachTilt();
+  flipButton.addEventListener("click", () => {
+    if (flipInner.classList.contains("animating")) return;
+
+    const goingToBack = !flipInner.classList.contains("flipped");
+
+    // Reduced motion: swap instantly, no 3D flourish, no shine, no glow.
+    if (PREFERS_REDUCED_MOTION) {
+      flipInner.classList.toggle("flipped", goingToBack);
+      return;
+    }
+
+    const direction = goingToBack ? "to-back" : "to-front";
+
+    // Reset shine so it can restart cleanly on every flip.
+    frontEl.classList.remove("shine-burst");
+    backEl.classList.remove("shine-burst");
+    void frontEl.offsetWidth; // force reflow so the animation restarts
+
+    flipInner.classList.add("animating", direction);
+
+    requestAnimationFrame(() => {
+      frontEl.classList.add("shine-burst");
+      backEl.classList.add("shine-burst");
+    });
+
+    const handleFlipEnd = (event) => {
+      if (event.animationName !== "smoothFlipBack" && event.animationName !== "smoothFlipFront") {
+        return;
+      }
+      flipInner.classList.remove("animating", direction);
+      flipInner.classList.toggle("flipped", goingToBack);
+      frontEl.classList.remove("shine-burst");
+      backEl.classList.remove("shine-burst");
+      flipInner.removeEventListener("animationend", handleFlipEnd);
+    };
+
+    flipInner.addEventListener("animationend", handleFlipEnd);
+  });
+}
+
+
+// =========================================================
+// AMBIENT PAGE BACKGROUND — a few CSS-driven drifting glow
+// orbs + floating particles. No canvas, no animation loop:
+// everything moves via CSS transforms/opacity only, so it's
+// effectively free on the main thread. Skipped entirely
+// under reduced motion (a static, non-animated version is
+// still inserted so the page doesn't look empty).
+// =========================================================
+
+function createAmbientBackground() {
+  if (document.getElementById("cardBgAmbient")) return; // avoid duplicates
+
+  const container = document.createElement("div");
+  container.id = "cardBgAmbient";
+  container.className = "card-bg-ambient";
+  container.setAttribute("aria-hidden", "true");
+
+  for (let i = 0; i < 3; i++) {
+    const orb = document.createElement("div");
+    orb.className = `bg-orb bg-orb-${i + 1}`;
+    container.appendChild(orb);
+  }
+
+  if (!PREFERS_REDUCED_MOTION) {
+    const particleCount = window.innerWidth < 600 ? 8 : 14;
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement("div");
+      particle.className = "bg-particle";
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.animationDelay = `${Math.random() * 8}s`;
+      particle.style.animationDuration = `${10 + Math.random() * 8}s`;
+      container.appendChild(particle);
+    }
+  }
+
+  document.body.insertBefore(container, document.body.firstChild);
+}
+
+
+// =========================================================
+// LOGOUT / SHARE / DOWNLOAD / PROFILE LINK
+// =========================================================
+
+function setupLogout() {
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (!logoutBtn) return;
+  logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("ascendent_user");
+    window.location.href = "index.html";
+  });
+}
+
+function setupShare() {
+  const shareBtn = document.getElementById("shareCardBtn");
+  if (!shareBtn) return;
+  shareBtn.addEventListener("click", () => {
+    showToast("🔗 Share link copied (placeholder — backend needed for real links)");
+  });
+}
+
+function setupDownload() {
+  const downloadBtn = document.getElementById("downloadCardBtn");
+  if (!downloadBtn) return;
+  downloadBtn.addEventListener("click", () => {
+    showToast("⬇️ Card download coming once backend image export is built");
+  });
+}
+
+function setupProfileLink() {
+  const profileBtn = document.getElementById("profileLinkBtn");
+  if (!profileBtn) return;
+  profileBtn.addEventListener("click", () => {
+    showToast(`👤 ascendent.app/${SAMPLE_CARD_DATA.username} (placeholder)`);
+  });
+}
+
+
+// =========================================================
+// INITIALIZE PLAYER CARD
+// =========================================================
+
+function initializeCard() {
+  createAmbientBackground();
+
+  renderCard();
+  renderBack();
+
+  attachTilt();
+  setupFlip();
+
+  setupLogout();
+  setupShare();
+  setupDownload();
+  setupProfileLink();
+
+  const flipInner = document.getElementById("flipInner");
+  if (!flipInner) return;
+
+  // Reduced motion: skip the entrance flourish entirely so the
+  // 'card-enter' class never gets stuck (it would otherwise block
+  // the tilt guard forever, since no animationend would ever fire).
+  if (PREFERS_REDUCED_MOTION) return;
+
+  requestAnimationFrame(() => {
+    flipInner.classList.add("card-enter");
+  });
+
+  flipInner.addEventListener("animationend", (event) => {
+    if (event.animationName === "cardEnterSmooth") {
+      flipInner.classList.remove("card-enter");
+    }
+  }, { once: true });
+}
+
+
+// =========================================================
+// START
+// =========================================================
+
+initializeCard();

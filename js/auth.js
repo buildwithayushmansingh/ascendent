@@ -44,7 +44,8 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     localStorage.setItem('ascendent_username', data.username);
 
     const user = getDemoUser();
-    window.location.href = (user.habits && user.habits.length > 0) ? 'dashboard.html' : 'onboarding.html';
+    const target = (user.habits && user.habits.length > 0) ? 'dashboard.html' : 'onboarding.html';
+    window.location.href = 'transition.html?next=' + target;
   } catch (err) {
     document.getElementById('authMessage').textContent = 'Could not reach the server.';
   }
@@ -68,5 +69,5 @@ document.getElementById('signupForm').addEventListener('submit', (e) => {
 
   // Signup stays frontend-only for now (no backend account creation yet)
   localStorage.setItem('ascendent_username', username);
-  window.location.href = 'onboarding.html';
+  window.location.href = 'transition.html?next=onboarding.html';
 });

@@ -108,8 +108,8 @@ function getCurrentTheme() {
 }
 
 function applyTheme(theme) {
-    if (theme === 'crimson') {
-        document.documentElement.setAttribute('data-theme', 'crimson');
+    if (theme === 'crimson' || theme === 'jade') {
+        document.documentElement.setAttribute('data-theme', theme);
     } else {
         document.documentElement.removeAttribute('data-theme');
     }
@@ -128,6 +128,7 @@ document.querySelectorAll('.theme-card').forEach((card) => {
         applyTheme(theme);
         document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('active'));
         card.classList.add('active');
-        showToast(theme === 'crimson' ? '⚔️ Crimson Circuit theme activated' : '⚡ Arcane Neon theme activated');
+        const themeNames = { neon: '⚡ Arcane Neon', crimson: '⚔️ Crimson Circuit', jade: '🟢 Jade Protocol' };
+        showToast(`${themeNames[theme]} theme activated`);
     });
 });
