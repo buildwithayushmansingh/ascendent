@@ -644,58 +644,193 @@ button:hover {
   min-height: 100vh;
 }
 
+/* ===== Premium Gamified Sidebar — AAA game-menu style ===== */
+
 .sidebar {
-  width: 220px;
+  width: 250px;
+  flex-shrink: 0;
   background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
-  border-right: 2px solid var(--border-bright);
+  border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  padding: 1.5rem 1rem;
+  padding: 1.6rem 1rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .sidebar-brand {
   color: var(--accent-bright);
   font-family: var(--font-display), sans-serif;
-  font-size: 1.1rem;
-  letter-spacing: 1px;
-  margin-bottom: 24px;
-  padding: 0 8px;
+  font-size: 1.05rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 26px;
+  padding: 0 6px;
   text-shadow: 0 0 12px rgba(192, 132, 252, 0.4);
 }
 
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 10px;
   flex: 1;
+  perspective: 800px;
+  /* gives the tilt effect a real vanishing point */
 }
 
-.sidebar-nav a {
-  color: var(--text-secondary);
+/* ---- Nav tile: glassmorphism game-menu card ---- */
+.nav-tile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
   text-decoration: none;
-  padding: 10px 12px;
-  border-radius: 8px;
-  font-size: 0.9rem;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(6px);
+  overflow: hidden;
+  transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s ease,
+    box-shadow 0.35s ease,
+    background 0.3s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
-.sidebar-nav a:hover {
-  background: rgba(168, 85, 247, 0.12);
+/* Light sweep — purely transform-driven, cheap on GPU */
+.nav-tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.10) 45%, transparent 60%);
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+
+.nav-tile:hover::before {
+  transform: translateX(120%);
+}
+
+.nav-tile:hover {
   color: var(--text);
+  border-color: color-mix(in srgb, var(--accent-bright) 35%, transparent);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.3),
+    0 0 20px color-mix(in srgb, var(--accent-bright) 30%, transparent);
 }
 
-.sidebar-nav a.nav-active {
-  background: linear-gradient(90deg, rgba(168, 85, 247, 0.25), transparent);
+.nav-tile-icon {
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-tile:hover .nav-tile-icon {
+  transform: scale(1.15) rotate(-6deg);
+}
+
+.nav-tile-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  transition: transform 0.35s ease;
+}
+
+.nav-tile:hover .nav-tile-text {
+  transform: translateX(2px);
+}
+
+.nav-tile-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.nav-tile-desc {
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.nav-tile-indicator {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  border-radius: 0 3px 3px 0;
+  background: var(--accent-bright);
+  box-shadow: 0 0 10px var(--accent-bright);
+  transition: height 0.3s ease;
+}
+
+.nav-tile:hover .nav-tile-indicator {
+  height: 55%;
+}
+
+/* ---- Active tile ---- */
+.nav-tile.nav-active {
   color: var(--accent-bright);
-  border-left: 3px solid var(--accent-bright);
+  background: linear-gradient(135deg,
+      color-mix(in srgb, var(--accent-bright) 16%, transparent),
+      color-mix(in srgb, var(--accent-bright) 4%, transparent));
+  border-color: color-mix(in srgb, var(--accent-bright) 45%, transparent);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--accent-bright) 30%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.nav-tile.nav-active .nav-tile-indicator {
+  height: 60%;
+}
+
+.nav-tile.nav-active .nav-tile-icon {
+  filter: drop-shadow(0 0 6px var(--accent-bright));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .nav-tile.nav-active {
+    animation: navBreathe 3.2s ease-in-out infinite;
+  }
+}
+
+@keyframes navBreathe {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px color-mix(in srgb, var(--accent-bright) 24%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  50% {
+    box-shadow: 0 0 34px color-mix(in srgb, var(--accent-bright) 42%, transparent), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+}
+
+@media (hover: none) {
+  .nav-tile {
+    transform: none !important;
+  }
+
+  .nav-tile::before {
+    display: none;
+  }
 }
 
 .sidebar-quote {
   color: var(--text-secondary);
   font-size: 0.75rem;
   font-style: italic;
-  padding: 12px;
+  padding: 14px;
   border-top: 1px solid var(--border);
   margin-top: 12px;
+  opacity: 0.8;
 }
 
 .main-content {
@@ -856,12 +991,42 @@ button:hover {
 
   .sidebar {
     width: 100%;
+    height: auto;
+    position: relative;
     flex-direction: row;
     overflow-x: auto;
+    padding: 0.8rem;
+  }
+
+  .sidebar-brand {
+    display: none;
   }
 
   .sidebar-nav {
     flex-direction: row;
+    gap: 8px;
+    flex: none;
+    perspective: none;
+  }
+
+  .nav-tile {
+    flex-direction: column;
+    padding: 10px 14px;
+    border-radius: 14px;
+    min-width: 84px;
+    text-align: center;
+  }
+
+  .nav-tile-desc {
+    display: none;
+  }
+
+  .nav-tile-indicator {
+    display: none;
+  }
+
+  .nav-tile-title {
+    font-size: 0.72rem;
   }
 
   .sidebar-quote {
