@@ -15,62 +15,29 @@
         <aside class="sidebar">
             <div class="sidebar-brand">⚔ Ascendent</div>
             <nav class="sidebar-nav">
-                <a href="dashboard.html" class="nav-tile ">
-                    <span class="nav-tile-icon">🏠</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Dashboard</span>
-                        <span class="nav-tile-desc">Home base</span>
-                    </span>
-                    <span class="nav-tile-indicator"></span>
-                </a>
-                <a href="habits.html" class="nav-tile">
-                    <span class="nav-tile-icon">📋</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Habits</span>
-                        <span class="nav-tile-desc">Track quests</span>
-                    </span>
-                    <span class="nav-tile-indicator"></span>
-                </a>
-                <a href="achievements.html" class="nav-tile">
-                    <span class="nav-tile-icon">🏆</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Achievements</span>
-                        <span class="nav-tile-desc">Unlocked badges</span>
-                    </span>
-                    <span class="nav-tile-indicator"></span>
-                </a>
-                <a href="card.html" class="nav-tile">
-                    <span class="nav-tile-icon">🎴</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Player Card</span>
-                        <span class="nav-tile-desc">Your identity</span>
-                    </span>
-                    <span class="nav-tile-indicator"></span>
-                </a>
-                <a href="progress.html" class="nav-tile nav-active">
-                    <span class="nav-tile-icon">📈</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Progress</span>
-                        <span class="nav-tile-desc">Analytics</span>
-                    </span>
-                    <span class="nav-tile-indicator"></span>
-                </a>
-                <a href="leaderboard.html" class="nav-tile">
-                    <span class="nav-tile-icon">📊</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Leaderboard</span>
-                        <span class="nav-tile-desc">Global ranks</span>
-                    </span>
-                    <span class="nav-tile-indicator"></span>
-                </a>
-                <a href="settings.html" class="nav-tile">
-                    <span class="nav-tile-icon">⚙️</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Settings</span>
-                        <span class="nav-tile-desc">Preferences</span>
-                    </span>
-                    <span class="nav-tile-indicator"></span>
-                </a>
+                <a href="dashboard.html" class="nav-tile"><span class="nav-tile-icon">🏠</span><span
+                        class="nav-tile-text"><span class="nav-tile-title">Dashboard</span><span
+                            class="nav-tile-desc">Home base</span></span><span class="nav-tile-indicator"></span></a>
+                <a href="habits.html" class="nav-tile"><span class="nav-tile-icon">📋</span><span
+                        class="nav-tile-text"><span class="nav-tile-title">Habits</span><span
+                            class="nav-tile-desc">Track quests</span></span><span class="nav-tile-indicator"></span></a>
+                <a href="achievements.html" class="nav-tile"><span class="nav-tile-icon">🏆</span><span
+                        class="nav-tile-text"><span class="nav-tile-title">Achievements</span><span
+                            class="nav-tile-desc">Unlocked badges</span></span><span
+                        class="nav-tile-indicator"></span></a>
+                <a href="card.html" class="nav-tile"><span class="nav-tile-icon">🎴</span><span
+                        class="nav-tile-text"><span class="nav-tile-title">Player Card</span><span
+                            class="nav-tile-desc">Your identity</span></span><span
+                        class="nav-tile-indicator"></span></a>
+                <a href="progress.html" class="nav-tile nav-active"><span class="nav-tile-icon">📈</span><span
+                        class="nav-tile-text"><span class="nav-tile-title">Progress</span><span
+                            class="nav-tile-desc">Analytics</span></span><span class="nav-tile-indicator"></span></a>
+                <a href="leaderboard.html" class="nav-tile"><span class="nav-tile-icon">📊</span><span
+                        class="nav-tile-text"><span class="nav-tile-title">Leaderboard</span><span
+                            class="nav-tile-desc">Global ranks</span></span><span class="nav-tile-indicator"></span></a>
+                <a href="settings.html" class="nav-tile"><span class="nav-tile-icon">⚙️</span><span
+                        class="nav-tile-text"><span class="nav-tile-title">Settings</span><span
+                            class="nav-tile-desc">Preferences</span></span><span class="nav-tile-indicator"></span></a>
             </nav>
             <div class="sidebar-quote">"Discipline today,<br>freedom tomorrow."</div>
         </aside>
@@ -84,62 +51,66 @@
                 <button id="logoutBtn" class="ghost-btn">Log Out</button>
             </header>
 
-            <section class="stat-row">
-                <div class="stat-card">
-                    <span class="stat-icon">✨</span>
-                    <div>
-                        <div class="stat-label">Weekly XP</div>
-                        <div id="weeklyXPStat" class="stat-value">0</div>
+            <!-- Hero ring -->
+            <section class="progress-hero">
+                <div class="progress-hero-ring" id="heroRing">
+                    <div class="progress-hero-inner">
+                        <span id="heroRingPct">0%</span>
+                        <small>Consistency</small>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <span class="stat-icon">🔥</span>
-                    <div>
-                        <div class="stat-label">Current Streak</div>
-                        <div id="currentStreakStat" class="stat-value">0</div>
+                <div class="progress-hero-stats">
+                    <div class="hero-stat-item"><span class="hero-stat-icon">✨</span>
+                        <div>
+                            <div class="hero-stat-label">Weekly XP</div>
+                            <div id="weeklyXPStat" class="hero-stat-value">0</div>
+                        </div>
                     </div>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-icon">🏔️</span>
-                    <div>
-                        <div class="stat-label">Best Streak</div>
-                        <div id="bestStreakStat" class="stat-value">0</div>
+                    <div class="hero-stat-item"><span class="hero-stat-icon">🔥</span>
+                        <div>
+                            <div class="hero-stat-label">Current Streak</div>
+                            <div id="currentStreakStat" class="hero-stat-value">0</div>
+                        </div>
+                    </div>
+                    <div class="hero-stat-item"><span class="hero-stat-icon">🏔️</span>
+                        <div>
+                            <div class="hero-stat-label">Best Streak</div>
+                            <div id="bestStreakStat" class="hero-stat-value">0</div>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <section class="progress-panel">
-                <h3>📊 Weekly Activity (XP per day)</h3>
+                <h3>Activity — last 7 days (XP)</h3>
                 <div id="weeklyChart" class="weekly-chart"></div>
             </section>
 
-            <div class="content-grid">
-                <section class="progress-panel">
-                    <h3>Activity Heatmap (last 7 days)</h3>
-                    <div id="heatmapRow" class="heatmap-row"></div>
-                </section>
+            <section class="progress-panel">
+                <h3>Activity Heatmap</h3>
+                <div id="heatmapRow" class="heatmap-row"></div>
+            </section>
 
+            <section class="progress-panel">
+                <h3>Course Progress</h3>
+                <div id="categoryProgress" class="ring-course-list"></div>
+            </section>
+
+            <div class="content-grid">
                 <section class="progress-panel">
                     <h3>Weekly Recap</h3>
                     <div id="weeklyRecap" class="recap-box"></div>
                 </section>
-            </div>
-            <section class="progress-panel">
-                <h3>Category Progress</h3>
-                <div id="categoryProgress" class="category-progress-list"></div>
-            </section>
-
-            <div class="content-grid">
                 <section class="progress-panel">
                     <h3>Excuse History</h3>
                     <div id="excuseHistory" class="excuse-list"></div>
                 </section>
-
-                <section class="progress-panel">
-                    <h3>Card Evolution</h3>
-                    <div id="cardEvolution" class="evolution-list"></div>
-                </section>
             </div>
+
+            <section class="progress-panel">
+                <h3>Card Evolution</h3>
+                <div id="cardEvolution" class="evolution-list"></div>
+            </section>
         </main>
     </div>
 

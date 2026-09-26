@@ -47,6 +47,14 @@ function renderProgress() {
   document.getElementById('currentStreakStat').textContent = `${user.currentStreak} days`;
   document.getElementById('bestStreakStat').textContent = `${user.longestStreak} days`;
 
+  // Hero consistency ring: completed vs total logged days
+  const totalLogged = log.length || 1;
+  const totalCompleted = log.filter(e => e.status === 'completed').length;
+  const consistencyPct = Math.round((totalCompleted / totalLogged) * 100);
+  const heroRing = document.getElementById('heroRing');
+  heroRing.style.setProperty('--pct', consistencyPct);
+  document.getElementById('heroRingPct').textContent = `${consistencyPct}%`;
+
   // Weekly bar chart: XP earned per day, last 7 days
   const days = getLastNDays(7);
   renderWeeklyChart(log, days);
@@ -79,16 +87,21 @@ function renderProgress() {
     `;
   }
 
-  // Category progress (from habits array — always current, not just this week)
+  // Category progress — rendered as circular "course" rings
   const habits = user.habits || [];
   document.getElementById('categoryProgress').innerHTML = habits.length === 0
     ? `<p class="subtext">No habits tracked yet.</p>`
     : habits.map((h) => {
       const pct = Math.min(100, Math.round((h.xp / h.xpToNextLevel) * 100));
       return `
-          <div class="category-progress-row">
-            <span class="category-progress-label">${h.icon} ${h.name} — Lv.${h.level}</span>
-            <div class="card-xp-bar-track"><div class="card-xp-bar-fill" style="width:${pct}%;"></div></div>
+          <div class="ring-course-card">
+            <div class="mini-ring" style="--pct:${pct};">
+              <div class="mini-ring-inner">${pct}%</div>
+            </div>
+            <div class="ring-course-info">
+              <div class="ring-course-name">${h.icon} ${h.name}</div>
+              <div class="ring-course-level">Level ${h.level}</div>
+            </div>
           </div>
         `;
     }).join('');

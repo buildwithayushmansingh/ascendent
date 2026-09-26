@@ -17,112 +17,115 @@
       <nav class="sidebar-nav">
         <a href="dashboard.html" class="nav-tile nav-active">
           <span class="nav-tile-icon">🏠</span>
-          <span class="nav-tile-text">
-            <span class="nav-tile-title">Dashboard</span>
-            <span class="nav-tile-desc">Home base</span>
-          </span>
+          <span class="nav-tile-text"><span class="nav-tile-title">Dashboard</span><span class="nav-tile-desc">Home
+              base</span></span>
           <span class="nav-tile-indicator"></span>
         </a>
         <a href="habits.html" class="nav-tile">
           <span class="nav-tile-icon">📋</span>
-          <span class="nav-tile-text">
-            <span class="nav-tile-title">Habits</span>
-            <span class="nav-tile-desc">Track quests</span>
-          </span>
+          <span class="nav-tile-text"><span class="nav-tile-title">Habits</span><span class="nav-tile-desc">Track
+              quests</span></span>
           <span class="nav-tile-indicator"></span>
         </a>
         <a href="achievements.html" class="nav-tile">
           <span class="nav-tile-icon">🏆</span>
-          <span class="nav-tile-text">
-            <span class="nav-tile-title">Achievements</span>
-            <span class="nav-tile-desc">Unlocked badges</span>
-          </span>
+          <span class="nav-tile-text"><span class="nav-tile-title">Achievements</span><span
+              class="nav-tile-desc">Unlocked badges</span></span>
           <span class="nav-tile-indicator"></span>
         </a>
         <a href="card.html" class="nav-tile">
           <span class="nav-tile-icon">🎴</span>
-          <span class="nav-tile-text">
-            <span class="nav-tile-title">Player Card</span>
-            <span class="nav-tile-desc">Your identity</span>
-          </span>
+          <span class="nav-tile-text"><span class="nav-tile-title">Player Card</span><span class="nav-tile-desc">Your
+              identity</span></span>
           <span class="nav-tile-indicator"></span>
         </a>
         <a href="progress.html" class="nav-tile">
           <span class="nav-tile-icon">📈</span>
-          <span class="nav-tile-text">
-            <span class="nav-tile-title">Progress</span>
-            <span class="nav-tile-desc">Analytics</span>
-          </span>
+          <span class="nav-tile-text"><span class="nav-tile-title">Progress</span><span
+              class="nav-tile-desc">Analytics</span></span>
           <span class="nav-tile-indicator"></span>
         </a>
         <a href="leaderboard.html" class="nav-tile">
           <span class="nav-tile-icon">📊</span>
-          <span class="nav-tile-text">
-            <span class="nav-tile-title">Leaderboard</span>
-            <span class="nav-tile-desc">Global ranks</span>
-          </span>
+          <span class="nav-tile-text"><span class="nav-tile-title">Leaderboard</span><span class="nav-tile-desc">Global
+              ranks</span></span>
           <span class="nav-tile-indicator"></span>
         </a>
         <a href="settings.html" class="nav-tile">
           <span class="nav-tile-icon">⚙️</span>
-          <span class="nav-tile-text">
-            <span class="nav-tile-title">Settings</span>
-            <span class="nav-tile-desc">Preferences</span>
-          </span>
+          <span class="nav-tile-text"><span class="nav-tile-title">Settings</span><span
+              class="nav-tile-desc">Preferences</span></span>
           <span class="nav-tile-indicator"></span>
         </a>
       </nav>
       <div class="sidebar-quote">"Discipline today,<br>freedom tomorrow."</div>
     </aside>
 
-    <main class="main-content">
-      <section class="dash-hero">
-        <div class="dash-hero-left">
-          <div class="dash-avatar" id="heroAvatar">?</div>
+    <main class="main-content frontier-main">
+      <div class="frontier-vignette" aria-hidden="true"></div>
+
+      <!-- Ledger header -->
+      <header class="frontier-header">
+        <div class="frontier-header-left">
+          <div class="frontier-medallion" id="heroAvatar">?</div>
           <div>
-            <h2 id="greeting">Hey there! 🔥</h2>
-            <p class="subtext">Every habit completed is a step towards your next level.</p>
+            <h2 id="greeting" class="frontier-title">Hey there!</h2>
+            <p class="frontier-subtitle">Every habit completed is a step towards your next level.</p>
           </div>
         </div>
-        <div class="dash-hero-right">
-          <div class="xp-ring">
-            <svg viewBox="0 0 80 80">
-              <circle class="ring-track" cx="40" cy="40" r="34"></circle>
-              <circle class="ring-fill" id="xpRingFill" cx="40" cy="40" r="34"></circle>
-            </svg>
-            <div class="ring-label"><span id="ringLevel">1</span><small>LVL</small></div>
+        <button id="logoutBtn" class="frontier-seal-btn">Log Out</button>
+      </header>
+
+      <!-- Central compass dial -->
+      <section class="frontier-dial-wrap">
+        <div class="frontier-dial">
+          <svg viewBox="0 0 160 160">
+            <circle class="dial-track" cx="80" cy="80" r="68"></circle>
+            <circle class="dial-fill" id="xpRingFill" cx="80" cy="80" r="68"></circle>
+            <g class="dial-ticks">
+              <line x1="80" y1="6" x2="80" y2="16"></line>
+              <line x1="80" y1="144" x2="80" y2="154"></line>
+              <line x1="6" y1="80" x2="16" y2="80"></line>
+              <line x1="144" y1="80" x2="154" y2="80"></line>
+            </g>
+          </svg>
+          <div class="dial-center">
+            <span class="dial-level" id="ringLevel">1</span>
+            <span class="dial-label">LEVEL</span>
           </div>
-          <button id="logoutBtn" class="ghost-btn">Log Out</button>
+        </div>
+        <div class="frontier-dial-stats">
+          <div class="frontier-stat-pill">
+            <span class="pill-icon">⭐</span>
+            <div>
+              <div class="pill-label">Level</div>
+              <div id="statLevel" class="pill-value">—</div>
+            </div>
+          </div>
+          <div class="frontier-stat-pill">
+            <span class="pill-icon">🔥</span>
+            <div>
+              <div class="pill-label">Streak</div>
+              <div id="statStreak" class="pill-value">—</div>
+            </div>
+          </div>
+          <div class="frontier-stat-pill">
+            <span class="pill-icon">✨</span>
+            <div>
+              <div class="pill-label">Total XP</div>
+              <div id="statXP" class="pill-value">—</div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="stat-row">
-        <div class="stat-card">
-          <span class="stat-icon stat-icon-a">⭐</span>
-          <div>
-            <div class="stat-label">Level</div>
-            <div id="statLevel" class="stat-value">—</div>
+      <div class="frontier-grid">
+        <!-- Bounty Board -->
+        <section class="frontier-card bounty-board">
+          <div class="frontier-card-header">
+            <span class="frontier-stamp">WANTED</span>
+            <h3>Today's Bounty</h3>
           </div>
-        </div>
-        <div class="stat-card">
-          <span class="stat-icon stat-icon-b">🔥</span>
-          <div>
-            <div class="stat-label">Streak</div>
-            <div id="statStreak" class="stat-value">—</div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <span class="stat-icon stat-icon-c">✨</span>
-          <div>
-            <div class="stat-label">Total XP</div>
-            <div id="statXP" class="stat-value">—</div>
-          </div>
-        </div>
-      </section>
-
-      <div class="content-grid">
-        <section class="log-activity">
-          <h3><span class="panel-icon">🎯</span> Today's Quest</h3>
           <select id="categorySelect">
             <option value="Coding">Coding</option>
             <option value="Reading">Reading</option>
@@ -144,18 +147,26 @@
           <p id="dashboardMessage" class="message"></p>
         </section>
 
-        <section class="boss-battle">
-          <h3><span class="panel-icon">⚔️</span> Boss Battle: Consistency Dragon</h3>
-          <div class="boss-hp-track">
-            <div id="bossHpFill" class="boss-hp-fill"></div>
+        <!-- Duel / Boss Battle -->
+        <section class="frontier-card duel-card">
+          <div class="frontier-card-header">
+            <span class="frontier-stamp duel-stamp">DUEL</span>
+            <h3>vs. Consistency Dragon</h3>
+          </div>
+          <div class="duel-strap-track">
+            <div id="bossHpFill" class="duel-strap-fill"></div>
           </div>
           <p id="bossHpText" class="boss-hp-text">100% HP remaining</p>
           <p class="boss-hint">Every completed habit chips away at the boss's HP.</p>
         </section>
       </div>
 
-      <section class="notes-section">
-        <h3><span class="panel-icon">📝</span> Notes</h3>
+      <!-- Journal -->
+      <section class="frontier-card journal-card">
+        <div class="frontier-card-header">
+          <span class="frontier-stamp journal-stamp">JOURNAL</span>
+          <h3>Field Notes</h3>
+        </div>
         <textarea id="notesArea" placeholder="Jot down anything useful..."></textarea>
         <button id="saveNotesBtn">Save Note</button>
         <ul id="notesList"></ul>

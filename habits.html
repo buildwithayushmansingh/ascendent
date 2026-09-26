@@ -15,87 +15,79 @@
         <aside class="sidebar">
             <div class="sidebar-brand">⚔ Ascendent</div>
             <nav class="sidebar-nav">
-                <a href="dashboard.html" class="nav-tile ">
+                <a href="dashboard.html" class="nav-tile">
                     <span class="nav-tile-icon">🏠</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Dashboard</span>
-                        <span class="nav-tile-desc">Home base</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Dashboard</span><span
+                            class="nav-tile-desc">Home base</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
                 <a href="habits.html" class="nav-tile nav-active">
                     <span class="nav-tile-icon">📋</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Habits</span>
-                        <span class="nav-tile-desc">Track quests</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Habits</span><span
+                            class="nav-tile-desc">Track quests</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
                 <a href="achievements.html" class="nav-tile">
                     <span class="nav-tile-icon">🏆</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Achievements</span>
-                        <span class="nav-tile-desc">Unlocked badges</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Achievements</span><span
+                            class="nav-tile-desc">Unlocked badges</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
                 <a href="card.html" class="nav-tile">
                     <span class="nav-tile-icon">🎴</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Player Card</span>
-                        <span class="nav-tile-desc">Your identity</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Player Card</span><span
+                            class="nav-tile-desc">Your identity</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
                 <a href="progress.html" class="nav-tile">
                     <span class="nav-tile-icon">📈</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Progress</span>
-                        <span class="nav-tile-desc">Analytics</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Progress</span><span
+                            class="nav-tile-desc">Analytics</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
                 <a href="leaderboard.html" class="nav-tile">
                     <span class="nav-tile-icon">📊</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Leaderboard</span>
-                        <span class="nav-tile-desc">Global ranks</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Leaderboard</span><span
+                            class="nav-tile-desc">Global ranks</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
-                <a href="settings.html" class="nav-tile ">
+                <a href="settings.html" class="nav-tile">
                     <span class="nav-tile-icon">⚙️</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Settings</span>
-                        <span class="nav-tile-desc">Preferences</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Settings</span><span
+                            class="nav-tile-desc">Preferences</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
             </nav>
             <div class="sidebar-quote">"Discipline today,<br>freedom tomorrow."</div>
         </aside>
 
-        <main class="main-content">
-            <header class="content-topbar">
-                <div>
-                    <h2>My Habits</h2>
-                    <p class="subtext">Track, level up, and manage every quest.</p>
+        <main class="main-content frontier-main">
+            <div class="frontier-vignette" aria-hidden="true"></div>
+
+            <header class="frontier-header">
+                <div class="frontier-header-left">
+                    <span class="frontier-stamp">LEDGER</span>
+                    <div>
+                        <h2 class="frontier-title">My Habits</h2>
+                        <p class="frontier-subtitle">Every quest logged, every bounty tracked.</p>
+                    </div>
                 </div>
                 <div style="display:flex; gap:10px;">
-                    <button id="addHabitBtn">➕ Add Habit</button>
-                    <button id="logoutBtn" class="ghost-btn">Log Out</button>
+                    <button id="addHabitBtn" class="frontier-add-btn">➕ New Bounty</button>
+                    <button id="logoutBtn" class="frontier-seal-btn">Log Out</button>
                 </div>
             </header>
 
-            <div id="habitList" class="habit-list">
-                <!-- filled in by habits.js -->
+            <div id="habitList" class="habit-list frontier-habit-list">
+                <!-- filled in by habits.js — unchanged -->
             </div>
         </main>
     </div>
 
     <!-- Complete Quest Modal -->
     <div id="completeModal" class="modal-overlay">
-        <div class="modal-box">
+        <div class="modal-box frontier-modal">
+            <span class="frontier-stamp modal-stamp">SEALED</span>
             <h3>Complete Quest</h3>
             <div id="completeModalBody"></div>
             <div class="modal-actions">
@@ -107,7 +99,8 @@
 
     <!-- Missed Activity Modal -->
     <div id="missModal" class="modal-overlay">
-        <div class="modal-box">
+        <div class="modal-box frontier-modal">
+            <span class="frontier-stamp modal-stamp duel-stamp">MISSED</span>
             <h3>Why did you miss it?</h3>
             <div id="missReasonOptions" class="reason-options">
                 <button type="button" class="reason-tile" data-reason="Busy">Busy</button>
@@ -127,7 +120,8 @@
 
     <!-- Add / Edit Habit Modal -->
     <div id="habitFormModal" class="modal-overlay">
-        <div class="modal-box">
+        <div class="modal-box frontier-modal">
+            <span class="frontier-stamp modal-stamp journal-stamp">NEW ENTRY</span>
             <h3 id="habitFormTitle">Add Habit</h3>
             <label class="field-label">Habit Name</label>
             <input type="text" id="habitNameInput" placeholder="e.g. Guitar Practice" />
