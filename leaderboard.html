@@ -15,60 +15,46 @@
         <aside class="sidebar">
             <div class="sidebar-brand">⚔ Ascendent</div>
             <nav class="sidebar-nav">
-                <a href="dashboard.html" class="nav-tile nav-active">
+                <a href="dashboard.html" class="nav-tile">
                     <span class="nav-tile-icon">🏠</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Dashboard</span>
-                        <span class="nav-tile-desc">Home base</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Dashboard</span><span
+                            class="nav-tile-desc">Home base</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
                 <a href="habits.html" class="nav-tile">
                     <span class="nav-tile-icon">📋</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Habits</span>
-                        <span class="nav-tile-desc">Track quests</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Habits</span><span
+                            class="nav-tile-desc">Track quests</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
                 <a href="achievements.html" class="nav-tile">
                     <span class="nav-tile-icon">🏆</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Achievements</span>
-                        <span class="nav-tile-desc">Unlocked badges</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Achievements</span><span
+                            class="nav-tile-desc">Unlocked badges</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
                 <a href="card.html" class="nav-tile">
                     <span class="nav-tile-icon">🎴</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Player Card</span>
-                        <span class="nav-tile-desc">Your identity</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Player Card</span><span
+                            class="nav-tile-desc">Your identity</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
                 <a href="progress.html" class="nav-tile">
                     <span class="nav-tile-icon">📈</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Progress</span>
-                        <span class="nav-tile-desc">Analytics</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Progress</span><span
+                            class="nav-tile-desc">Analytics</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
-                <a href="leaderboard.html" class="nav-tile">
+                <a href="leaderboard.html" class="nav-tile nav-active">
                     <span class="nav-tile-icon">📊</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Leaderboard</span>
-                        <span class="nav-tile-desc">Global ranks</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Leaderboard</span><span
+                            class="nav-tile-desc">Global ranks</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
                 <a href="settings.html" class="nav-tile">
                     <span class="nav-tile-icon">⚙️</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Settings</span>
-                        <span class="nav-tile-desc">Preferences</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Settings</span><span
+                            class="nav-tile-desc">Preferences</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
             </nav>
@@ -90,9 +76,11 @@
                 <button class="lb-tab" data-tab="squad">⚔️ Squad</button>
             </div>
 
-            <div id="podium" class="podium"></div>
+            <!-- Rank-1 spotlight -->
+            <section class="lb-spotlight" id="lbSpotlight"></section>
 
-            <div id="leaderboardList" class="leaderboard-list"></div>
+            <!-- Rest of the ranked list -->
+            <div id="leaderboardList" class="lb-rank-list"></div>
         </main>
     </div>
 

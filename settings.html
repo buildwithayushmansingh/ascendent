@@ -15,201 +15,209 @@
         <aside class="sidebar">
             <div class="sidebar-brand">⚔ Ascendent</div>
             <nav class="sidebar-nav">
-                <a href="dashboard.html" class="nav-tile nav-active">
+                <a href="dashboard.html" class="nav-tile">
                     <span class="nav-tile-icon">🏠</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Dashboard</span>
-                        <span class="nav-tile-desc">Home base</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Dashboard</span><span
+                            class="nav-tile-desc">Home base</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
                 <a href="habits.html" class="nav-tile">
                     <span class="nav-tile-icon">📋</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Habits</span>
-                        <span class="nav-tile-desc">Track quests</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Habits</span><span
+                            class="nav-tile-desc">Track quests</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
                 <a href="achievements.html" class="nav-tile">
                     <span class="nav-tile-icon">🏆</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Achievements</span>
-                        <span class="nav-tile-desc">Unlocked badges</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Achievements</span><span
+                            class="nav-tile-desc">Unlocked badges</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
                 <a href="card.html" class="nav-tile">
                     <span class="nav-tile-icon">🎴</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Player Card</span>
-                        <span class="nav-tile-desc">Your identity</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Player Card</span><span
+                            class="nav-tile-desc">Your identity</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
                 <a href="progress.html" class="nav-tile">
                     <span class="nav-tile-icon">📈</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Progress</span>
-                        <span class="nav-tile-desc">Analytics</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Progress</span><span
+                            class="nav-tile-desc">Analytics</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
                 <a href="leaderboard.html" class="nav-tile">
                     <span class="nav-tile-icon">📊</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Leaderboard</span>
-                        <span class="nav-tile-desc">Global ranks</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Leaderboard</span><span
+                            class="nav-tile-desc">Global ranks</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
-                <a href="settings.html" class="nav-tile">
+                <a href="settings.html" class="nav-tile nav-active">
                     <span class="nav-tile-icon">⚙️</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Settings</span>
-                        <span class="nav-tile-desc">Preferences</span>
-                    </span>
+                    <span class="nav-tile-text"><span class="nav-tile-title">Settings</span><span
+                            class="nav-tile-desc">Preferences</span></span>
                     <span class="nav-tile-indicator"></span>
                 </a>
             </nav>
             <div class="sidebar-quote">"Discipline today,<br>freedom tomorrow."</div>
         </aside>
 
-        <main class="main-content">
-            <header class="content-topbar">
-                <div>
-                    <h2>Settings</h2>
-                    <p class="subtext">Customize your experience.</p>
+        <main class="main-content settings-main">
+            <!-- Profile hero -->
+            <section class="settings-hero">
+                <div class="settings-hero-avatar" id="settingsHeroAvatar">?</div>
+                <div class="settings-hero-info">
+                    <div class="settings-hero-name" id="settingsHeroName">Player</div>
+                    <div class="settings-hero-sub">Ascendent Command Deck</div>
                 </div>
                 <button id="logoutBtn" class="ghost-btn">Log Out</button>
-            </header>
-
-            <!-- PROFILE -->
-            <section class="settings-panel">
-                <h3>👤 Profile</h3>
-                <label class="field-label">Avatar Initials</label>
-                <input type="text" id="settingsAvatar" maxlength="2" />
-                <label class="field-label">Display Name</label>
-                <input type="text" id="settingsDisplayName" />
-                <label class="field-label">Username</label>
-                <input type="text" id="settingsUsername" disabled />
-                <button id="saveProfileBtn" class="primary-wide-btn">Save Profile</button>
             </section>
 
-            <!-- APPEARANCE -->
-            <section class="settings-panel">
-                <h3>🎨 Appearance</h3>
-                <label class="field-label">Accent Color</label>
-                <div class="accent-swatches" id="accentSwatches">
-                    <button type="button" class="swatch" data-accent="#e8a33d" style="background:#e8a33d;"></button>
-                    <button type="button" class="swatch" data-accent="#6bcf9d" style="background:#6bcf9d;"></button>
-                    <button type="button" class="swatch" data-accent="#7fb8ff" style="background:#7fb8ff;"></button>
-                    <button type="button" class="swatch" data-accent="#ff6b9d" style="background:#ff6b9d;"></button>
-                </div>
-
-                <label class="field-label" style="margin-top:16px;">Theme</label>
-                <div class="theme-options" id="themeOptions">
-                    <button type="button" class="theme-card" data-theme-value="crimson">
-                        <span class="theme-swatch-row">
-                            <span class="swatch-dot" style="background:#e11d48;"></span>
-                            <span class="swatch-dot" style="background:#00e0a4;"></span>
-                        </span>
-                        <span class="theme-card-name">Crimson Circuit</span>
+            <div class="settings-deck">
+                <!-- Category rail -->
+                <nav class="settings-rail" id="settingsRail">
+                    <button class="rail-item active" data-panel="profile">
+                        <span class="rail-icon">👤</span> Profile
                     </button>
-                    <button type="button" class="theme-card" data-theme-value="jade">
-                        <span class="theme-swatch-row">
-                            <span class="swatch-dot" style="background:#00b368;"></span>
-                            <span class="swatch-dot" style="background:#5cffb0;"></span>
-                        </span>
-                        <span class="theme-card-name">Jade Protocol</span>
+                    <button class="rail-item" data-panel="appearance">
+                        <span class="rail-icon">🎨</span> Appearance
                     </button>
-                    <button type="button" class="theme-card" data-theme-value="ember">
-                        <span class="theme-swatch-row">
-                            <span class="swatch-dot" style="background:#ff6a00;"></span>
-                            <span class="swatch-dot" style="background:#ff2d78;"></span>
-                        </span>
-                        <span class="theme-card-name">Ember Forge</span>
+                    <button class="rail-item" data-panel="sound">
+                        <span class="rail-icon">🔊</span> Sound
                     </button>
-                </div>
-            </section>
+                    <button class="rail-item" data-panel="animations">
+                        <span class="rail-icon">✨</span> Animations
+                    </button>
+                    <button class="rail-item" data-panel="notifications">
+                        <span class="rail-icon">🔔</span> Notifications
+                    </button>
+                    <button class="rail-item rail-danger" data-panel="account">
+                        <span class="rail-icon">🔐</span> Account
+                    </button>
+                </nav>
 
-            <!-- SOUND -->
-            <section class="settings-panel">
-                <div class="settings-row">
-                    <div>
-                        <h3 style="margin-bottom:2px;">🔊 Reward Sounds</h3>
-                        <p class="subtext" style="margin:0;">Play a sound on XP gain and level up.</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="soundToggle" />
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-                <div class="settings-row">
-                    <div>
-                        <h3 style="margin-bottom:2px;">🏆 Achievement Sounds</h3>
-                        <p class="subtext" style="margin:0;">Play a sound when a badge unlocks.</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="achievementSoundToggle" />
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-            </section>
+                <!-- Panel viewport -->
+                <div class="settings-viewport">
+                    <section class="settings-panel-v2 active" data-panel-content="profile">
+                        <h3>Profile</h3>
+                        <p class="panel-hint">How you appear across Ascendent.</p>
+                        <label class="field-label">Avatar Initials</label>
+                        <input type="text" id="settingsAvatar" maxlength="2" />
+                        <label class="field-label">Display Name</label>
+                        <input type="text" id="settingsDisplayName" />
+                        <label class="field-label">Username</label>
+                        <input type="text" id="settingsUsername" disabled />
+                        <button id="saveProfileBtn" class="primary-wide-btn">Save Profile</button>
+                    </section>
 
-            <!-- ANIMATIONS -->
-            <section class="settings-panel">
-                <div class="settings-row">
-                    <div>
-                        <h3 style="margin-bottom:2px;">✨ Animations</h3>
-                        <p class="subtext" style="margin:0;">Level-up bursts, floating XP, tier upgrade overlays.</p>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="animationsToggle" checked />
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-            </section>
+                    <section class="settings-panel-v2" data-panel-content="appearance">
+                        <h3>Appearance</h3>
+                        <p class="panel-hint">Pick an accent and a visual theme.</p>
+                        <label class="field-label">Accent Color</label>
+                        <div class="accent-swatches" id="accentSwatches">
+                            <button type="button" class="swatch" data-accent="#e8a33d"
+                                style="background:#e8a33d;"></button>
+                            <button type="button" class="swatch" data-accent="#6bcf9d"
+                                style="background:#6bcf9d;"></button>
+                            <button type="button" class="swatch" data-accent="#7fb8ff"
+                                style="background:#7fb8ff;"></button>
+                            <button type="button" class="swatch" data-accent="#ff6b9d"
+                                style="background:#ff6b9d;"></button>
+                        </div>
+                        <label class="field-label" style="margin-top:16px;">Theme</label>
+                        <div class="theme-options" id="themeOptions">
+                            <button type="button" class="theme-card" data-theme-value="neon">
+                                <span class="theme-swatch-row"><span class="swatch-dot"
+                                        style="background:#8b5cf6;"></span><span class="swatch-dot"
+                                        style="background:#22d3ee;"></span></span>
+                                <span class="theme-card-name">Arcane Neon</span>
+                            </button>
+                            <button type="button" class="theme-card" data-theme-value="crimson">
+                                <span class="theme-swatch-row"><span class="swatch-dot"
+                                        style="background:#e11d48;"></span><span class="swatch-dot"
+                                        style="background:#00e0a4;"></span></span>
+                                <span class="theme-card-name">Crimson Circuit</span>
+                            </button>
+                            <button type="button" class="theme-card" data-theme-value="jade">
+                                <span class="theme-swatch-row"><span class="swatch-dot"
+                                        style="background:#00b368;"></span><span class="swatch-dot"
+                                        style="background:#5cffb0;"></span></span>
+                                <span class="theme-card-name">Jade Protocol</span>
+                            </button>
+                        </div>
+                    </section>
 
-            <!-- NOTIFICATIONS -->
-            <section class="settings-panel">
-                <div class="settings-row">
-                    <div>
-                        <h3 style="margin-bottom:2px;">📅 Daily Quest Reminder</h3>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="dailyQuestToggle" checked />
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-                <div class="settings-row">
-                    <div>
-                        <h3 style="margin-bottom:2px;">🔥 Streak Reminder</h3>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="streakReminderToggle" checked />
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-                <div class="settings-row">
-                    <div>
-                        <h3 style="margin-bottom:2px;">🏆 Achievement Notifications</h3>
-                    </div>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="achievementNotifToggle" checked />
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-            </section>
+                    <section class="settings-panel-v2" data-panel-content="sound">
+                        <h3>Sound</h3>
+                        <p class="panel-hint">Audio feedback for rewards and milestones.</p>
+                        <div class="settings-row">
+                            <div>
+                                <h4>Reward Sounds</h4>
+                                <p class="subtext">Play a sound on XP gain and level up.</p>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="soundToggle" /><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+                        <div class="settings-row">
+                            <div>
+                                <h4>Achievement Sounds</h4>
+                                <p class="subtext">Play a sound when a badge unlocks.</p>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="achievementSoundToggle" /><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+                    </section>
 
-            <!-- ACCOUNT -->
-            <section class="settings-panel">
-                <h3>🔐 Account</h3>
-                <button id="settingsLogoutBtn" class="ghost-btn" style="width:100%; margin-bottom:8px;">Log Out</button>
-                <button id="changePasswordBtn" class="ghost-btn" style="width:100%; margin-bottom:8px;">Change
-                    Password</button>
-                <button id="deleteAccountBtn" class="ghost-btn danger-text" style="width:100%;">Delete Account</button>
-            </section>
+                    <section class="settings-panel-v2" data-panel-content="animations">
+                        <h3>Animations</h3>
+                        <p class="panel-hint">Control motion across the app.</p>
+                        <div class="settings-row">
+                            <div>
+                                <h4>Reward Animations</h4>
+                                <p class="subtext">Level-up bursts, floating XP, tier upgrade overlays.</p>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="animationsToggle" checked /><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+                    </section>
+
+                    <section class="settings-panel-v2" data-panel-content="notifications">
+                        <h3>Notifications</h3>
+                        <p class="panel-hint">Stay on top of your streak.</p>
+                        <div class="settings-row">
+                            <div>
+                                <h4>Daily Quest Reminder</h4>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="dailyQuestToggle" checked /><span
+                                    class="toggle-slider"></span></label>
+                        </div>
+                        <div class="settings-row">
+                            <div>
+                                <h4>Streak Reminder</h4>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="streakReminderToggle"
+                                    checked /><span class="toggle-slider"></span></label>
+                        </div>
+                        <div class="settings-row">
+                            <div>
+                                <h4>Achievement Notifications</h4>
+                            </div>
+                            <label class="toggle-switch"><input type="checkbox" id="achievementNotifToggle"
+                                    checked /><span class="toggle-slider"></span></label>
+                        </div>
+                    </section>
+
+                    <section class="settings-panel-v2" data-panel-content="account">
+                        <h3>Account</h3>
+                        <p class="panel-hint">Session and account controls.</p>
+                        <button id="settingsLogoutBtn" class="ghost-btn" style="width:100%; margin-bottom:8px;">Log
+                            Out</button>
+                        <button id="changePasswordBtn" class="ghost-btn" style="width:100%; margin-bottom:8px;">Change
+                            Password</button>
+                        <button id="deleteAccountBtn" class="ghost-btn danger-text" style="width:100%;">Delete
+                            Account</button>
+                    </section>
+                </div>
+            </div>
 
             <p id="settingsMessage" class="message"></p>
         </main>

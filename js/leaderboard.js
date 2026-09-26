@@ -1,41 +1,56 @@
-// leaderboard.js — Phase 6: Tabs, podium, rankings, current-player highlight
+// leaderboard.js — Gamified avatar+podium leaderboard (v2 layout)
+// Data source unchanged: getLeaderboardData() from leaderboard-data.js
 
 let activeTab = 'global';
 
+function levelBadgeColor(level) {
+  if (level >= 20) return 'lb-badge-gold';
+  if (level >= 12) return 'lb-badge-silver';
+  return 'lb-badge-bronze';
+}
+
 function renderLeaderboard() {
   const data = getLeaderboardData(activeTab);
-  const top3 = data.slice(0, 3);
-  const rest = data.slice(3);
+  const champion = data[0];
+  const rest = data.slice(1);
 
-  // Podium — order visually as 2nd, 1st, 3rd
-  const podiumOrder = [top3[1], top3[0], top3[2]].filter(Boolean);
-  const podiumRankMap = [2, 1, 3];
+  // Spotlight card for rank #1
+  document.getElementById('lbSpotlight').innerHTML = `
+    <div class="lb-crown">👑</div>
+    <div class="lb-spotlight-avatar ${champion.isCurrentPlayer ? 'is-you' : ''}">
+      ${champion.name.slice(0, 2).toUpperCase()}
+    </div>
+    <div class="lb-spotlight-name">${champion.name}${champion.isCurrentPlayer ? ' <span class="you-tag">YOU</span>' : ''}</div>
+    <div class="lb-spotlight-title">Rank #1 · Level ${champion.level}</div>
+    <div class="lb-spotlight-stats">
+      <div><span>${champion.xp.toLocaleString()}</span><small>XP</small></div>
+      <div><span>🔥 ${champion.streak}</span><small>Streak</small></div>
+      <div><span>${champion.consistency}%</span><small>Consistency</small></div>
+    </div>
+  `;
 
-  document.getElementById('podium').innerHTML = podiumOrder.map((player, i) => {
-    if (!player) return '';
-    const rank = podiumRankMap[i];
+  document.getElementById('leaderboardList').innerHTML = rest.map((player, i) => {
+    const rank = i + 2;
+    const xpForRing = Math.min(100, Math.round((player.consistency)));
     return `
-      <div class="podium-spot podium-rank-${rank} ${player.isCurrentPlayer ? 'is-you' : ''}">
-        <div class="podium-medal">${rank === 1 ? '🥇' : rank === 2 ? '🥈' : '🥉'}</div>
-        <div class="podium-avatar">${player.name.slice(0, 2).toUpperCase()}</div>
-        <div class="podium-name">${player.name}${player.isCurrentPlayer ? ' (You)' : ''}</div>
-        <div class="podium-level">Lv.${player.level}</div>
-        <div class="podium-pillar"></div>
+      <div class="lb-row-v2 ${player.isCurrentPlayer ? 'is-you' : ''}" style="animation-delay:${i * 60}ms;">
+        <span class="lb-rank-num">#${rank}</span>
+        <div class="lb-avatar-v2">${player.name.slice(0, 2).toUpperCase()}</div>
+        <div class="lb-row-info">
+          <div class="lb-row-name">${player.name}${player.isCurrentPlayer ? ' <span class="you-tag">YOU</span>' : ''}</div>
+          <div class="lb-row-meta">
+            <span class="lb-level-badge ${levelBadgeColor(player.level)}">Lv.${player.level}</span>
+            <span class="lb-streak-chip">🔥 ${player.streak}d</span>
+          </div>
+        </div>
+        <div class="lb-row-bar-wrap">
+          <div class="lb-row-bar-track"><div class="lb-row-bar-fill" style="width:${xpForRing}%;"></div></div>
+          <span class="lb-row-bar-label">${player.consistency}%</span>
+        </div>
+        <span class="lb-row-xp">${player.xp.toLocaleString()} XP</span>
       </div>
     `;
   }).join('');
-
-  document.getElementById('leaderboardList').innerHTML = rest.map((player, i) => `
-    <div class="lb-row ${player.isCurrentPlayer ? 'is-you' : ''}">
-      <span class="lb-rank">#${i + 4}</span>
-      <span class="lb-avatar">${player.name.slice(0, 2).toUpperCase()}</span>
-      <span class="lb-name">${player.name}${player.isCurrentPlayer ? ' <span class="you-tag">YOU</span>' : ''}</span>
-      <span class="lb-level">Lv.${player.level}</span>
-      <span class="lb-xp">${player.xp.toLocaleString()} XP</span>
-      <span class="lb-streak">🔥 ${player.streak}</span>
-      <span class="lb-consistency">${player.consistency}%</span>
-    </div>
-  `).join('');
 }
 
 document.querySelectorAll('.lb-tab').forEach((tab) => {

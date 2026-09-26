@@ -132,3 +132,16 @@ document.querySelectorAll('.theme-card').forEach((card) => {
         showToast(`${themeNames[theme]} theme activated`);
     });
 });
+// ---- Settings rail tab switching (new "Command Deck" layout) ----
+document.querySelectorAll('.rail-item').forEach((btn) => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.rail-item').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.settings-panel-v2').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelector(`[data-panel-content="${btn.dataset.panel}"]`).classList.add('active');
+    });
+});
+
+// ---- Hero banner (name + initials) ----
+document.getElementById('settingsHeroName').textContent = user.username;
+document.getElementById('settingsHeroAvatar').textContent = (user.username || '??').slice(0, 2).toUpperCase();
