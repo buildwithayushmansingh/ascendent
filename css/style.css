@@ -3870,3 +3870,141 @@ to {
     width: 100%;
   }
 }
+
+/* ===== Achievements v2 — fintech badge-ring style ===== */
+.ach-hero {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: linear-gradient(160deg, var(--surface) 0%, var(--surface-2) 100%);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1.6rem 1.8rem;
+  margin-bottom: 20px;
+}
+
+.ach-hero-ring {
+  --pct: 0;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: conic-gradient(var(--accent-bright) calc(var(--pct) * 1%), var(--bg-deep) 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.6s ease;
+}
+
+.ach-hero-inner {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: var(--bg-deep);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ach-hero-inner span {
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.ach-hero-inner small {
+  font-size: 0.58rem;
+  color: var(--text-secondary);
+}
+
+.ach-hero-text h3 {
+  margin: 0 0 4px;
+  color: var(--accent-bright);
+}
+
+.ach-filter-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.ach-tab {
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 7px 16px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  box-shadow: none;
+}
+
+.ach-tab.active {
+  background: color-mix(in srgb, var(--accent-bright) 20%, transparent);
+  color: var(--accent-bright);
+  border-color: var(--accent-bright);
+}
+
+.achievement-grid-v2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.ach-badge-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 14px;
+  text-align: center;
+}
+
+.ach-badge-card.locked {
+  opacity: 0.5;
+}
+
+.ach-badge-ring {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--border);
+}
+
+.ach-badge-card.unlocked .ach-badge-ring {
+  border-color: var(--accent-bright);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent-bright) 35%, transparent);
+}
+
+.ach-badge-icon {
+  font-size: 26px;
+}
+
+.ach-badge-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 3px;
+}
+
+.ach-badge-desc {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.ach-badge-pill {
+  display: inline-block;
+  font-size: 0.65rem;
+  background: color-mix(in srgb, var(--accent-bright) 18%, transparent);
+  color: var(--accent-bright);
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.ach-badge-pill.locked-pill {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-secondary);
+}

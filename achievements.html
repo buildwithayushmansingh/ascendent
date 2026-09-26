@@ -15,62 +15,29 @@
         <aside class="sidebar">
             <div class="sidebar-brand">⚔ Ascendent</div>
             <nav class="sidebar-nav">
-                <a href="dashboard.html" class="nav-tile">
-                    <span class="nav-tile-icon">🏠</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Dashboard</span>
-                        <span class="nav-tile-desc">Home base</span>
-                    </span>
-                    <span class="nav-tile-indicator"></span>
-                </a>
-                <a href="habits.html" class="nav-tile">
-                    <span class="nav-tile-icon">📋</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Habits</span>
-                        <span class="nav-tile-desc">Track quests</span>
-                    </span>
-                    <span class="nav-tile-indicator"></span>
-                </a>
-                <a href="achievements.html" class="nav-tile nav-active">
-                    <span class="nav-tile-icon">🏆</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Achievements</span>
-                        <span class="nav-tile-desc">Unlocked badges</span>
-                    </span>
-                    <span class="nav-tile-indicator"></span>
-                </a>
-                <a href="card.html" class="nav-tile">
-                    <span class="nav-tile-icon">🎴</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Player Card</span>
-                        <span class="nav-tile-desc">Your identity</span>
-                    </span>
-                    <span class="nav-tile-indicator"></span>
-                </a>
-                <a href="progress.html" class="nav-tile">
-                    <span class="nav-tile-icon">📈</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Progress</span>
-                        <span class="nav-tile-desc">Analytics</span>
-                    </span>
-                    <span class="nav-tile-indicator"></span>
-                </a>
-                <a href="leaderboard.html" class="nav-tile">
-                    <span class="nav-tile-icon">📊</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Leaderboard</span>
-                        <span class="nav-tile-desc">Global ranks</span>
-                    </span>
-                    <span class="nav-tile-indicator"></span>
-                </a>
-                <a href="settings.html" class="nav-tile">
-                    <span class="nav-tile-icon">⚙️</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Settings</span>
-                        <span class="nav-tile-desc">Preferences</span>
-                    </span>
-                    <span class="nav-tile-indicator"></span>
-                </a>
+                <a href="dashboard.html" class="nav-tile"><span class="nav-tile-icon">🏠</span><span
+                        class="nav-tile-text"><span class="nav-tile-title">Dashboard</span><span
+                            class="nav-tile-desc">Home base</span></span><span class="nav-tile-indicator"></span></a>
+                <a href="habits.html" class="nav-tile"><span class="nav-tile-icon">📋</span><span
+                        class="nav-tile-text"><span class="nav-tile-title">Habits</span><span
+                            class="nav-tile-desc">Track quests</span></span><span class="nav-tile-indicator"></span></a>
+                <a href="achievements.html" class="nav-tile nav-active"><span class="nav-tile-icon">🏆</span><span
+                        class="nav-tile-text"><span class="nav-tile-title">Achievements</span><span
+                            class="nav-tile-desc">Unlocked badges</span></span><span
+                        class="nav-tile-indicator"></span></a>
+                <a href="card.html" class="nav-tile"><span class="nav-tile-icon">🎴</span><span
+                        class="nav-tile-text"><span class="nav-tile-title">Player Card</span><span
+                            class="nav-tile-desc">Your identity</span></span><span
+                        class="nav-tile-indicator"></span></a>
+                <a href="progress.html" class="nav-tile"><span class="nav-tile-icon">📈</span><span
+                        class="nav-tile-text"><span class="nav-tile-title">Progress</span><span
+                            class="nav-tile-desc">Analytics</span></span><span class="nav-tile-indicator"></span></a>
+                <a href="leaderboard.html" class="nav-tile"><span class="nav-tile-icon">📊</span><span
+                        class="nav-tile-text"><span class="nav-tile-title">Leaderboard</span><span
+                            class="nav-tile-desc">Global ranks</span></span><span class="nav-tile-indicator"></span></a>
+                <a href="settings.html" class="nav-tile"><span class="nav-tile-icon">⚙️</span><span
+                        class="nav-tile-text"><span class="nav-tile-title">Settings</span><span
+                            class="nav-tile-desc">Preferences</span></span><span class="nav-tile-indicator"></span></a>
             </nav>
             <div class="sidebar-quote">"Discipline today,<br>freedom tomorrow."</div>
         </aside>
@@ -84,7 +51,27 @@
                 <button id="logoutBtn" class="ghost-btn">Log Out</button>
             </header>
 
-            <div id="achievementGrid" class="achievement-grid"></div>
+            <!-- Achievement level hero -->
+            <section class="ach-hero">
+                <div class="ach-hero-ring" id="achHeroRing">
+                    <div class="ach-hero-inner">
+                        <span id="achHeroCount">0/0</span>
+                        <small>Unlocked</small>
+                    </div>
+                </div>
+                <div class="ach-hero-text">
+                    <h3>Achievement Progress</h3>
+                    <p class="subtext">Every badge tells part of your story.</p>
+                </div>
+            </section>
+
+            <div class="ach-filter-tabs">
+                <button class="ach-tab active" data-filter="all">All</button>
+                <button class="ach-tab" data-filter="unlocked">Unlocked</button>
+                <button class="ach-tab" data-filter="locked">Locked</button>
+            </div>
+
+            <div id="achievementGrid" class="achievement-grid-v2"></div>
         </main>
     </div>
 
@@ -93,30 +80,56 @@
     <script src="js/demo-data.js"></script>
     <script src="js/rewards.js"></script>
     <script src="js/achievements.js"></script>
+    <script src="js/sidebar-tilt.js"></script>
     <script>
+        let achFilter = 'all';
+
         function renderAchievements() {
             const user = getDemoUser();
-            checkAchievements(user); // catch any newly-met conditions on page load too
-            const stats = getAchievementStats(user);
+            checkAchievements(user);
 
-            document.getElementById('achievementGrid').innerHTML = ACHIEVEMENT_LIST.map((ach) => {
+            const total = ACHIEVEMENT_LIST.length;
+            const unlockedCount = user.unlockedAchievements.length;
+            const pct = Math.round((unlockedCount / total) * 100);
+
+            document.getElementById('achHeroRing').style.setProperty('--pct', pct);
+            document.getElementById('achHeroCount').textContent = `${unlockedCount}/${total}`;
+
+            const visible = ACHIEVEMENT_LIST.filter((ach) => {
+                const unlocked = user.unlockedAchievements.includes(ach.id);
+                if (achFilter === 'unlocked') return unlocked;
+                if (achFilter === 'locked') return !unlocked;
+                return true;
+            });
+
+            document.getElementById('achievementGrid').innerHTML = visible.map((ach) => {
                 const unlocked = user.unlockedAchievements.includes(ach.id);
                 return `
-          <div class="achievement-card ${unlocked ? 'unlocked' : 'locked'}">
-            <div class="achievement-icon">${unlocked ? ach.icon : '🔒'}</div>
-            <div class="achievement-name">${ach.name}</div>
-            <div class="achievement-desc">${ach.description}</div>
-            ${unlocked ? '<div class="achievement-badge">Unlocked</div>' : '<div class="achievement-badge locked-badge">Locked</div>'}
+          <div class="ach-badge-card ${unlocked ? 'unlocked' : 'locked'}">
+            <div class="ach-badge-ring">
+              <div class="ach-badge-icon">${unlocked ? ach.icon : '🔒'}</div>
+            </div>
+            <div class="ach-badge-name">${ach.name}</div>
+            <div class="ach-badge-desc">${ach.description}</div>
+            <div class="ach-badge-pill ${unlocked ? '' : 'locked-pill'}">${unlocked ? 'Unlocked' : 'Locked'}</div>
           </div>
         `;
             }).join('');
         }
 
+        document.querySelectorAll('.ach-tab').forEach((tab) => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.ach-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                achFilter = tab.dataset.filter;
+                renderAchievements();
+            });
+        });
+
         document.getElementById('logoutBtn').addEventListener('click', logoutUser);
 
         renderAchievements();
     </script>
-    <script src="js/sidebar-tilt.js"></script>
 </body>
 
 </html>
