@@ -5,7 +5,7 @@
     <script src="js/theme.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ascendent — Progress</title>
+    <title>Ascendent — Calendar</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -21,7 +21,7 @@
                 <a href="habits.html" class="nav-tile"><span class="nav-tile-icon">📋</span><span
                         class="nav-tile-text"><span class="nav-tile-title">Habits</span><span
                             class="nav-tile-desc">Track quests</span></span><span class="nav-tile-indicator"></span></a>
-                <a href="calendar.html" class="nav-tile"><span class="nav-tile-icon">📅</span><span
+                <a href="calendar.html" class="nav-tile nav-active"><span class="nav-tile-icon">📅</span><span
                         class="nav-tile-text"><span class="nav-tile-title">Calendar</span><span
                             class="nav-tile-desc">Daily history</span></span><span
                         class="nav-tile-indicator"></span></a>
@@ -33,7 +33,7 @@
                         class="nav-tile-text"><span class="nav-tile-title">Player Card</span><span
                             class="nav-tile-desc">Your identity</span></span><span
                         class="nav-tile-indicator"></span></a>
-                <a href="progress.html" class="nav-tile nav-active"><span class="nav-tile-icon">📈</span><span
+                <a href="progress.html" class="nav-tile"><span class="nav-tile-icon">📈</span><span
                         class="nav-tile-text"><span class="nav-tile-title">Progress</span><span
                             class="nav-tile-desc">Analytics</span></span><span class="nav-tile-indicator"></span></a>
                 <a href="leaderboard.html" class="nav-tile"><span class="nav-tile-icon">📊</span><span
@@ -49,77 +49,43 @@
         <main class="main-content">
             <header class="content-topbar">
                 <div>
-                    <h2>Progress</h2>
-                    <p class="subtext">Your consistency, visualized.</p>
+                    <h2>Calendar</h2>
+                    <p class="subtext">Your entire consistency history, day by day.</p>
                 </div>
                 <button id="logoutBtn" class="ghost-btn">Log Out</button>
             </header>
 
-            <!-- Hero ring -->
-            <section class="progress-hero">
-                <div class="progress-hero-ring" id="heroRing">
-                    <div class="progress-hero-inner">
-                        <span id="heroRingPct">0%</span>
-                        <small>Consistency</small>
-                    </div>
-                </div>
-                <div class="progress-hero-stats">
-                    <div class="hero-stat-item"><span class="hero-stat-icon">✨</span>
-                        <div>
-                            <div class="hero-stat-label">Weekly XP</div>
-                            <div id="weeklyXPStat" class="hero-stat-value">0</div>
-                        </div>
-                    </div>
-                    <div class="hero-stat-item"><span class="hero-stat-icon">🔥</span>
-                        <div>
-                            <div class="hero-stat-label">Current Streak</div>
-                            <div id="currentStreakStat" class="hero-stat-value">0</div>
-                        </div>
-                    </div>
-                    <div class="hero-stat-item"><span class="hero-stat-icon">🏔️</span>
-                        <div>
-                            <div class="hero-stat-label">Best Streak</div>
-                            <div id="bestStreakStat" class="hero-stat-value">0</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <!-- Monthly summary -->
+            <section class="cal-summary" id="calSummary"></section>
 
-            <section class="progress-panel">
-                <h3>Activity — last 7 days (XP)</h3>
-                <div id="weeklyChart" class="weekly-chart"></div>
-            </section>
-
-            <section class="progress-panel">
-                <h3>Activity Heatmap</h3>
-                <div id="heatmapRow" class="heatmap-row"></div>
-            </section>
-
-            <section class="progress-panel">
-                <h3>Course Progress</h3>
-                <div id="categoryProgress" class="ring-course-list"></div>
-            </section>
-
-            <div class="content-grid">
-                <section class="progress-panel">
-                    <h3>Weekly Recap</h3>
-                    <div id="weeklyRecap" class="recap-box"></div>
+            <div class="cal-layout">
+                <!-- Calendar -->
+                <section class="cal-panel">
+                    <div class="cal-header">
+                        <button id="calPrevBtn" class="cal-nav-btn">←</button>
+                        <h3 id="calMonthLabel">Month Year</h3>
+                        <button id="calNextBtn" class="cal-nav-btn">→</button>
+                        <button id="calTodayBtn" class="cal-today-btn">Today</button>
+                    </div>
+                    <div class="cal-weekdays">
+                        <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                    </div>
+                    <div id="calGrid" class="cal-grid"></div>
                 </section>
-                <section class="progress-panel">
-                    <h3>Excuse History</h3>
-                    <div id="excuseHistory" class="excuse-list"></div>
+
+                <!-- Daily status panel -->
+                <section class="cal-daily-panel" id="calDailyPanel">
+                    <div class="cal-daily-empty">
+                        <div class="cal-daily-empty-icon">📅</div>
+                        <p>Click a date to see what happened that day.</p>
+                    </div>
                 </section>
             </div>
-
-            <section class="progress-panel">
-                <h3>Card Evolution</h3>
-                <div id="cardEvolution" class="evolution-list"></div>
-            </section>
         </main>
     </div>
 
     <script src="js/demo-data.js"></script>
-    <script src="js/progress.js"></script>
+    <script src="js/calendar.js"></script>
     <script src="js/sidebar-tilt.js"></script>
 </body>
 

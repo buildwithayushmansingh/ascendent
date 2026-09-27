@@ -17,13 +17,67 @@ function getSettings() {
     };
 }
 
+function hexToRgb(hex) {
+    if (!hex || !/^#[0-9A-Fa-f]{6}$/.test(hex)) {
+        return null;
+    }
+
+    return {
+        r: parseInt(hex.slice(1, 3), 16),
+        g: parseInt(hex.slice(3, 5), 16),
+        b: parseInt(hex.slice(5, 7), 16)
+    };
+}
+
+function rgbToHex(r, g, b) {
+    return '#' + [r, g, b]
+        .map(value => Number(value).toString(16).padStart(2, '0'))
+        .join('')
+        .toUpperCase();
+}
+
+function mixHex(hex, target, amount) {
+    const a = hexToRgb(hex);
+    const b = hexToRgb(target);
+
+    if (!a || !b) return hex;
+
+    const r = Math.round(a.r + (b.r - a.r) * amount);
+    const g = Math.round(a.g + (b.g - a.g) * amount);
+    const bVal = Math.round(a.b + (b.b - a.b) * amount);
+
+    return rgbToHex(r, g, bVal);
+}
+
+function applyAccent(accent) {
+    const root = document.documentElement;
+
+    // NONE = neutral grayscale accent
+    if (!accent || accent === 'none') {
+        root.dataset.accent = 'none';
+
+        root.style.setProperty('--accent-bright', '#9a9a9a');
+        root.style.setProperty('--accent', '#555555');
+        root.style.setProperty('--accent-cyan', '#b5b5b5');
+        root.style.setProperty('--border-bright', '#707070');
+
+        return;
+    }
+
+    const rgb = hexToRgb(accent);
+    if (!rgb) return;
+
+    root.dataset.accent = 'custom';
+
+    root.style.setProperty('--accent-bright', accent);
+    root.style.setProperty('--accent', mixHex(accent, '#000000', 0.18));
+    root.style.setProperty('--accent-cyan', mixHex(accent, '#ffffff', 0.25));
+    root.style.setProperty('--border-bright', mixHex(accent, '#ffffff', 0.08));
+}
+
 function saveSettings(settings) {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
     applyAccent(settings.accent);
-}
-
-function applyAccent(hex) {
-    document.documentElement.style.setProperty('--accent-bright', hex);
 }
 
 // ---- Load current values into the form ----
@@ -41,20 +95,128 @@ document.getElementById('dailyQuestToggle').checked = settings.dailyQuestReminde
 document.getElementById('streakReminderToggle').checked = settings.streakReminder;
 document.getElementById('achievementNotifToggle').checked = settings.achievementNotif;
 
-document.querySelectorAll('.swatch').forEach((sw) => {
-    sw.classList.toggle('selected', sw.dataset.accent === settings.accent);
+function updateAccentSelection(accent) {
+    document.querySelectorAll('.swatch').forEach((sw) => {
+        sw.classList.toggle(
+            'selected',
+            sw.dataset.accent === accent
+        );
+    });
+}
+const rgbR = document.getElementById('accentR');
+const rgbG = document.getElementById('accentG');
+const rgbB = document.getElementById('accentB');
+const rgbHex = document.getElementById('accentHex');
+const rgbPreview = document.getElementById('rgbPreview');
+
+function updateCustomRgbAccent(save = true) {
+    const r = Number(rgbR.value);
+    const g = Number(rgbG.value);
+    const b = Number(rgbB.value);
+
+    const hex = rgbToHex(r, g, b);
+
+    document.getElementById('accentRValue').textContent = r;
+    document.getElementById('accentGValue').textContent = g;
+    document.getElementById('accentBValue').textContent = b;
+
+    rgbHex.value = hex;
+
+    rgbPreview.style.background = hex;
+    rgbPreview.style.boxShadow = `0 0 22px ${hex}`;
+
+    applyAccent(hex);
+
+    if (save) {
+        const current = getSettings();
+        current.accent = hex;
+        saveSettings(current);
+
+        updateAccentSelection(hex);
+    }
+}
+
+[rgbR, rgbG, rgbB].forEach((slider) => {
+    slider.addEventListener('input', () => {
+        updateCustomRgbAccent(true);
+    });
 });
+
+document.getElementById('applyRgbAccent').addEventListener('click', () => {
+    const value = rgbHex.value.trim().toUpperCase();
+
+    if (!/^#[0-9A-F]{6}$/.test(value)) {
+        showToast('Enter a valid HEX color');
+        return;
+    }
+
+    const rgb = hexToRgb(value);
+
+    rgbR.value = rgb.r;
+    rgbG.value = rgb.g;
+    rgbB.value = rgb.b;
+
+    updateCustomRgbAccent(true);
+
+    showToast('Custom RGB accent applied');
+});
+
+rgbHex.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        document.getElementById('applyRgbAccent').click();
+    }
+});
+function updateRgbControls(hex) {
+    const rgb = hexToRgb(hex);
+    if (!rgb) return;
+
+    document.getElementById('accentR').value = rgb.r;
+    document.getElementById('accentG').value = rgb.g;
+    document.getElementById('accentB').value = rgb.b;
+
+    document.getElementById('accentRValue').textContent = rgb.r;
+    document.getElementById('accentGValue').textContent = rgb.g;
+    document.getElementById('accentBValue').textContent = rgb.b;
+
+    document.getElementById('accentHex').value = rgbToHex(
+        rgb.r,
+        rgb.g,
+        rgb.b
+    );
+
+    document.getElementById('rgbPreview').style.background = hex;
+    document.getElementById('rgbPreview').style.boxShadow =
+        `0 0 20px ${hex}`;
+}
+
+updateAccentSelection(settings.accent);
 applyAccent(settings.accent);
 
-// ---- Wire up changes ----
+if (settings.accent !== 'none') {
+    updateRgbControls(settings.accent);
+}
+
+// Preset colors + None
 document.querySelectorAll('.swatch').forEach((sw) => {
     sw.addEventListener('click', () => {
-        document.querySelectorAll('.swatch').forEach(s => s.classList.remove('selected'));
-        sw.classList.add('selected');
+
+        const accent = sw.dataset.accent;
+
         const current = getSettings();
-        current.accent = sw.dataset.accent;
+        current.accent = accent;
+
         saveSettings(current);
-        showToast('Accent color updated');
+        updateAccentSelection(accent);
+
+        if (accent !== 'none') {
+            updateRgbControls(accent);
+        }
+
+        showToast(
+            accent === 'none'
+                ? 'Custom accent disabled'
+                : 'Accent color updated'
+        );
     });
 });
 
@@ -108,7 +270,7 @@ function getCurrentTheme() {
 }
 
 function applyTheme(theme) {
-    if (saved === 'crimson' || saved === 'jade' || saved === 'void') {
+    if (theme === 'crimson' || theme === 'jade' || theme === 'void') {
         document.documentElement.setAttribute('data-theme', theme);
     } else {
         document.documentElement.removeAttribute('data-theme');

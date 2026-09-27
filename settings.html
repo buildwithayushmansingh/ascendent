@@ -107,15 +107,97 @@
                             <h4>Accent Color</h4>
                             <p>Pick a highlight color used across the app.</p>
                         </div>
-                        <div class="accent-swatches" id="accentSwatches">
-                            <button type="button" class="swatch" data-accent="#e8a33d"
-                                style="background:#e8a33d;"></button>
-                            <button type="button" class="swatch" data-accent="#6bcf9d"
-                                style="background:#6bcf9d;"></button>
-                            <button type="button" class="swatch" data-accent="#7fb8ff"
-                                style="background:#7fb8ff;"></button>
-                            <button type="button" class="swatch" data-accent="#ff6b9d"
-                                style="background:#ff6b9d;"></button>
+                        <div class="accent-picker-wrap">
+
+                            <!-- 9 Preset Colors -->
+                            <div class="accent-swatches" id="accentSwatches">
+
+                                <!-- Existing 4 -->
+                                <button type="button" class="swatch" data-accent="#e8a33d" style="background:#e8a33d;"
+                                    title="Solar Amber"></button>
+
+                                <button type="button" class="swatch" data-accent="#6bcf9d" style="background:#6bcf9d;"
+                                    title="Mint"></button>
+
+                                <button type="button" class="swatch" data-accent="#7fb8ff" style="background:#7fb8ff;"
+                                    title="Ice Blue"></button>
+
+                                <button type="button" class="swatch" data-accent="#ff6b9d" style="background:#ff6b9d;"
+                                    title="Cyber Pink"></button>
+
+                                <!-- New 5 -->
+                                <button type="button" class="swatch" data-accent="#a78bfa" style="background:#a78bfa;"
+                                    title="Arcane Violet"></button>
+
+                                <button type="button" class="swatch" data-accent="#22d3ee" style="background:#22d3ee;"
+                                    title="Neon Cyan"></button>
+
+                                <button type="button" class="swatch" data-accent="#ff4d6d" style="background:#ff4d6d;"
+                                    title="Crimson Red"></button>
+
+                                <button type="button" class="swatch" data-accent="#f97316" style="background:#f97316;"
+                                    title="Plasma Orange"></button>
+
+                                <button type="button" class="swatch" data-accent="#c4f82a" style="background:#c4f82a;"
+                                    title="Cyber Lime"></button>
+
+                                <!-- None -->
+                                <button type="button" class="swatch swatch-none" data-accent="none"
+                                    title="No custom accent">
+                                    ∅
+                                </button>
+
+                            </div>
+
+                            <!-- RGB Mixer -->
+                            <div class="rgb-mixer" id="rgbMixer">
+
+                                <div class="rgb-mixer-head">
+                                    <div>
+                                        <strong>RGB Mixer</strong>
+                                        <span>Create your own accent color</span>
+                                    </div>
+
+                                    <div class="rgb-preview" id="rgbPreview"></div>
+                                </div>
+
+                                <div class="rgb-control">
+                                    <label for="accentR">
+                                        <span>R</span>
+                                        <output id="accentRValue">232</output>
+                                    </label>
+                                    <input type="range" id="accentR" min="0" max="255" value="232">
+                                </div>
+
+                                <div class="rgb-control">
+                                    <label for="accentG">
+                                        <span>G</span>
+                                        <output id="accentGValue">163</output>
+                                    </label>
+                                    <input type="range" id="accentG" min="0" max="255" value="163">
+                                </div>
+
+                                <div class="rgb-control">
+                                    <label for="accentB">
+                                        <span>B</span>
+                                        <output id="accentBValue">61</output>
+                                    </label>
+                                    <input type="range" id="accentB" min="0" max="255" value="61">
+                                </div>
+
+                                <div class="rgb-hex-row">
+                                    <span>HEX</span>
+
+                                    <input type="text" id="accentHex" value="#E8A33D" maxlength="7" spellcheck="false"
+                                        autocomplete="off">
+
+                                    <button type="button" id="applyRgbAccent" class="u-ghost-sm">
+                                        Apply
+                                    </button>
+                                </div>
+
+                            </div>
+
                         </div>
                     </div>
                     <div class="u-row u-row-block">
@@ -124,6 +206,36 @@
                             <p>Choose the overall visual theme.</p>
                         </div>
                         <div class="theme-options" id="themeOptions">
+                            <button type="button" class="theme-card" data-theme-value="neon">
+                                <div class="tp-window" style="background:#1a1030;">
+                                    <div class="tp-topbar"><span class="tp-dot" style="background:#8b5cf6;"></span><span
+                                            class="tp-appname">Ascendent</span><span class="tp-dot"
+                                            style="background:#22d3ee;"></span></div>
+                                    <div class="tp-mini-card" style="background:#241a4a;">
+                                        <span class="tp-mini-icon" style="background:#8b5cf6;"></span>
+                                        <span class="tp-mini-label">Quests</span>
+                                        <span class="tp-mini-btn" style="background:#22d3ee;">Open</span>
+                                    </div>
+                                </div>
+                                <div class="tp-footer"><span class="tp-name">Arcane Neon</span><span
+                                        class="tp-check">✓</span></div>
+                            </button>
+
+                            <button type="button" class="theme-card" data-theme-value="crimson">
+                                <div class="tp-window" style="background:#1a0a10;">
+                                    <div class="tp-topbar"><span class="tp-dot" style="background:#e11d48;"></span><span
+                                            class="tp-appname">Ascendent</span><span class="tp-dot"
+                                            style="background:#00e0a4;"></span></div>
+                                    <div class="tp-mini-card" style="background:#2a0e16;">
+                                        <span class="tp-mini-icon" style="background:#e11d48;"></span>
+                                        <span class="tp-mini-label">Quests</span>
+                                        <span class="tp-mini-btn" style="background:#00e0a4;">Open</span>
+                                    </div>
+                                </div>
+                                <div class="tp-footer"><span class="tp-name">Crimson Circuit</span><span
+                                        class="tp-check">✓</span></div>
+                            </button>
+
                             <button type="button" class="theme-card" data-theme-value="jade">
                                 <div class="tp-window" style="background:#0c1410;">
                                     <div class="tp-topbar"><span class="tp-dot" style="background:#00b368;"></span><span
@@ -154,36 +266,6 @@
                                         class="tp-check">✓</span></div>
                             </button>
                         </div>
-
-                        <button type="button" class="theme-card" data-theme-value="crimson">
-                            <div class="tp-window" style="background:#1a0a10;">
-                                <div class="tp-topbar"><span class="tp-dot" style="background:#e11d48;"></span><span
-                                        class="tp-appname">Ascendent</span><span class="tp-dot"
-                                        style="background:#00e0a4;"></span></div>
-                                <div class="tp-mini-card" style="background:#2a0e16;">
-                                    <span class="tp-mini-icon" style="background:#e11d48;"></span>
-                                    <span class="tp-mini-label">Quests</span>
-                                    <span class="tp-mini-btn" style="background:#00e0a4;">Open</span>
-                                </div>
-                            </div>
-                            <div class="tp-footer"><span class="tp-name">Crimson Circuit</span><span
-                                    class="tp-check">✓</span></div>
-                        </button>
-
-                        <button type="button" class="theme-card" data-theme-value="jade">
-                            <div class="tp-window" style="background:#0c1410;">
-                                <div class="tp-topbar"><span class="tp-dot" style="background:#00b368;"></span><span
-                                        class="tp-appname">Ascendent</span><span class="tp-dot"
-                                        style="background:#5cffb0;"></span></div>
-                                <div class="tp-mini-card" style="background:#101c16;">
-                                    <span class="tp-mini-icon" style="background:#00b368;"></span>
-                                    <span class="tp-mini-label">Quests</span>
-                                    <span class="tp-mini-btn" style="background:#5cffb0;">Open</span>
-                                </div>
-                            </div>
-                            <div class="tp-footer"><span class="tp-name">Jade Protocol</span><span
-                                    class="tp-check">✓</span></div>
-                        </button>
                     </div>
             </div>
             </section>

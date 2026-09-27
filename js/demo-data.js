@@ -127,3 +127,32 @@ function applyAvatarImage(selector) {
     el.textContent = '';
   });
 }
+// ===== GLOBAL PROFILE AVATAR =====
+
+function addGlobalProfileAvatar() {
+  const topbars = document.querySelectorAll('.content-topbar');
+
+  topbars.forEach((topbar) => {
+
+    // Already added ho to duplicate mat banao
+    if (topbar.querySelector('.global-profile-avatar')) return;
+
+    const avatar = document.createElement('div');
+    avatar.className = 'global-profile-avatar';
+    avatar.id = 'globalProfileAvatar';
+
+    const user = getDemoUser();
+    avatar.textContent = (user.username || '??')
+      .slice(0, 2)
+      .toUpperCase();
+
+    topbar.appendChild(avatar);
+
+    // Saved profile image apply karo
+    applyAvatarImage('#globalProfileAvatar');
+  });
+}
+
+
+// Page load hote hi avatar add karo
+addGlobalProfileAvatar();

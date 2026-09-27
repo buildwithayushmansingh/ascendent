@@ -3,46 +3,132 @@
 
 <head>
   <script src="js/theme.js"></script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Ascendent — Player Card</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
+
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/card.css" />
 </head>
 
+
 <body>
+
+  <!-- ================= TOP BAR ================= -->
+
   <header class="card-topbar">
-    <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
-    <button id="logoutBtn" class="ghost-btn">Log Out</button>
+
+    <a href="dashboard.html" class="back-link">
+      ← Back to Dashboard
+    </a>
+
+
+    <!-- PROFILE AVATAR -->
+
+
+
+
+    <button id="logoutBtn" class="ghost-btn">
+      Log Out
+    </button>
+
   </header>
 
+
+
+  <!-- ================= PLAYER CARD ================= -->
+
   <main class="card-page">
+
     <div class="flip-container">
+
       <div id="flipInner" class="flip-inner">
+
+        <!-- FRONT -->
+
         <div id="playerCard" class="player-card tier-gold flip-front">
-          <!-- filled in by card.js from SAMPLE_CARD_DATA -->
+          <!--
+            Filled dynamically by card.js
+            from SAMPLE_CARD_DATA
+          -->
         </div>
+
+
+        <!-- BACK -->
+
         <div id="futureSelfCard" class="player-card tier-gold flip-back">
-          <!-- filled in by card.js from SAMPLE_CARD_DATA -->
+          <!--
+            Filled dynamically by card.js
+            from SAMPLE_CARD_DATA
+          -->
         </div>
+
       </div>
+
     </div>
 
-    <button id="flipCardBtn">🔮 View Future Self</button>
+
+    <!-- ================= FLIP BUTTON ================= -->
+
+    <button id="flipCardBtn">
+      🔮 View Future Self
+    </button>
+
+
+    <!-- ================= SHARE BUTTONS ================= -->
 
     <div class="card-share-row">
-      <button id="shareCardBtn" class="ghost-btn">🔗 Share Card</button>
-      <button id="downloadCardBtn" class="ghost-btn">⬇️ Download Card</button>
-      <button id="profileLinkBtn" class="ghost-btn">👤 Profile Link</button>
+
+      <button id="shareCardBtn" class="ghost-btn">
+        🔗 Share Card
+      </button>
+
+
+      <button id="downloadCardBtn" class="ghost-btn">
+        ⬇️ Download Card
+      </button>
+
+
+      <button id="profileLinkBtn" class="ghost-btn">
+        👤 Profile Link
+      </button>
+
     </div>
+
   </main>
+
+
+
+  <!-- ================= TOAST ================= -->
 
   <div id="toastContainer" class="toast-container"></div>
 
+
+
+  <!-- ================= SCRIPTS ================= -->
+
+  <script src="js/demo-data.js"></script>
+
   <script src="js/rewards.js"></script>
+
   <script src="js/card.js"></script>
+
   <script src="js/sidebar-tilt.js"></script>
+
+
+  <!-- Apply saved profile image to topbar -->
+
+  <script>
+    if (typeof applyAvatarImage === "function") {
+      applyAvatarImage("#cardPageAvatar");
+    }
+  </script>
+
+
 </body>
 
 </html>

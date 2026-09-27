@@ -842,7 +842,7 @@ button:hover {
 .content-topbar {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 24px;
 }
 
@@ -4546,22 +4546,59 @@ to {
 /* Avatar glow ring — dashboard header, settings, frontier medallion.
    The Player Card's own avatar keeps its existing spin-ring (card.css)
    and is intentionally excluded here to avoid double effects. */
+/* ===== GLOBAL PROFILE AVATAR GLOW ===== */
+
 .dash-avatar,
 .u-avatar,
 .frontier-medallion {
   position: relative;
+  isolation: isolate;
+  overflow: visible !important;
+
+  box-shadow:
+    0 0 7px color-mix(in srgb, var(--accent-bright) 45%, transparent),
+    0 0 18px color-mix(in srgb, var(--accent-bright) 25%, transparent);
 }
+
+/* Circular animated light around profile image */
 
 .dash-avatar::after,
 .u-avatar::after,
 .frontier-medallion::after {
   content: '';
   position: absolute;
-  inset: -5px;
+
+  inset: -6px;
+
   border-radius: 50%;
-  border: 1.5px solid color-mix(in srgb, var(--accent-bright) 55%, transparent);
-  box-shadow: 0 0 14px color-mix(in srgb, var(--accent-bright) 45%, transparent);
+
+  border: 1.5px solid color-mix(in srgb, var(--accent-bright) 75%, transparent);
+
+  box-shadow:
+    0 0 7px color-mix(in srgb, var(--accent-bright) 65%, transparent),
+    0 0 18px color-mix(in srgb, var(--accent-bright) 35%, transparent);
+
   pointer-events: none;
+
+  z-index: 5;
+
+  animation: profileAvatarGlow 1.8s ease-in-out infinite;
+}
+
+
+@keyframes profileAvatarGlow {
+
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.99);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.035);
+  }
+
 }
 
 /* ===== Flip system hard reset =====
@@ -4609,4 +4646,1143 @@ to {
 .card-avatar {
   background-size: cover !important;
   background-position: center !important;
+}
+
+/* ===== Calendar page ===== */
+.cal-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.cal-sum-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(160deg, var(--surface) 0%, var(--surface-2) 100%);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.cal-sum-icon {
+  font-size: 18px;
+}
+
+.cal-sum-value {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1rem;
+  color: var(--accent-bright);
+}
+
+.cal-sum-label {
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+}
+
+.cal-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+  align-items: start;
+}
+
+.cal-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.4rem;
+  animation: calFadeIn 0.4s ease;
+}
+
+@keyframes calFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.cal-header h3 {
+  flex: 1;
+  text-align: center;
+  margin: 0;
+  color: var(--accent-bright);
+}
+
+.cal-nav-btn {
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  padding: 0;
+  box-shadow: none;
+}
+
+.cal-today-btn {
+  font-size: 0.75rem;
+  padding: 6px 12px;
+}
+
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.cal-weekdays span {
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.cal-cell {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: none;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.cal-cell:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--accent-bright) 30%, transparent);
+}
+
+.cal-cell-blank {
+  background: transparent;
+  border: none;
+  cursor: default;
+}
+
+.cal-cell-blank:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.cal-cell-num {
+  font-size: 0.78rem;
+}
+
+.cal-cell-icon {
+  font-size: 0.6rem;
+  margin-top: 1px;
+}
+
+.cal-completed {
+  border-color: var(--success);
+  background: color-mix(in srgb, var(--success) 16%, var(--bg-deep));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--success) 30%, transparent);
+}
+
+.cal-missed {
+  border-color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 14%, var(--bg-deep));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--danger) 25%, transparent);
+}
+
+.cal-partial {
+  border-color: #f5a623;
+  background: color-mix(in srgb, #f5a623 14%, var(--bg-deep));
+}
+
+.cal-future {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.cal-future:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.cal-none {
+  opacity: 0.7;
+}
+
+.cal-today {
+  border-width: 2px;
+  border-color: var(--accent-bright) !important;
+}
+
+.cal-today-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 12px;
+  border: 1.5px solid var(--accent-bright);
+  animation: calTodayPulse 1.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes calTodayPulse {
+
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.cal-selected {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
+}
+
+.cal-daily-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.4rem;
+  min-height: 300px;
+  opacity: 0;
+  transform: translateX(12px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.cal-daily-panel.cal-panel-show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.cal-daily-panel:not(.cal-panel-show) {
+  opacity: 1;
+  transform: none;
+}
+
+/* keep empty-state visible by default */
+
+.cal-daily-empty {
+  text-align: center;
+  color: var(--text-secondary);
+  padding-top: 40px;
+}
+
+.cal-daily-empty-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+  opacity: 0.6;
+}
+
+.cal-daily-header {
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.cal-daily-date {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.cal-daily-day {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.cal-status-badge {
+  display: inline-block;
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.75rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  animation: calBadgePop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes calBadgePop {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.cal-badge-completed {
+  background: color-mix(in srgb, var(--success) 20%, transparent);
+  color: var(--success);
+}
+
+.cal-badge-missed {
+  background: color-mix(in srgb, var(--danger) 20%, transparent);
+  color: var(--danger);
+}
+
+.cal-badge-partial {
+  background: rgba(245, 166, 35, 0.2);
+  color: #f5a623;
+}
+
+.cal-badge-future,
+.cal-badge-none {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-secondary);
+}
+
+.cal-section-title {
+  font-size: 0.8rem;
+  color: var(--accent-bright);
+  margin: 14px 0 8px;
+}
+
+.cal-activity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cal-activity-list li {
+  display: flex;
+  justify-content: space-between;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 0.8rem;
+}
+
+.cal-activity-list li span {
+  color: var(--accent-cyan);
+  font-size: 0.72rem;
+}
+
+.cal-activity-missed li span {
+  color: var(--text-secondary);
+}
+
+.cal-stat-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.cal-stat-row>div {
+  flex: 1;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+.cal-stat-value {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1rem;
+  color: var(--accent-bright);
+}
+
+.cal-stat-label {
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+}
+
+.cal-empty-state {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.cal-empty-icon {
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 900px) {
+  .cal-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===== GLOBAL AVATAR GLOW ===== */
+
+.u-avatar {
+  position: relative;
+  border-radius: 50%;
+  isolation: isolate;
+}
+
+.u-avatar::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-bright);
+  box-shadow:
+    0 0 8px var(--accent-bright),
+    0 0 18px var(--accent-bright);
+  animation: avatarPulse 2s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.u-avatar img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+@keyframes avatarPulse {
+
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.98);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* =====================================================
+   GLOBAL PROFILE AVATAR
+   Used on all normal page topbars
+   ===================================================== */
+
+.global-profile-avatar {
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-left: 12px;
+
+  background:
+    radial-gradient(circle,
+      var(--surface-2),
+      var(--bg-deep));
+
+  border: 2px solid color-mix(in srgb,
+      var(--accent-bright) 70%,
+      transparent);
+
+  color: var(--accent-bright);
+
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+
+  box-shadow:
+    0 0 8px color-mix(in srgb,
+      var(--accent-bright) 50%,
+      transparent),
+    0 0 20px color-mix(in srgb,
+      var(--accent-bright) 25%,
+      transparent);
+
+  animation: globalAvatarPulse 1.8s ease-in-out infinite;
+}
+
+
+/* Circular light ring */
+
+.global-profile-avatar::after {
+  content: '';
+
+  position: absolute;
+
+  inset: -6px;
+
+  border-radius: 50%;
+
+  border: 1.5px solid color-mix(in srgb,
+      var(--accent-bright) 75%,
+      transparent);
+
+  box-shadow:
+    0 0 7px color-mix(in srgb,
+      var(--accent-bright) 65%,
+      transparent),
+    0 0 18px color-mix(in srgb,
+      var(--accent-bright) 35%,
+      transparent);
+
+  pointer-events: none;
+
+  z-index: 5;
+
+  animation: globalAvatarRing 1.8s ease-in-out infinite;
+}
+
+
+/* Avatar glow */
+
+@keyframes globalAvatarPulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 8px color-mix(in srgb,
+        var(--accent-bright) 45%,
+        transparent),
+      0 0 18px color-mix(in srgb,
+        var(--accent-bright) 20%,
+        transparent);
+  }
+
+  50% {
+    box-shadow:
+      0 0 12px color-mix(in srgb,
+        var(--accent-bright) 70%,
+        transparent),
+      0 0 28px color-mix(in srgb,
+        var(--accent-bright) 35%,
+        transparent);
+  }
+}
+
+
+@keyframes globalAvatarRing {
+
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.99);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+
+}
+
+/* =====================================================
+   HABITS PAGE PROFILE AVATAR
+   ===================================================== */
+
+.habits-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#habitsProfileAvatar {
+  width: 46px;
+  height: 46px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(circle,
+      var(--surface-2),
+      var(--bg-deep));
+
+  border: 2px solid color-mix(in srgb,
+      var(--accent-bright) 70%,
+      transparent);
+
+  color: var(--accent-bright);
+
+  font-weight: 800;
+  font-size: 0.8rem;
+
+  position: relative;
+  isolation: isolate;
+
+  background-size: cover;
+  background-position: center;
+
+  box-shadow:
+    0 0 8px color-mix(in srgb,
+      var(--accent-bright) 50%,
+      transparent),
+    0 0 20px color-mix(in srgb,
+      var(--accent-bright) 25%,
+      transparent);
+
+  animation: habitsAvatarPulse 1.8s ease-in-out infinite;
+}
+
+
+#habitsProfileAvatar::after {
+  content: '';
+
+  position: absolute;
+  inset: -6px;
+
+  border-radius: 50%;
+
+  border: 1.5px solid color-mix(in srgb,
+      var(--accent-bright) 75%,
+      transparent);
+
+  box-shadow:
+    0 0 7px color-mix(in srgb,
+      var(--accent-bright) 65%,
+      transparent),
+    0 0 18px color-mix(in srgb,
+      var(--accent-bright) 35%,
+      transparent);
+
+  pointer-events: none;
+
+  z-index: 5;
+
+  animation: habitsAvatarRing 1.8s ease-in-out infinite;
+}
+
+
+@keyframes habitsAvatarPulse {
+
+  0%,
+  100% {
+    box-shadow:
+      0 0 8px color-mix(in srgb,
+        var(--accent-bright) 45%,
+        transparent),
+      0 0 18px color-mix(in srgb,
+        var(--accent-bright) 20%,
+        transparent);
+  }
+
+  50% {
+    box-shadow:
+      0 0 12px color-mix(in srgb,
+        var(--accent-bright) 70%,
+        transparent),
+      0 0 28px color-mix(in srgb,
+        var(--accent-bright) 35%,
+        transparent);
+  }
+}
+
+
+@keyframes habitsAvatarRing {
+
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.99);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+/* =====================================================
+   HABITS HEADER
+   Avatar + title on left, buttons on right
+   ===================================================== */
+
+.frontier-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+
+/* Avatar + title group */
+
+.frontier-header-main {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  min-width: 0;
+}
+
+
+/* Profile avatar */
+
+.global-page-profile {
+  position: relative;
+
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* Remove old margin */
+
+.global-page-profile .global-profile-avatar {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+
+/* Title area */
+
+.frontier-header-left {
+  min-width: 0;
+}
+
+
+/* Right-side buttons */
+
+.habits-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-left: auto;
+
+  flex-shrink: 0;
+}
+
+/* =====================================================
+   PLAYER CARD PAGE PROFILE
+   ===================================================== */
+
+.card-page-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+
+/* Profile avatar */
+
+.card-page-profile .global-profile-avatar {
+  width: 46px;
+  height: 46px;
+
+  margin: 0;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  background:
+    radial-gradient(circle,
+      var(--surface-2),
+      var(--bg-deep));
+
+  border: 2px solid color-mix(in srgb,
+      var(--accent-bright) 70%,
+      transparent);
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  color: var(--accent-bright);
+
+  font-weight: 800;
+
+  box-shadow:
+    0 0 8px color-mix(in srgb,
+      var(--accent-bright) 50%,
+      transparent),
+    0 0 20px color-mix(in srgb,
+      var(--accent-bright) 25%,
+      transparent);
+}
+
+
+/* Glow ring */
+
+.card-page-profile .global-profile-avatar::after {
+  content: "";
+
+  position: absolute;
+
+  inset: -6px;
+
+  border-radius: 50%;
+
+  border: 1.5px solid color-mix(in srgb,
+      var(--accent-bright) 75%,
+      transparent);
+
+  box-shadow:
+    0 0 7px color-mix(in srgb,
+      var(--accent-bright) 65%,
+      transparent),
+    0 0 18px color-mix(in srgb,
+      var(--accent-bright) 35%,
+      transparent);
+
+  pointer-events: none;
+
+  animation: cardPageAvatarGlow 1.8s ease-in-out infinite;
+}
+
+
+@keyframes cardPageAvatarGlow {
+
+  0%,
+  100% {
+    opacity: .55;
+    transform: scale(.99);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.035);
+  }
+
+}
+
+/* =========================================================
+   ACCENT COLOR SYSTEM — 9 PRESETS + RGB MIXER
+   ========================================================= */
+
+.accent-picker-wrap {
+  width: 100%;
+}
+
+.accent-swatches {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  max-width: 620px;
+}
+
+.swatch {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.swatch:hover {
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 0 0 18px currentColor;
+}
+
+.swatch.selected {
+  border-color: #ffffff;
+  transform: scale(1.16);
+  box-shadow:
+    0 0 0 2px var(--bg-deep),
+    0 0 16px currentColor;
+}
+
+/* None button */
+.swatch-none {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    repeating-linear-gradient(45deg,
+      #111 0px,
+      #111 5px,
+      #444 5px,
+      #444 9px);
+
+  color: #aaa;
+  font-size: 17px;
+  font-weight: 700;
+  text-shadow: 0 0 5px #000;
+}
+
+.swatch-none:hover {
+  color: #fff;
+  box-shadow: 0 0 14px rgba(255, 255, 255, .25);
+}
+
+
+/* =========================================================
+   RGB MIXER
+   ========================================================= */
+
+.rgb-mixer {
+  margin-top: 22px;
+  max-width: 620px;
+  padding: 20px;
+
+  background:
+    linear-gradient(145deg,
+      color-mix(in srgb,
+        var(--accent-bright) 7%,
+        var(--surface)),
+      var(--surface-2));
+
+  border: 1px solid var(--border);
+  border-radius: 16px;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .04),
+    0 0 22px color-mix(in srgb,
+      var(--accent-bright) 8%,
+      transparent);
+}
+
+.rgb-mixer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.rgb-mixer-head strong {
+  display: block;
+  font-family: var(--font-display), sans-serif;
+  font-size: .85rem;
+  color: var(--text);
+}
+
+.rgb-mixer-head span {
+  display: block;
+  margin-top: 4px;
+  font-size: .72rem;
+  color: var(--text-secondary);
+}
+
+.rgb-preview {
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+
+  border-radius: 14px;
+  background: var(--accent-bright);
+
+  border: 2px solid rgba(255, 255, 255, .75);
+
+  box-shadow:
+    0 0 20px var(--accent-bright);
+
+  transition:
+    background .15s ease,
+    box-shadow .15s ease;
+}
+
+
+/* RGB rows */
+
+.rgb-control {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.rgb-control label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-family: var(--font-display), sans-serif;
+  font-size: .72rem;
+  color: var(--text);
+}
+
+.rgb-control label span {
+  font-weight: 700;
+}
+
+.rgb-control output {
+  color: var(--text-secondary);
+  font-family: var(--font-body), sans-serif;
+}
+
+
+/* Slider */
+
+.rgb-control input[type="range"] {
+  width: 100%;
+  height: 6px;
+  appearance: none;
+  -webkit-appearance: none;
+
+  border-radius: 20px;
+  outline: none;
+  cursor: pointer;
+
+  background:
+    linear-gradient(90deg,
+      var(--accent-bright),
+      var(--accent-cyan));
+
+  box-shadow:
+    0 0 8px color-mix(in srgb,
+      var(--accent-bright) 25%,
+      transparent);
+}
+
+.rgb-control input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 18px;
+  height: 18px;
+
+  border-radius: 50%;
+
+  background: #fff;
+
+  border: 3px solid var(--accent-bright);
+
+  box-shadow:
+    0 0 10px var(--accent-bright);
+
+  cursor: grab;
+}
+
+.rgb-control input[type="range"]::-webkit-slider-thumb:active {
+  cursor: grabbing;
+}
+
+.rgb-control input[type="range"]::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+
+  border-radius: 50%;
+
+  background: #fff;
+
+  border: 3px solid var(--accent-bright);
+
+  box-shadow:
+    0 0 10px var(--accent-bright);
+
+  cursor: grab;
+}
+
+
+/* HEX */
+
+.rgb-hex-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 18px;
+  padding-top: 16px;
+
+  border-top: 1px solid var(--border);
+}
+
+.rgb-hex-row>span {
+  font-family: var(--font-display), sans-serif;
+  font-size: .68rem;
+  color: var(--text-secondary);
+}
+
+.rgb-hex-row input {
+  flex: 1;
+  min-width: 0;
+
+  height: 38px;
+
+  background: var(--bg-deep);
+  color: var(--text);
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  padding: 0 12px;
+
+  font-family: 'Chakra Petch', monospace;
+  font-size: .82rem;
+  letter-spacing: 1px;
+
+  outline: none;
+}
+
+.rgb-hex-row input:focus {
+  border-color: var(--accent-bright);
+  box-shadow:
+    0 0 12px color-mix(in srgb,
+      var(--accent-bright) 20%,
+      transparent);
+}
+
+.rgb-hex-row button {
+  flex-shrink: 0;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .accent-swatches {
+    justify-content: flex-start;
+  }
+
+  .rgb-mixer {
+    width: 100%;
+  }
+
+  .rgb-hex-row {
+    flex-wrap: wrap;
+  }
+
+  .rgb-hex-row input {
+    min-width: 150px;
+  }
 }
