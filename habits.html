@@ -21,88 +21,197 @@
 
         <aside class="sidebar">
 
+            <!-- BRAND -->
             <div class="sidebar-brand">
-                ⚔ Ascendent
+                <span class="sidebar-brand-mark">✦</span>
+                <span>ASCENDENT</span>
             </div>
 
+            <!-- PLAYER HUD -->
+            <div class="sidebar-player">
+
+                <div class="sidebar-player-top">
+                    <div class="sidebar-avatar" id="sidebarAvatar">
+                        <span>AS</span>
+                    </div>
+
+                    <div class="sidebar-player-info">
+                        <div class="sidebar-level" id="sidebarLevel">
+                            LVL 08
+                        </div>
+
+                        <div class="sidebar-player-name" id="sidebarPlayerName">
+                            AYUSHMAN
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-xp-row">
+                    <span>XP</span>
+                    <span id="sidebarXpText">7,640 / 10,000</span>
+                </div>
+
+                <div class="sidebar-xp-track">
+                    <div class="sidebar-xp-fill" id="sidebarXpFill" style="width:76%;">
+                    </div>
+                </div>
+
+                <div class="sidebar-streak">
+                    <span class="sidebar-streak-icon">🔥</span>
+                    <span>
+                        <b id="sidebarStreak">27</b> DAY STREAK
+                    </span>
+                </div>
+
+            </div>
+
+
+            <!-- COMMAND CENTER -->
+            <div class="sidebar-section-label">
+                <span>◈</span>
+                COMMAND CENTER
+            </div>
+
+
+            <!-- NAVIGATION -->
             <nav class="sidebar-nav">
 
                 <a href="dashboard.html" class="nav-tile">
-                    <span class="nav-tile-icon">🏠</span>
+                    <span class="nav-tile-icon">◈</span>
+
                     <span class="nav-tile-text">
                         <span class="nav-tile-title">Dashboard</span>
                         <span class="nav-tile-desc">Home base</span>
                     </span>
+
+                    <span class="nav-tile-arrow">›</span>
                     <span class="nav-tile-indicator"></span>
                 </a>
 
-                <a href="habits.html" class="nav-tile nav-active">
-                    <span class="nav-tile-icon">📋</span>
+
+                <a href="habits.html" class="nav-tile">
+                    <span class="nav-tile-icon">⚔</span>
+
                     <span class="nav-tile-text">
-                        <span class="nav-tile-title">Habits</span>
+                        <span class="nav-tile-title">Quests</span>
                         <span class="nav-tile-desc">Track quests</span>
                     </span>
+
+                    <span class="nav-tile-arrow">›</span>
                     <span class="nav-tile-indicator"></span>
                 </a>
 
+
                 <a href="calendar.html" class="nav-tile">
-                    <span class="nav-tile-icon">📅</span>
+                    <span class="nav-tile-icon">🗺</span>
+
                     <span class="nav-tile-text">
                         <span class="nav-tile-title">Calendar</span>
                         <span class="nav-tile-desc">Daily history</span>
                     </span>
+
+                    <span class="nav-tile-arrow">›</span>
                     <span class="nav-tile-indicator"></span>
                 </a>
 
+
                 <a href="achievements.html" class="nav-tile">
                     <span class="nav-tile-icon">🏆</span>
+
                     <span class="nav-tile-text">
                         <span class="nav-tile-title">Achievements</span>
                         <span class="nav-tile-desc">Unlocked badges</span>
                     </span>
+
+                    <span class="nav-tile-arrow">›</span>
                     <span class="nav-tile-indicator"></span>
                 </a>
 
+
                 <a href="card.html" class="nav-tile">
-                    <span class="nav-tile-icon">🎴</span>
+                    <span class="nav-tile-icon">◈</span>
+
                     <span class="nav-tile-text">
                         <span class="nav-tile-title">Player Card</span>
                         <span class="nav-tile-desc">Your identity</span>
                     </span>
+
+                    <span class="nav-tile-arrow">›</span>
                     <span class="nav-tile-indicator"></span>
                 </a>
 
+
                 <a href="progress.html" class="nav-tile">
-                    <span class="nav-tile-icon">📈</span>
+                    <span class="nav-tile-icon">📊</span>
+
                     <span class="nav-tile-text">
                         <span class="nav-tile-title">Progress</span>
                         <span class="nav-tile-desc">Analytics</span>
                     </span>
+
+                    <span class="nav-tile-arrow">›</span>
                     <span class="nav-tile-indicator"></span>
                 </a>
 
+
                 <a href="leaderboard.html" class="nav-tile">
-                    <span class="nav-tile-icon">📊</span>
+                    <span class="nav-tile-icon">🌐</span>
+
                     <span class="nav-tile-text">
                         <span class="nav-tile-title">Leaderboard</span>
                         <span class="nav-tile-desc">Global ranks</span>
                     </span>
-                    <span class="nav-tile-indicator"></span>
-                </a>
 
-                <a href="settings.html" class="nav-tile">
-                    <span class="nav-tile-icon">⚙️</span>
-                    <span class="nav-tile-text">
-                        <span class="nav-tile-title">Settings</span>
-                        <span class="nav-tile-desc">Preferences</span>
-                    </span>
+                    <span class="nav-tile-arrow">›</span>
                     <span class="nav-tile-indicator"></span>
                 </a>
 
             </nav>
 
-            <div class="sidebar-quote">
-                "Discipline today,<br>freedom tomorrow."
+
+            <!-- DAILY MISSION -->
+            <div class="sidebar-mission">
+
+                <div class="sidebar-mission-header">
+                    <span>DAILY MISSION</span>
+                    <span id="sidebarMissionCount">3/4</span>
+                </div>
+
+                <div class="sidebar-mission-track">
+                    <div class="sidebar-mission-fill" id="sidebarMissionFill" style="width:75%;">
+                    </div>
+                </div>
+
+                <div class="sidebar-mission-text">
+                    <span>Today's quests</span>
+                    <span id="sidebarMissionPercent">75%</span>
+                </div>
+
+            </div>
+
+
+            <!-- BOTTOM -->
+            <div class="sidebar-bottom">
+
+                <a href="settings.html" class="nav-tile sidebar-settings">
+                    <span class="nav-tile-icon">⚙</span>
+
+                    <span class="nav-tile-text">
+                        <span class="nav-tile-title">Settings</span>
+                        <span class="nav-tile-desc">Preferences</span>
+                    </span>
+
+                    <span class="nav-tile-arrow">›</span>
+                    <span class="nav-tile-indicator"></span>
+                </a>
+
+                <div class="sidebar-quote">
+                    <span>“</span>
+                    Discipline today,<br>
+                    freedom tomorrow.
+                    <span>”</span>
+                </div>
+
             </div>
 
         </aside>
@@ -378,6 +487,7 @@
     <script src="js/achievements.js"></script>
     <script src="js/habits.js"></script>
     <script src="js/sidebar-tilt.js"></script>
+    <script src="js/sidebar.js"></script>
 
     <script>
         // Apply saved profile image
