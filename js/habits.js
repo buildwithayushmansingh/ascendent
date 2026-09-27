@@ -6,16 +6,31 @@ let activeHabitId = null;
 let selectedMissReason = null;
 let editingHabitId = null;
 
+function renderHeroStats(user) {
+    const habits = user.habits || [];
+    const total = habits.length;
+    const bestStreak = habits.reduce((max, h) => Math.max(max, h.streak), 0);
+    const avgLevel = total ? Math.round(habits.reduce((sum, h) => sum + h.level, 0) / total) : 0;
+
+    document.getElementById('habitHeroStats').innerHTML = `
+    <div class="hh-stat"><span class="hh-icon">📋</span><div><div class="hh-value">${total}</div><div class="hh-label">Active Quests</div></div></div>
+    <div class="hh-stat"><span class="hh-icon">🔥</span><div><div class="hh-value">${bestStreak}</div><div class="hh-label">Best Streak</div></div></div>
+    <div class="hh-stat"><span class="hh-icon">⭐</span><div><div class="hh-value">${avgLevel}</div><div class="hh-label">Avg. Level</div></div></div>
+  `;
+}
+
 function renderHabitList() {
     const user = getDemoUser();
     const container = document.getElementById('habitList');
+
+    renderHeroStats(user);
 
     if (!user.habits || user.habits.length === 0) {
         container.innerHTML = `
       <div class="coming-soon-panel">
         <div class="coming-soon-icon">📋</div>
         <h3>No habits yet</h3>
-        <p>Click "Add Habit" to create your first quest.</p>
+        <p>Click "New Bounty" to create your first quest.</p>
       </div>
     `;
         return;
@@ -24,37 +39,35 @@ function renderHabitList() {
     container.innerHTML = user.habits.map((habit) => {
         const xpPercent = Math.min(100, Math.round((habit.xp / habit.xpToNextLevel) * 100));
         return `
-      <div class="habit-card">
-        <div class="habit-card-header">
-          <span class="habit-card-icon">${habit.icon || '⭐'}</span>
-          <div class="habit-card-title">
-            <div class="habit-card-name">${habit.name}</div>
-            <div class="habit-card-meta">Lv.${habit.level} • ${habit.target} min/day • ${habit.frequency}x/week</div>
+      <div class="habit-card-v2">
+        <div class="hc-top">
+          <div class="hc-ring" style="--pct:${xpPercent};">
+            <div class="hc-ring-inner">${habit.icon || '⭐'}</div>
           </div>
-          <div class="habit-card-streak">🔥 ${habit.streak}</div>
+          <button class="hc-icon-btn hc-edit" data-id="${habit.id}" title="Edit">✏️</button>
+          <button class="hc-icon-btn hc-delete" data-id="${habit.id}" title="Delete">🗑️</button>
         </div>
 
-        <div class="card-xp-bar-track">
-          <div class="card-xp-bar-fill" style="width:${xpPercent}%;"></div>
-        </div>
+        <div class="hc-name">${habit.name}</div>
+        <div class="hc-meta">Lv.${habit.level} • ${habit.target}min • ${habit.frequency}x/wk</div>
 
-        <div class="habit-card-actions">
-          <button class="habit-complete-btn" data-id="${habit.id}">✅ Complete</button>
-          <button class="habit-miss-btn" data-id="${habit.id}">❌ Miss</button>
-          <button class="ghost-btn habit-edit-btn" data-id="${habit.id}">Edit</button>
-          <button class="ghost-btn habit-delete-btn" data-id="${habit.id}">Delete</button>
+        <div class="hc-streak-chip">🔥 ${habit.streak} day streak</div>
+
+        <div class="hc-actions">
+          <button class="hc-action-btn hc-complete" data-id="${habit.id}">✅</button>
+          <button class="hc-action-btn hc-miss" data-id="${habit.id}">❌</button>
         </div>
       </div>
     `;
     }).join('');
 
-    document.querySelectorAll('.habit-complete-btn').forEach(btn =>
+    document.querySelectorAll('.hc-complete').forEach(btn =>
         btn.addEventListener('click', () => openCompleteModal(btn.dataset.id)));
-    document.querySelectorAll('.habit-miss-btn').forEach(btn =>
+    document.querySelectorAll('.hc-miss').forEach(btn =>
         btn.addEventListener('click', () => openMissModal(btn.dataset.id)));
-    document.querySelectorAll('.habit-edit-btn').forEach(btn =>
+    document.querySelectorAll('.hc-edit').forEach(btn =>
         btn.addEventListener('click', () => openHabitForm(btn.dataset.id)));
-    document.querySelectorAll('.habit-delete-btn').forEach(btn =>
+    document.querySelectorAll('.hc-delete').forEach(btn =>
         btn.addEventListener('click', () => deleteHabit(btn.dataset.id)));
 }
 

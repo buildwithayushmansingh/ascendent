@@ -351,20 +351,9 @@
   box-shadow: 0 0 16px rgba(176, 118, 63, 0.4);
 }
 
-.player-card.tier-silver {
-  border-color: #b8bfd6;
-  box-shadow: 0 0 20px rgba(184, 191, 214, 0.4);
-}
-
 .player-card.tier-gold {
   border-color: #f5c451;
   box-shadow: 0 0 26px rgba(245, 196, 81, 0.5);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .player-card.tier-gold {
-    animation: goldPulse 3s ease-in-out infinite;
-  }
 }
 
 .player-card.tier-platinum {
@@ -377,34 +366,57 @@
   box-shadow: 0 0 36px rgba(192, 132, 252, 0.7);
 }
 
+/* GPU-friendly pulsing glow layer — animates opacity+scale on a pseudo
+   element instead of animating box-shadow directly (which forces a full
+   repaint every frame and was the main cause of the flip feeling laggy). */
+.player-card.tier-gold::before,
+.player-card.tier-legendary::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 24px;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+.player-card.tier-gold::before {
+  box-shadow: 0 0 34px 6px rgba(245, 196, 81, 0.55);
+}
+
+.player-card.tier-legendary::before {
+  box-shadow: 0 0 40px 8px rgba(192, 132, 252, 0.6);
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  .player-card.tier-legendary {
-    animation: legendaryPulse 2.5s ease-in-out infinite;
+
+  .player-card.tier-gold::before,
+  .player-card.tier-legendary::before {
+    animation: tierGlowPulse 3s ease-in-out infinite;
+    will-change: opacity, transform;
   }
 }
 
-@keyframes goldPulse {
+@keyframes tierGlowPulse {
 
   0%,
   100% {
-    box-shadow: 0 0 22px rgba(245, 196, 81, 0.45);
+    opacity: 0.45;
+    transform: scale(1);
   }
 
   50% {
-    box-shadow: 0 0 36px rgba(245, 196, 81, 0.7);
+    opacity: 0.85;
+    transform: scale(1.03);
   }
 }
 
-@keyframes legendaryPulse {
-
-  0%,
-  100% {
-    box-shadow: 0 0 26px rgba(139, 92, 246, 0.6);
-  }
-
-  50% {
-    box-shadow: 0 0 46px rgba(34, 211, 238, 0.7);
-  }
+/* Pause the idle shine sweep entirely while the flip is running — running
+   two animations on the same element at once (flip transform + shine
+   transform) was the other contributor to the jank. */
+.flip-inner.animating .player-card::after {
+  animation-play-state: paused;
+  opacity: 0;
 }
 
 
@@ -1104,5 +1116,111 @@
 
   .card-stats {
     gap: 5px;
+  }
+}
+
+/* ===== Extra premium features ===== */
+
+/* Cursor-tracked holographic foil sweep — set via --foil-x/--foil-y in JS */
+.player-card {
+  --foil-x: 50%;
+  --foil-y: 50%;
+}
+
+.player-card.tier-legendary,
+.player-card.tier-platinum {
+  background-image: radial-gradient(circle at var(--foil-x) var(--foil-y),
+      rgba(255, 255, 255, 0.10),
+      transparent 45%);
+  background-blend-mode: screen;
+}
+
+/* Twinkling sparkle dots (fixed positions, pure CSS flicker) */
+.card-sparkle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff;
+  pointer-events: none;
+  z-index: 40;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card-sparkle {
+    animation: sparkleTwinkle 2.6s ease-in-out infinite;
+  }
+}
+
+@keyframes sparkleTwinkle {
+
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1.3);
+  }
+}
+
+/* Animated tier ring around the avatar */
+.card-avatar {
+  position: relative;
+}
+
+.card-avatar::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--accent-bright) 55%, transparent);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card-avatar::after {
+    animation: avatarRingSpin 6s linear infinite;
+  }
+}
+
+@keyframes avatarRingSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== Richer ambient background: flowing wave + more particles ===== */
+.bg-wave {
+  position: absolute;
+  inset: -20%;
+  background: conic-gradient(from 0deg,
+      transparent 0deg,
+      color-mix(in srgb, var(--accent) 6%, transparent) 90deg,
+      transparent 180deg,
+      color-mix(in srgb, var(--accent-cyan) 5%, transparent) 270deg,
+      transparent 360deg);
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .bg-wave {
+    animation: waveRotate 40s linear infinite;
+  }
+}
+
+@keyframes waveRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }

@@ -108,7 +108,7 @@ function getCurrentTheme() {
 }
 
 function applyTheme(theme) {
-    if (theme === 'crimson' || theme === 'jade') {
+    if (saved === 'crimson' || saved === 'jade' || saved === 'void') {
         document.documentElement.setAttribute('data-theme', theme);
     } else {
         document.documentElement.removeAttribute('data-theme');
@@ -128,7 +128,7 @@ document.querySelectorAll('.theme-card').forEach((card) => {
         applyTheme(theme);
         document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('active'));
         card.classList.add('active');
-        const themeNames = { neon: '⚡ Arcane Neon', crimson: '⚔️ Crimson Circuit', jade: '🟢 Jade Protocol' };
+        const themeNames = { neon: '⚡ Arcane Neon', crimson: '⚔️ Crimson Circuit', jade: '🟢 Jade Protocol', void: '⚫ Pure Void' };
         showToast(`${themeNames[theme]} theme activated`);
     });
 });
@@ -145,3 +145,23 @@ document.querySelectorAll('.rail-item').forEach((btn) => {
 // ---- Hero banner (name + initials) ----
 document.getElementById('settingsHeroName').textContent = user.username;
 document.getElementById('settingsHeroAvatar').textContent = (user.username || '??').slice(0, 2).toUpperCase();
+// ---- Avatar image upload ----
+document.getElementById('avatarUploadBtn').addEventListener('click', () => {
+    document.getElementById('avatarFileInput').click();
+});
+
+document.getElementById('avatarFileInput').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+        saveAvatarImage(reader.result);
+        applyAvatarImage('.u-avatar, .dash-avatar, .card-avatar');
+        showToast('📷 Profile photo updated');
+    };
+    reader.readAsDataURL(file);
+});
+
+// Apply saved avatar on this page load too
+applyAvatarImage('.u-avatar');

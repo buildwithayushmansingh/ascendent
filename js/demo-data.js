@@ -104,3 +104,26 @@ function logoutUser() {
   localStorage.removeItem('ascendent_username');
   window.location.href = 'index.html';
 }
+// Custom avatar image (base64), stored separately from the main user object.
+const AVATAR_KEY = 'ascendent_avatar_image';
+
+function getAvatarImage() {
+  return localStorage.getItem(AVATAR_KEY);
+}
+
+function saveAvatarImage(dataUrl) {
+  localStorage.setItem(AVATAR_KEY, dataUrl);
+}
+
+// Applies the saved avatar image (if any) to any element matching the
+// given selector, replacing its initials with a background image.
+function applyAvatarImage(selector) {
+  const img = getAvatarImage();
+  if (!img) return;
+  document.querySelectorAll(selector).forEach((el) => {
+    el.style.backgroundImage = `url(${img})`;
+    el.style.backgroundSize = 'cover';
+    el.style.backgroundPosition = 'center';
+    el.textContent = '';
+  });
+}

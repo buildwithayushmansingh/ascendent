@@ -12,7 +12,9 @@ function loadMiniCard() {
   document.getElementById('statStreak').textContent = `${user.currentStreak} days`;
   document.getElementById('statXP').textContent = `${user.xp} / ${user.xpToNextLevel}`;
 
-  document.getElementById('heroAvatar').textContent = (user.username || '??').slice(0, 2).toUpperCase();
+  const heroAvatarEl = document.getElementById('heroAvatar');
+  heroAvatarEl.textContent = (user.username || '??').slice(0, 2).toUpperCase();
+  applyAvatarImage('#heroAvatar');
   document.getElementById('ringLevel').textContent = user.level;
 
   const circumference = 2 * Math.PI * 34;

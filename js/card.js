@@ -83,6 +83,10 @@ function renderCard() {
 
   cardEl.innerHTML = `
     <div class="tilt-wrapper">
+      <span class="card-sparkle" style="top:12%; left:18%; animation-delay:0s;"></span>
+      <span class="card-sparkle" style="top:70%; left:82%; animation-delay:0.8s;"></span>
+      <span class="card-sparkle" style="top:40%; left:90%; animation-delay:1.6s;"></span>
+      <span class="card-sparkle" style="top:85%; left:12%; animation-delay:1.1s;"></span>
       <div class="card-top-row">
         <span class="identity-label">ASCENDENT PLAYER</span>
         <span class="tier-pill">${data.tier.toUpperCase()} TIER</span>
@@ -146,6 +150,7 @@ function renderCard() {
   `;
 
   animateXPBar("frontXpFill");
+  applyAvatarImage(".card-avatar");
 }
 
 
@@ -260,6 +265,8 @@ function attachTilt() {
   const flipInner = document.getElementById("flipInner");
 
   document.querySelectorAll(".tilt-wrapper").forEach((wrapper) => {
+    const cardEl = wrapper.closest(".player-card");
+
     wrapper.addEventListener("mousemove", (e) => {
       if (flipInner.classList.contains("animating") || flipInner.classList.contains("card-enter")) {
         return;
@@ -270,6 +277,12 @@ function attachTilt() {
       const rotateY = ((x / rect.width) - 0.5) * 8;
       const rotateX = ((y / rect.height) - 0.5) * -8;
       wrapper.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+      // Move the holographic foil highlight with the cursor (legendary/platinum tiers)
+      if (cardEl) {
+        cardEl.style.setProperty("--foil-x", `${(x / rect.width) * 100}%`);
+        cardEl.style.setProperty("--foil-y", `${(y / rect.height) * 100}%`);
+      }
     });
 
     wrapper.addEventListener("mouseleave", () => {
@@ -351,6 +364,12 @@ function createAmbientBackground() {
   container.className = "card-bg-ambient";
   container.setAttribute("aria-hidden", "true");
 
+  if (!PREFERS_REDUCED_MOTION) {
+    const wave = document.createElement("div");
+    wave.className = "bg-wave";
+    container.appendChild(wave);
+  }
+
   for (let i = 0; i < 3; i++) {
     const orb = document.createElement("div");
     orb.className = `bg-orb bg-orb-${i + 1}`;
@@ -358,13 +377,13 @@ function createAmbientBackground() {
   }
 
   if (!PREFERS_REDUCED_MOTION) {
-    const particleCount = window.innerWidth < 600 ? 8 : 14;
+    const particleCount = window.innerWidth < 600 ? 14 : 26;
     for (let i = 0; i < particleCount; i++) {
       const particle = document.createElement("div");
       particle.className = "bg-particle";
       particle.style.left = `${Math.random() * 100}%`;
       particle.style.animationDelay = `${Math.random() * 8}s`;
-      particle.style.animationDuration = `${10 + Math.random() * 8}s`;
+      particle.style.animationDuration = `${9 + Math.random() * 9}s`;
       container.appendChild(particle);
     }
   }

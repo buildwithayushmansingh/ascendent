@@ -53,7 +53,12 @@
 
             <!-- Avatar row -->
             <section class="u-avatar-row">
-                <div class="u-avatar" id="settingsHeroAvatar">?</div>
+                <div class="u-avatar-wrap">
+                    <div class="u-avatar" id="settingsHeroAvatar">?</div>
+                    <button type="button" class="u-avatar-edit-btn" id="avatarUploadBtn"
+                        title="Change photo">📷</button>
+                    <input type="file" id="avatarFileInput" accept="image/*" style="display:none;" />
+                </div>
                 <div class="u-avatar-info">
                     <div class="u-avatar-name" id="settingsHeroName">Player</div>
                     <div class="u-avatar-sub">Update your photo and personal details.</div>
@@ -119,112 +124,154 @@
                             <p>Choose the overall visual theme.</p>
                         </div>
                         <div class="theme-options" id="themeOptions">
-                            <button type="button" class="theme-card" data-theme-value="neon">
-                                <span class="theme-swatch-row"><span class="swatch-dot"
-                                        style="background:#8b5cf6;"></span><span class="swatch-dot"
-                                        style="background:#22d3ee;"></span></span>
-                                <span class="theme-card-name">Arcane Neon</span>
-                            </button>
-                            <button type="button" class="theme-card" data-theme-value="crimson">
-                                <span class="theme-swatch-row"><span class="swatch-dot"
-                                        style="background:#e11d48;"></span><span class="swatch-dot"
-                                        style="background:#00e0a4;"></span></span>
-                                <span class="theme-card-name">Crimson Circuit</span>
-                            </button>
                             <button type="button" class="theme-card" data-theme-value="jade">
-                                <span class="theme-swatch-row"><span class="swatch-dot"
-                                        style="background:#00b368;"></span><span class="swatch-dot"
-                                        style="background:#5cffb0;"></span></span>
-                                <span class="theme-card-name">Jade Protocol</span>
+                                <div class="tp-window" style="background:#0c1410;">
+                                    <div class="tp-topbar"><span class="tp-dot" style="background:#00b368;"></span><span
+                                            class="tp-appname">Ascendent</span><span class="tp-dot"
+                                            style="background:#5cffb0;"></span></div>
+                                    <div class="tp-mini-card" style="background:#101c16;">
+                                        <span class="tp-mini-icon" style="background:#00b368;"></span>
+                                        <span class="tp-mini-label">Quests</span>
+                                        <span class="tp-mini-btn" style="background:#5cffb0;">Open</span>
+                                    </div>
+                                </div>
+                                <div class="tp-footer"><span class="tp-name">Jade Protocol</span><span
+                                        class="tp-check">✓</span></div>
+                            </button>
+
+                            <button type="button" class="theme-card" data-theme-value="void">
+                                <div class="tp-window" style="background:#000000;">
+                                    <div class="tp-topbar"><span class="tp-dot" style="background:#ffffff;"></span><span
+                                            class="tp-appname">Ascendent</span><span class="tp-dot"
+                                            style="background:#7a7a7a;"></span></div>
+                                    <div class="tp-mini-card" style="background:#0d0d0d;">
+                                        <span class="tp-mini-icon" style="background:#ffffff;"></span>
+                                        <span class="tp-mini-label">Quests</span>
+                                        <span class="tp-mini-btn" style="background:#ffffff;">Open</span>
+                                    </div>
+                                </div>
+                                <div class="tp-footer"><span class="tp-name">Pure Void</span><span
+                                        class="tp-check">✓</span></div>
                             </button>
                         </div>
-                    </div>
-                </section>
 
-                <section class="settings-panel-v2" data-panel-content="sound">
-                    <div class="u-row">
-                        <div class="u-row-text">
-                            <h4>Reward Sounds</h4>
-                            <p>Play a sound on XP gain and level up.</p>
-                        </div>
-                        <label class="toggle-switch"><input type="checkbox" id="soundToggle" /><span
-                                class="toggle-slider"></span></label>
-                    </div>
-                    <div class="u-row">
-                        <div class="u-row-text">
-                            <h4>Achievement Sounds</h4>
-                            <p>Play a sound when a badge unlocks.</p>
-                        </div>
-                        <label class="toggle-switch"><input type="checkbox" id="achievementSoundToggle" /><span
-                                class="toggle-slider"></span></label>
-                    </div>
-                </section>
+                        <button type="button" class="theme-card" data-theme-value="crimson">
+                            <div class="tp-window" style="background:#1a0a10;">
+                                <div class="tp-topbar"><span class="tp-dot" style="background:#e11d48;"></span><span
+                                        class="tp-appname">Ascendent</span><span class="tp-dot"
+                                        style="background:#00e0a4;"></span></div>
+                                <div class="tp-mini-card" style="background:#2a0e16;">
+                                    <span class="tp-mini-icon" style="background:#e11d48;"></span>
+                                    <span class="tp-mini-label">Quests</span>
+                                    <span class="tp-mini-btn" style="background:#00e0a4;">Open</span>
+                                </div>
+                            </div>
+                            <div class="tp-footer"><span class="tp-name">Crimson Circuit</span><span
+                                    class="tp-check">✓</span></div>
+                        </button>
 
-                <section class="settings-panel-v2" data-panel-content="animations">
-                    <div class="u-row">
-                        <div class="u-row-text">
-                            <h4>Reward Animations</h4>
-                            <p>Level-up bursts, floating XP, tier upgrade overlays.</p>
-                        </div>
-                        <label class="toggle-switch"><input type="checkbox" id="animationsToggle" checked /><span
-                                class="toggle-slider"></span></label>
+                        <button type="button" class="theme-card" data-theme-value="jade">
+                            <div class="tp-window" style="background:#0c1410;">
+                                <div class="tp-topbar"><span class="tp-dot" style="background:#00b368;"></span><span
+                                        class="tp-appname">Ascendent</span><span class="tp-dot"
+                                        style="background:#5cffb0;"></span></div>
+                                <div class="tp-mini-card" style="background:#101c16;">
+                                    <span class="tp-mini-icon" style="background:#00b368;"></span>
+                                    <span class="tp-mini-label">Quests</span>
+                                    <span class="tp-mini-btn" style="background:#5cffb0;">Open</span>
+                                </div>
+                            </div>
+                            <div class="tp-footer"><span class="tp-name">Jade Protocol</span><span
+                                    class="tp-check">✓</span></div>
+                        </button>
                     </div>
-                </section>
-
-                <section class="settings-panel-v2" data-panel-content="notifications">
-                    <div class="u-row">
-                        <div class="u-row-text">
-                            <h4>Daily Quest Reminder</h4>
-                            <p>Get nudged to complete today's quest.</p>
-                        </div>
-                        <label class="toggle-switch"><input type="checkbox" id="dailyQuestToggle" checked /><span
-                                class="toggle-slider"></span></label>
-                    </div>
-                    <div class="u-row">
-                        <div class="u-row-text">
-                            <h4>Streak Reminder</h4>
-                            <p>Warn me before my streak breaks.</p>
-                        </div>
-                        <label class="toggle-switch"><input type="checkbox" id="streakReminderToggle" checked /><span
-                                class="toggle-slider"></span></label>
-                    </div>
-                    <div class="u-row">
-                        <div class="u-row-text">
-                            <h4>Achievement Notifications</h4>
-                            <p>Notify me when I unlock a badge.</p>
-                        </div>
-                        <label class="toggle-switch"><input type="checkbox" id="achievementNotifToggle" checked /><span
-                                class="toggle-slider"></span></label>
-                    </div>
-                </section>
-
-                <section class="settings-panel-v2" data-panel-content="account">
-                    <div class="u-row">
-                        <div class="u-row-text">
-                            <h4>Log Out</h4>
-                            <p>Sign out of your current session.</p>
-                        </div>
-                        <button id="settingsLogoutBtn" class="u-ghost-sm">Log Out</button>
-                    </div>
-                    <div class="u-row">
-                        <div class="u-row-text">
-                            <h4>Change Password</h4>
-                            <p>Update your account password.</p>
-                        </div>
-                        <button id="changePasswordBtn" class="u-ghost-sm">Change</button>
-                    </div>
-                    <div class="u-row">
-                        <div class="u-row-text">
-                            <h4>Delete Account</h4>
-                            <p>Permanently erase your local data.</p>
-                        </div>
-                        <button id="deleteAccountBtn" class="u-ghost-sm u-danger-sm">Delete</button>
-                    </div>
-                </section>
             </div>
+            </section>
 
-            <p id="settingsMessage" class="message"></p>
-        </main>
+            <section class="settings-panel-v2" data-panel-content="sound">
+                <div class="u-row">
+                    <div class="u-row-text">
+                        <h4>Reward Sounds</h4>
+                        <p>Play a sound on XP gain and level up.</p>
+                    </div>
+                    <label class="toggle-switch"><input type="checkbox" id="soundToggle" /><span
+                            class="toggle-slider"></span></label>
+                </div>
+                <div class="u-row">
+                    <div class="u-row-text">
+                        <h4>Achievement Sounds</h4>
+                        <p>Play a sound when a badge unlocks.</p>
+                    </div>
+                    <label class="toggle-switch"><input type="checkbox" id="achievementSoundToggle" /><span
+                            class="toggle-slider"></span></label>
+                </div>
+            </section>
+
+            <section class="settings-panel-v2" data-panel-content="animations">
+                <div class="u-row">
+                    <div class="u-row-text">
+                        <h4>Reward Animations</h4>
+                        <p>Level-up bursts, floating XP, tier upgrade overlays.</p>
+                    </div>
+                    <label class="toggle-switch"><input type="checkbox" id="animationsToggle" checked /><span
+                            class="toggle-slider"></span></label>
+                </div>
+            </section>
+
+            <section class="settings-panel-v2" data-panel-content="notifications">
+                <div class="u-row">
+                    <div class="u-row-text">
+                        <h4>Daily Quest Reminder</h4>
+                        <p>Get nudged to complete today's quest.</p>
+                    </div>
+                    <label class="toggle-switch"><input type="checkbox" id="dailyQuestToggle" checked /><span
+                            class="toggle-slider"></span></label>
+                </div>
+                <div class="u-row">
+                    <div class="u-row-text">
+                        <h4>Streak Reminder</h4>
+                        <p>Warn me before my streak breaks.</p>
+                    </div>
+                    <label class="toggle-switch"><input type="checkbox" id="streakReminderToggle" checked /><span
+                            class="toggle-slider"></span></label>
+                </div>
+                <div class="u-row">
+                    <div class="u-row-text">
+                        <h4>Achievement Notifications</h4>
+                        <p>Notify me when I unlock a badge.</p>
+                    </div>
+                    <label class="toggle-switch"><input type="checkbox" id="achievementNotifToggle" checked /><span
+                            class="toggle-slider"></span></label>
+                </div>
+            </section>
+
+            <section class="settings-panel-v2" data-panel-content="account">
+                <div class="u-row">
+                    <div class="u-row-text">
+                        <h4>Log Out</h4>
+                        <p>Sign out of your current session.</p>
+                    </div>
+                    <button id="settingsLogoutBtn" class="u-ghost-sm">Log Out</button>
+                </div>
+                <div class="u-row">
+                    <div class="u-row-text">
+                        <h4>Change Password</h4>
+                        <p>Update your account password.</p>
+                    </div>
+                    <button id="changePasswordBtn" class="u-ghost-sm">Change</button>
+                </div>
+                <div class="u-row">
+                    <div class="u-row-text">
+                        <h4>Delete Account</h4>
+                        <p>Permanently erase your local data.</p>
+                    </div>
+                    <button id="deleteAccountBtn" class="u-ghost-sm u-danger-sm">Delete</button>
+                </div>
+            </section>
+    </div>
+
+    <p id="settingsMessage" class="message"></p>
+    </main>
     </div>
 
     <div id="toastContainer" class="toast-container"></div>
