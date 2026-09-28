@@ -2,132 +2,109 @@
 <html lang="en">
 
 <head>
-  <script src="js/theme.js"></script>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Ascendent — Player Card</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <script src="js/theme.js"></script>
 
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/card.css" />
+  <link rel="stylesheet" href="css/card-themes.css" />
 </head>
-
 
 <body>
 
-  <!-- ================= TOP BAR ================= -->
+  <!-- Existing animated background stays untouched -->
+  <div class="card-page">
 
-  <header class="card-topbar">
+    <div class="card-page-header">
 
-    <a href="dashboard.html" class="back-link">
-      ← Back to Dashboard
-    </a>
+      <a href="dashboard.html" class="back-link">
+        ← Back to Dashboard
+      </a>
 
+      <section class="card-theme-section">
+        <span class="card-theme-label">CARD THEME</span>
 
-    <!-- PROFILE AVATAR -->
+        <div class="card-theme-selector" id="cardThemeSelector">
 
+          <button type="button" class="card-theme-btn" data-card-theme="holographic">
+            <span class="theme-dot holographic-dot"></span>
+            Holographic
+          </button>
 
+          <button type="button" class="card-theme-btn" data-card-theme="warrior">
+            <span class="theme-dot warrior-dot"></span>
+            Warrior
+          </button>
 
+          <button type="button" class="card-theme-btn" data-card-theme="cosmic">
+            <span class="theme-dot cosmic-dot"></span>
+            Cosmic
+          </button>
 
-    <button id="logoutBtn" class="ghost-btn">
-      Log Out
-    </button>
+          <button type="button" class="card-theme-btn" data-card-theme="minimal">
+            <span class="theme-dot minimal-dot"></span>
+            Minimal
+          </button>
 
-  </header>
-
-
-
-  <!-- ================= PLAYER CARD ================= -->
-
-  <main class="card-page">
-
-    <div class="flip-container">
-
-      <div id="flipInner" class="flip-inner">
-
-        <!-- FRONT -->
-
-        <div id="playerCard" class="player-card tier-gold flip-front">
-          <!--
-            Filled dynamically by card.js
-            from SAMPLE_CARD_DATA
-          -->
         </div>
+      </section>
 
+    </div>
 
-        <!-- BACK -->
+    <main class="card-main">
 
-        <div id="futureSelfCard" class="player-card tier-gold flip-back">
-          <!--
-            Filled dynamically by card.js
-            from SAMPLE_CARD_DATA
-          -->
+      <div class="flip-container">
+        <div id="flipInner" class="flip-inner">
+
+          <div id="playerCard" class="player-card tier-gold flip-front" data-card-theme="holographic">
+          </div>
+
+          <div id="futureSelfCard" class="player-card tier-gold flip-back" data-card-theme="holographic">
+          </div>
+
         </div>
+      </div>
+
+      <div class="card-actions">
+
+        <button id="flipCardBtn" class="card-action-btn primary-card-btn">
+          🔮 View Future Self
+        </button>
+
+        <button id="shareCardBtn" class="ghost-btn">
+          🔗 Share Card
+        </button>
+
+        <button id="downloadCardBtn" class="ghost-btn">
+          ↓ Download Card
+        </button>
+
+        <button id="profileLinkBtn" class="ghost-btn">
+          👤 Profile Link
+        </button>
 
       </div>
 
-    </div>
+    </main>
 
+  </div>
 
-    <!-- ================= FLIP BUTTON ================= -->
-
-    <button id="flipCardBtn">
-      🔮 View Future Self
-    </button>
-
-
-    <!-- ================= SHARE BUTTONS ================= -->
-
-    <div class="card-share-row">
-
-      <button id="shareCardBtn" class="ghost-btn">
-        🔗 Share Card
-      </button>
-
-
-      <button id="downloadCardBtn" class="ghost-btn">
-        ⬇️ Download Card
-      </button>
-
-
-      <button id="profileLinkBtn" class="ghost-btn">
-        👤 Profile Link
-      </button>
-
-    </div>
-
-  </main>
-
-
-
-  <!-- ================= TOAST ================= -->
-
+  <!-- Toast -->
   <div id="toastContainer" class="toast-container"></div>
 
 
-
-  <!-- ================= SCRIPTS ================= -->
-
+  <!-- Existing JS -->
   <script src="js/demo-data.js"></script>
-
   <script src="js/rewards.js"></script>
-
   <script src="js/card.js"></script>
-
   <script src="js/sidebar-tilt.js"></script>
-
-
-  <!-- Apply saved profile image to topbar -->
-
-  <script>
-    if (typeof applyAvatarImage === "function") {
-      applyAvatarImage("#cardPageAvatar");
-    }
-  </script>
-
 
 </body>
 

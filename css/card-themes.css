@@ -1,0 +1,1029 @@
+/* =========================================================
+   ASCENDENT — PLAYER CARD THEMES
+   =========================================================
+   Themes:
+   1. Holographic Glass
+   2. Warrior Edition
+   3. Cosmic Universe
+   4. Minimal Dark
+
+   Theme is controlled through:
+
+   data-card-theme="holographic"
+   data-card-theme="warrior"
+   data-card-theme="cosmic"
+   data-card-theme="minimal"
+
+   ========================================================= */
+
+
+/* =========================================================
+   THEME VARIABLES
+   ========================================================= */
+
+.player-card[data-card-theme="holographic"] {
+
+    --theme-primary: #8dfcff;
+    --theme-secondary: #b28cff;
+    --theme-accent: #ff8de8;
+
+    --theme-text: #ffffff;
+    --theme-muted: rgba(255, 255, 255, 0.52);
+
+    --theme-border: rgba(255, 255, 255, 0.20);
+
+    --theme-glow:
+        rgba(141, 252, 255, 0.22);
+
+    --theme-surface:
+        rgba(255, 255, 255, 0.055);
+
+    --theme-gradient:
+        linear-gradient(135deg,
+            rgba(120, 255, 255, 0.16),
+            rgba(180, 120, 255, 0.12),
+            rgba(255, 120, 220, 0.12));
+}
+
+
+.player-card[data-card-theme="warrior"] {
+
+    --theme-primary: #ff4d3d;
+    --theme-secondary: #ff8a3d;
+    --theme-accent: #ffd15c;
+
+    --theme-text: #fffaf5;
+    --theme-muted: rgba(255, 225, 210, 0.52);
+
+    --theme-border: rgba(255, 91, 61, 0.28);
+
+    --theme-glow:
+        rgba(255, 72, 48, 0.24);
+
+    --theme-surface:
+        rgba(255, 75, 45, 0.055);
+
+    --theme-gradient:
+        linear-gradient(135deg,
+            rgba(255, 60, 40, 0.16),
+            rgba(255, 120, 50, 0.10),
+            rgba(255, 205, 80, 0.08));
+}
+
+
+.player-card[data-card-theme="cosmic"] {
+
+    --theme-primary: #9d7cff;
+    --theme-secondary: #42b8ff;
+    --theme-accent: #ec7cff;
+
+    --theme-text: #ffffff;
+    --theme-muted: rgba(215, 210, 255, 0.52);
+
+    --theme-border: rgba(150, 120, 255, 0.24);
+
+    --theme-glow:
+        rgba(130, 95, 255, 0.25);
+
+    --theme-surface:
+        rgba(110, 80, 255, 0.055);
+
+    --theme-gradient:
+        linear-gradient(135deg,
+            rgba(120, 80, 255, 0.18),
+            rgba(50, 150, 255, 0.10),
+            rgba(240, 80, 230, 0.12));
+}
+
+
+.player-card[data-card-theme="minimal"] {
+
+    --theme-primary: #ffffff;
+    --theme-secondary: #bcbcbc;
+    --theme-accent: #707070;
+
+    --theme-text: #ffffff;
+    --theme-muted: rgba(255, 255, 255, 0.44);
+
+    --theme-border: rgba(255, 255, 255, 0.14);
+
+    --theme-glow:
+        rgba(255, 255, 255, 0.10);
+
+    --theme-surface:
+        rgba(255, 255, 255, 0.035);
+
+    --theme-gradient:
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.06),
+            rgba(255, 255, 255, 0.015));
+}
+
+
+/* =========================================================
+   BASE THEME OVERRIDE
+   ========================================================= */
+
+.player-card[data-card-theme] {
+
+    background:
+        linear-gradient(145deg,
+            rgba(25, 25, 30, 0.97),
+            rgba(7, 7, 10, 0.99));
+
+    border-color:
+        var(--theme-border);
+
+    color:
+        var(--theme-text);
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.58),
+        0 0 40px var(--theme-glow),
+        inset 0 0 50px var(--theme-surface);
+
+    transition:
+        border-color 0.45s ease,
+        box-shadow 0.45s ease,
+        background 0.45s ease;
+}
+
+
+/* =========================================================
+   THEME BACKGROUND LAYER
+   ========================================================= */
+
+.player-card[data-card-theme]::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: inherit;
+
+    pointer-events: none;
+
+    z-index: 0;
+
+    background:
+        var(--theme-gradient);
+
+    opacity: 0.9;
+
+    mix-blend-mode: screen;
+}
+
+
+/* =========================================================
+   HOLOGRAPHIC GLASS
+   ========================================================= */
+
+.player-card[data-card-theme="holographic"] {
+
+    background:
+        linear-gradient(145deg,
+            rgba(22, 30, 36, 0.96),
+            rgba(11, 12, 18, 0.98));
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.60),
+        0 0 40px rgba(100, 240, 255, 0.12),
+        0 0 80px rgba(210, 100, 255, 0.06),
+        inset 0 0 45px rgba(255, 255, 255, 0.025);
+}
+
+
+/* Holographic rainbow layer */
+
+.player-card[data-card-theme="holographic"]::before {
+
+    background:
+        linear-gradient(115deg,
+            transparent 0%,
+            rgba(80, 255, 255, 0.08) 18%,
+            rgba(100, 130, 255, 0.10) 34%,
+            rgba(220, 100, 255, 0.09) 50%,
+            rgba(255, 100, 190, 0.08) 66%,
+            rgba(100, 255, 220, 0.08) 82%,
+            transparent 100%);
+
+    opacity: 0.75;
+
+    animation:
+        holographicShift 8s ease-in-out infinite;
+}
+
+
+@keyframes holographicShift {
+
+    0%,
+    100% {
+        transform:
+            translateX(-8%);
+    }
+
+    50% {
+        transform:
+            translateX(8%);
+    }
+}
+
+
+/* Glass border */
+
+.player-card[data-card-theme="holographic"] {
+
+    border:
+        1px solid rgba(180, 255, 255, 0.25);
+}
+
+
+/* Holographic identity */
+
+.player-card[data-card-theme="holographic"] .card-name {
+
+    background:
+        linear-gradient(90deg,
+            #ffffff,
+            #8fffff,
+            #d5a1ff,
+            #ffffff);
+
+    background-size:
+        250% auto;
+
+    -webkit-background-clip:
+        text;
+
+    background-clip:
+        text;
+
+    color:
+        transparent;
+
+    animation:
+        holographicText 6s linear infinite;
+}
+
+
+@keyframes holographicText {
+
+    to {
+        background-position:
+            250% center;
+    }
+}
+
+
+/* =========================================================
+   WARRIOR EDITION
+   ========================================================= */
+
+.player-card[data-card-theme="warrior"] {
+
+    background:
+        linear-gradient(145deg,
+            rgba(32, 12, 10, 0.98),
+            rgba(12, 7, 7, 0.99));
+
+    border:
+        1px solid rgba(255, 80, 55, 0.32);
+
+    box-shadow:
+        0 25px 75px rgba(0, 0, 0, 0.65),
+        0 0 35px rgba(255, 55, 35, 0.12),
+        inset 0 0 55px rgba(255, 70, 40, 0.035);
+}
+
+
+/* Warrior red aura */
+
+.player-card[data-card-theme="warrior"]::before {
+
+    background:
+        radial-gradient(circle at 85% 15%,
+            rgba(255, 60, 40, 0.16),
+            transparent 30%),
+        radial-gradient(circle at 15% 85%,
+            rgba(255, 150, 40, 0.10),
+            transparent 32%),
+        linear-gradient(135deg,
+            rgba(255, 50, 30, 0.10),
+            transparent 45%);
+}
+
+
+/* Warrior top line */
+
+.player-card[data-card-theme="warrior"] .card-top-row {
+
+    border-bottom:
+        1px solid rgba(255, 75, 50, 0.12);
+
+    padding-bottom: 10px;
+}
+
+
+/* Warrior title */
+
+.player-card[data-card-theme="warrior"] .card-title-pill {
+
+    background:
+        rgba(255, 65, 40, 0.10);
+
+    border-color:
+        rgba(255, 75, 45, 0.22);
+
+    color:
+        #ffb09d;
+
+    box-shadow:
+        0 0 15px rgba(255, 60, 40, 0.08);
+}
+
+
+/* Warrior level */
+
+.player-card[data-card-theme="warrior"] .card-level-num {
+
+    color:
+        #ff765d;
+
+    text-shadow:
+        0 0 18px rgba(255, 70, 45, 0.38);
+}
+
+
+/* Warrior XP */
+
+.player-card[data-card-theme="warrior"] .card-xp-bar-fill {
+
+    background:
+        linear-gradient(90deg,
+            #b72b1e,
+            #ff5239,
+            #ffb347);
+
+    box-shadow:
+        0 0 18px rgba(255, 70, 45, 0.40);
+}
+
+
+/* Warrior avatar */
+
+.player-card[data-card-theme="warrior"] .card-avatar {
+
+    border-color:
+        rgba(255, 85, 55, 0.80);
+
+    box-shadow:
+        0 0 0 4px rgba(255, 70, 45, 0.06),
+        0 0 28px rgba(255, 65, 40, 0.25);
+}
+
+
+/* Warrior badge */
+
+.player-card[data-card-theme="warrior"] .badge-circle {
+
+    border-color:
+        rgba(255, 80, 55, 0.18);
+
+    background:
+        rgba(255, 60, 40, 0.055);
+}
+
+
+/* =========================================================
+   COSMIC UNIVERSE
+   ========================================================= */
+
+.player-card[data-card-theme="cosmic"] {
+
+    background:
+        radial-gradient(circle at 20% 20%,
+            rgba(100, 70, 255, 0.16),
+            transparent 32%),
+        radial-gradient(circle at 80% 75%,
+            rgba(50, 160, 255, 0.12),
+            transparent 32%),
+        linear-gradient(145deg,
+            rgba(15, 12, 35, 0.98),
+            rgba(5, 7, 18, 0.99));
+
+    border:
+        1px solid rgba(145, 120, 255, 0.30);
+
+    box-shadow:
+        0 25px 75px rgba(0, 0, 0, 0.65),
+        0 0 40px rgba(110, 80, 255, 0.15),
+        inset 0 0 65px rgba(100, 70, 255, 0.035);
+}
+
+
+/* Cosmic star field */
+
+.player-card[data-card-theme="cosmic"]::before {
+
+    background-image:
+
+        radial-gradient(circle at 12% 20%,
+            rgba(255, 255, 255, 0.80) 0 1px,
+            transparent 2px),
+
+        radial-gradient(circle at 82% 18%,
+            rgba(170, 210, 255, 0.75) 0 1px,
+            transparent 2px),
+
+        radial-gradient(circle at 65% 70%,
+            rgba(220, 180, 255, 0.70) 0 1px,
+            transparent 2px),
+
+        radial-gradient(circle at 25% 78%,
+            rgba(150, 210, 255, 0.70) 0 1px,
+            transparent 2px),
+
+        radial-gradient(circle at 92% 55%,
+            rgba(255, 255, 255, 0.65) 0 1px,
+            transparent 2px);
+
+    background-size:
+        90px 90px,
+        130px 130px,
+        110px 110px,
+        150px 150px,
+        120px 120px;
+
+    opacity:
+        0.75;
+}
+
+
+/* Cosmic name */
+
+.player-card[data-card-theme="cosmic"] .card-name {
+
+    background:
+        linear-gradient(90deg,
+            #ffffff,
+            #bda8ff,
+            #70c9ff,
+            #ffffff);
+
+    -webkit-background-clip:
+        text;
+
+    background-clip:
+        text;
+
+    color:
+        transparent;
+
+    background-size:
+        200% auto;
+
+    animation:
+        cosmicText 7s ease-in-out infinite;
+}
+
+
+@keyframes cosmicText {
+
+    0%,
+    100% {
+        background-position:
+            0% center;
+    }
+
+    50% {
+        background-position:
+            100% center;
+    }
+}
+
+
+/* Cosmic level */
+
+.player-card[data-card-theme="cosmic"] .card-level-num {
+
+    color:
+        #b7a2ff;
+
+    text-shadow:
+        0 0 18px rgba(145, 105, 255, 0.42);
+}
+
+
+/* Cosmic XP */
+
+.player-card[data-card-theme="cosmic"] .card-xp-bar-fill {
+
+    background:
+        linear-gradient(90deg,
+            #6545e8,
+            #9d72ff,
+            #54c9ff);
+
+    box-shadow:
+        0 0 20px rgba(125, 95, 255, 0.45);
+}
+
+
+/* Cosmic avatar */
+
+.player-card[data-card-theme="cosmic"] .card-avatar {
+
+    border-color:
+        rgba(155, 125, 255, 0.80);
+
+    box-shadow:
+        0 0 0 4px rgba(130, 100, 255, 0.07),
+        0 0 30px rgba(120, 90, 255, 0.28);
+}
+
+
+/* =========================================================
+   MINIMAL DARK
+   ========================================================= */
+
+.player-card[data-card-theme="minimal"] {
+
+    background:
+        linear-gradient(145deg,
+            #151515,
+            #090909);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.12);
+
+    box-shadow:
+        0 25px 65px rgba(0, 0, 0, 0.65),
+        inset 0 0 35px rgba(255, 255, 255, 0.012);
+}
+
+
+/* Minimal background */
+
+.player-card[data-card-theme="minimal"]::before {
+
+    background:
+        linear-gradient(145deg,
+            rgba(255, 255, 255, 0.035),
+            transparent 40%);
+
+    opacity:
+        1;
+}
+
+
+/* Minimal name */
+
+.player-card[data-card-theme="minimal"] .card-name {
+
+    color:
+        #ffffff;
+
+    background:
+        none;
+
+    -webkit-background-clip:
+        initial;
+
+    background-clip:
+        initial;
+
+    animation:
+        none;
+}
+
+
+/* Minimal title */
+
+.player-card[data-card-theme="minimal"] .card-title-pill {
+
+    background:
+        rgba(255, 255, 255, 0.045);
+
+    border-color:
+        rgba(255, 255, 255, 0.10);
+
+    color:
+        rgba(255, 255, 255, 0.72);
+}
+
+
+/* Minimal XP */
+
+.player-card[data-card-theme="minimal"] .card-xp-bar-fill {
+
+    background:
+        linear-gradient(90deg,
+            #777777,
+            #ffffff);
+
+    box-shadow:
+        0 0 12px rgba(255, 255, 255, 0.18);
+}
+
+
+/* Minimal avatar */
+
+.player-card[data-card-theme="minimal"] .card-avatar {
+
+    border-color:
+        rgba(255, 255, 255, 0.35);
+
+    box-shadow:
+        0 0 0 3px rgba(255, 255, 255, 0.035);
+}
+
+
+/* Minimal badges */
+
+.player-card[data-card-theme="minimal"] .badge-circle {
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    border-color:
+        rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   COMMON THEME ELEMENTS
+   ========================================================= */
+
+.player-card[data-card-theme] .tier-pill {
+
+    color:
+        var(--theme-primary);
+
+    border-color:
+        var(--theme-border);
+
+    background:
+        var(--theme-surface);
+
+    box-shadow:
+        0 0 15px var(--theme-glow);
+}
+
+
+.player-card[data-card-theme] .card-username {
+
+    color:
+        var(--theme-muted);
+}
+
+
+.player-card[data-card-theme] .card-level-next {
+
+    color:
+        var(--theme-muted);
+}
+
+
+.player-card[data-card-theme] .card-stat-tile {
+
+    background:
+        var(--theme-surface);
+
+    border-color:
+        var(--theme-border);
+}
+
+
+.player-card[data-card-theme] .stat-big {
+
+    color:
+        var(--theme-primary);
+
+    text-shadow:
+        0 0 15px var(--theme-glow);
+}
+
+
+.player-card[data-card-theme] .badge-circle {
+
+    background:
+        var(--theme-surface);
+
+    border-color:
+        var(--theme-border);
+}
+
+
+.player-card[data-card-theme] .card-footer-row {
+
+    border-color:
+        var(--theme-border);
+
+    color:
+        var(--theme-muted);
+}
+
+
+/* =========================================================
+   CARD CORNERS
+   ========================================================= */
+
+.player-card[data-card-theme] .card-corner {
+
+    border-color:
+        var(--theme-border);
+
+    box-shadow:
+        0 0 8px var(--theme-glow);
+}
+
+
+/* =========================================================
+   SPARKLES
+   ========================================================= */
+
+.player-card[data-card-theme] .card-sparkle {
+
+    background:
+        var(--theme-primary);
+
+    box-shadow:
+        0 0 8px var(--theme-primary),
+        0 0 18px var(--theme-glow);
+}
+
+
+/* =========================================================
+   FUTURE SELF / BACK SIDE
+   ========================================================= */
+
+.player-card[data-card-theme] .back-section-title {
+
+    color:
+        var(--theme-primary);
+
+    text-shadow:
+        0 0 12px var(--theme-glow);
+}
+
+
+.player-card[data-card-theme] .stat-grid-item {
+
+    background:
+        var(--theme-surface);
+
+    border-color:
+        var(--theme-border);
+}
+
+
+.player-card[data-card-theme] .stat-grid-item b {
+
+    color:
+        var(--theme-primary);
+}
+
+
+.player-card[data-card-theme] .achievement-mini {
+
+    background:
+        var(--theme-surface);
+
+    border-color:
+        var(--theme-border);
+}
+
+
+.player-card[data-card-theme] .achievement-mini-icon {
+
+    filter:
+        drop-shadow(0 0 7px var(--theme-glow));
+}
+
+
+.player-card[data-card-theme] .challenge-box {
+
+    background:
+        var(--theme-surface);
+
+    border-color:
+        var(--theme-border);
+}
+
+
+.player-card[data-card-theme] .challenge-label {
+
+    color:
+        var(--theme-text);
+}
+
+
+.player-card[data-card-theme] .challenge-count {
+
+    color:
+        var(--theme-primary);
+}
+
+
+.player-card[data-card-theme] .mini-stats-row {
+
+    color:
+        var(--theme-muted);
+}
+
+
+.player-card[data-card-theme] .mini-stats-row b {
+
+    color:
+        var(--theme-primary);
+}
+
+
+.player-card[data-card-theme] .identity-list>div {
+
+    border-color:
+        var(--theme-border);
+}
+
+
+.player-card[data-card-theme] .identity-list b {
+
+    color:
+        var(--theme-text);
+}
+
+
+.player-card[data-card-theme] .future-row {
+
+    background:
+        var(--theme-surface);
+
+    border-color:
+        var(--theme-border);
+}
+
+
+.player-card[data-card-theme] .future-label {
+
+    color:
+        var(--theme-primary);
+}
+
+
+.player-card[data-card-theme] .future-detail {
+
+    color:
+        var(--theme-muted);
+}
+
+
+/* =========================================================
+   THEME TRANSITION
+   ========================================================= */
+
+.player-card[data-card-theme] * {
+
+    transition:
+        color 0.35s ease,
+        background-color 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+/* =========================================================
+   THEME SELECTOR — MATCH THE CARD
+   ========================================================= */
+
+.card-theme-btn[data-card-theme="holographic"].active {
+
+    background:
+        linear-gradient(135deg,
+            rgba(80, 255, 255, 0.12),
+            rgba(190, 100, 255, 0.10));
+
+    border-color:
+        rgba(130, 255, 255, 0.25);
+
+    color:
+        #a8ffff;
+
+    box-shadow:
+        0 0 18px rgba(100, 240, 255, 0.08);
+}
+
+
+.card-theme-btn[data-card-theme="warrior"].active {
+
+    background:
+        rgba(255, 65, 40, 0.10);
+
+    border-color:
+        rgba(255, 80, 55, 0.25);
+
+    color:
+        #ff9b87;
+
+    box-shadow:
+        0 0 18px rgba(255, 65, 40, 0.08);
+}
+
+
+.card-theme-btn[data-card-theme="cosmic"].active {
+
+    background:
+        linear-gradient(135deg,
+            rgba(120, 80, 255, 0.12),
+            rgba(60, 160, 255, 0.08));
+
+    border-color:
+        rgba(145, 120, 255, 0.26);
+
+    color:
+        #bcaaff;
+
+    box-shadow:
+        0 0 18px rgba(120, 90, 255, 0.09);
+}
+
+
+.card-theme-btn[data-card-theme="minimal"].active {
+
+    background:
+        rgba(255, 255, 255, 0.07);
+
+    border-color:
+        rgba(255, 255, 255, 0.15);
+
+    color:
+        #ffffff;
+
+    box-shadow:
+        0 0 15px rgba(255, 255, 255, 0.04);
+}
+
+
+/* =========================================================
+   HOVER EFFECTS
+   ========================================================= */
+
+@media (hover: hover) {
+
+    .player-card[data-card-theme="holographic"]:hover {
+
+        box-shadow:
+            0 30px 80px rgba(0, 0, 0, 0.62),
+            0 0 50px rgba(100, 240, 255, 0.15),
+            0 0 90px rgba(210, 100, 255, 0.08);
+    }
+
+
+    .player-card[data-card-theme="warrior"]:hover {
+
+        box-shadow:
+            0 30px 80px rgba(0, 0, 0, 0.68),
+            0 0 48px rgba(255, 60, 40, 0.18);
+    }
+
+
+    .player-card[data-card-theme="cosmic"]:hover {
+
+        box-shadow:
+            0 30px 80px rgba(0, 0, 0, 0.68),
+            0 0 55px rgba(120, 90, 255, 0.19);
+    }
+
+
+    .player-card[data-card-theme="minimal"]:hover {
+
+        box-shadow:
+            0 30px 75px rgba(0, 0, 0, 0.72),
+            0 0 25px rgba(255, 255, 255, 0.035);
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .player-card[data-card-theme="holographic"]::before,
+    .player-card[data-card-theme="holographic"] .card-name,
+    .player-card[data-card-theme="cosmic"] .card-name {
+
+        animation:
+            none !important;
+    }
+
+}
