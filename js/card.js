@@ -140,65 +140,31 @@ function getSavedCardTheme() {
     : "holographic";
 }
 
-
 function applyCardTheme(theme) {
+  const safeTheme = CARD_THEMES.includes(theme)
+    ? theme
+    : "holographic";
 
-  if (!CARD_THEMES.includes(theme)) {
-    theme = "holographic";
-  }
+  // Card theme
+  [playerCard, futureSelfCard].forEach(card => {
+    if (card) {
+      card.dataset.cardTheme = safeTheme;
+    }
+  });
 
-  const frontCard =
-    document.getElementById("playerCard");
+  // Sidebar + page theme
+  document.body.dataset.cardTheme = safeTheme;
 
-  const backCard =
-    document.getElementById("futureSelfCard");
+  // Theme buttons
+  document.querySelectorAll(".card-theme-btn").forEach(btn => {
+    const active = btn.dataset.cardTheme === safeTheme;
 
-  const flipInner =
-    document.getElementById("flipInner");
+    btn.classList.toggle("active", active);
+    btn.setAttribute("aria-pressed", String(active));
+  });
 
-  if (frontCard) {
-    frontCard.dataset.cardTheme = theme;
-  }
-
-  if (backCard) {
-    backCard.dataset.cardTheme = theme;
-  }
-
-  if (flipInner) {
-    flipInner.dataset.cardTheme = theme;
-  }
-
-  // IMPORTANT:
-  // Only theme buttons.
-  document
-    .querySelectorAll(
-      ".card-theme-btn[data-card-theme]"
-    )
-    .forEach((button) => {
-
-      const buttonTheme =
-        button.dataset.cardTheme;
-
-      const active =
-        buttonTheme === theme;
-
-      button.classList.toggle(
-        "active",
-        active
-      );
-
-      button.setAttribute(
-        "aria-pressed",
-        active ? "true" : "false"
-      );
-    });
-
-  localStorage.setItem(
-    CARD_THEME_STORAGE_KEY,
-    theme
-  );
+  localStorage.setItem(CARD_THEME_KEY, safeTheme);
 }
-
 
 function setupCardThemes() {
 

@@ -1581,6 +1581,27 @@ button:hover {
   }
 }
 
+/* Clickable profile avatar */
+
+.sidebar-avatar-link {
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.sidebar-avatar-link:hover {
+  transform: scale(1.06);
+  filter: brightness(1.12);
+}
+
+.sidebar-avatar-link:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
+}
+
 /* ===== Onboarding wizard ===== */
 .onboarding-page {
   min-height: 100vh;
@@ -6324,4 +6345,32 @@ to {
   .rgb-hex-row input {
     min-width: 150px;
   }
+}
+
+/* =========================================
+   SIDEBAR THEME SYNC
+========================================= */
+
+body[data-card-theme="holographic"] .sidebar,
+body[data-card-theme="holographic"] .side-panel {
+  background: rgba(12, 12, 18, 0.72);
+}
+
+body[data-card-theme="warrior"] .sidebar,
+body[data-card-theme="warrior"] .side-panel {
+  background: linear-gradient(180deg,
+      rgba(30, 22, 16, 0.96),
+      rgba(12, 12, 12, 0.98));
+}
+
+body[data-card-theme="cosmic"] .sidebar,
+body[data-card-theme="cosmic"] .side-panel {
+  background: linear-gradient(180deg,
+      rgba(15, 10, 35, 0.96),
+      rgba(5, 8, 25, 0.98));
+}
+
+body[data-card-theme="minimal"] .sidebar,
+body[data-card-theme="minimal"] .side-panel {
+  background: rgba(12, 12, 12, 0.96);
 }
