@@ -665,8 +665,8 @@ button:hover {
 
   background:
     linear-gradient(180deg,
-      rgba(12, 12, 12, .98),
-      rgba(8, 8, 8, .98));
+      color-mix(in srgb, var(--bg-deep) 92%, black),
+      color-mix(in srgb, var(--bg-deep) 98%, black));
 
   border-right: 1px solid color-mix(in srgb,
       var(--accent-bright) 12%,
@@ -4074,6 +4074,25 @@ to {
   font-weight: 700;
   color: var(--accent-bright);
   box-shadow: 0 0 16px color-mix(in srgb, var(--accent-bright) 35%, transparent);
+}
+
+a.frontier-medallion {
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+a.frontier-medallion:hover {
+  transform: scale(1.06);
+  filter: brightness(1.15);
+}
+
+a.frontier-medallion:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
 }
 
 .frontier-title {
