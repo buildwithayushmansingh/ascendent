@@ -7,7 +7,8 @@ const SETTINGS_KEY = 'ascendent_settings';
 function getSettings() {
     const stored = localStorage.getItem(SETTINGS_KEY);
     return stored ? JSON.parse(stored) : {
-        accent: '#e8a33d',
+        accent: 'none',
+        accentCustom: false,
         soundEnabled: false,
         achievementSoundEnabled: false,
         animationsEnabled: true,
@@ -50,34 +51,16 @@ function mixHex(hex, target, amount) {
 }
 
 function applyAccent(accent) {
-    const root = document.documentElement;
-
-    // NONE = neutral grayscale accent
-    if (!accent || accent === 'none') {
-        root.dataset.accent = 'none';
-
-        root.style.setProperty('--accent-bright', '#9a9a9a');
-        root.style.setProperty('--accent', '#555555');
-        root.style.setProperty('--accent-cyan', '#b5b5b5');
-        root.style.setProperty('--border-bright', '#707070');
-
+    if (!accent || accent === 'none' || accent === 'theme') {
+        window.AscendentTheme.clearAccent();
         return;
     }
-
-    const rgb = hexToRgb(accent);
-    if (!rgb) return;
-
-    root.dataset.accent = 'custom';
-
-    root.style.setProperty('--accent-bright', accent);
-    root.style.setProperty('--accent', mixHex(accent, '#000000', 0.18));
-    root.style.setProperty('--accent-cyan', mixHex(accent, '#ffffff', 0.25));
-    root.style.setProperty('--border-bright', mixHex(accent, '#ffffff', 0.08));
+    window.AscendentTheme.applyAccent(accent);
 }
 
 function saveSettings(settings) {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-    applyAccent(settings.accent);
+    applyAccent(settings.accentCustom ? settings.accent : 'none');
 }
 
 // ---- Load current values into the form ----
@@ -130,6 +113,7 @@ function updateCustomRgbAccent(save = true) {
     if (save) {
         const current = getSettings();
         current.accent = hex;
+        current.accentCustom = true;
         saveSettings(current);
 
         updateAccentSelection(hex);
@@ -189,12 +173,10 @@ function updateRgbControls(hex) {
         `0 0 20px ${hex}`;
 }
 
-updateAccentSelection(settings.accent);
-applyAccent(settings.accent);
-
-if (settings.accent !== 'none') {
-    updateRgbControls(settings.accent);
-}
+const startAccent = settings.accentCustom ? settings.accent : 'none';
+updateAccentSelection(startAccent);
+applyAccent(startAccent);
+if (startAccent !== 'none') updateRgbControls(startAccent);
 
 // Preset colors + None
 document.querySelectorAll('.swatch').forEach((sw) => {
@@ -204,6 +186,7 @@ document.querySelectorAll('.swatch').forEach((sw) => {
 
         const current = getSettings();
         current.accent = accent;
+        current.accentCustom = accent !== 'none';
 
         saveSettings(current);
         updateAccentSelection(accent);
@@ -276,7 +259,11 @@ function applyTheme(theme) {
         document.documentElement.removeAttribute('data-theme');
     }
 }
-
+const s = getSettings();
+s.accent = 'none'; s.accentCustom = false;
+localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
+window.AscendentTheme.clearAccent();
+updateAccentSelection('none');
 // Apply immediately on load too (theme.js already did this before paint,
 // this just keeps settings.js consistent if it ever runs standalone)
 applyTheme(getCurrentTheme());

@@ -39,7 +39,7 @@
   border-radius: 50%;
 
   background: radial-gradient(circle,
-      rgba(255, 190, 70, 0.10),
+      rgba(var(--accent-bright-rgb), 0.10),
       transparent 70%);
 
   filter: blur(55px);
@@ -60,7 +60,7 @@
   border-radius: 50%;
 
   background: radial-gradient(circle,
-      rgba(120, 80, 255, 0.08),
+      rgba(var(--accent-rgb), 0.08),
       transparent 70%);
 
   filter: blur(70px);
