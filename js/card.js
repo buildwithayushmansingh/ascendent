@@ -98,7 +98,25 @@ const SAMPLE_CARD_DATA = {
   ]
 };
 
-
+function buildCardData() {
+  const d = { ...SAMPLE_CARD_DATA };
+  if (typeof getDemoUser !== 'function') return d;
+  const u = getDemoUser();
+  const log = u.activityLog || [];
+  const done = log.filter(a => a.status === 'completed').length;
+  d.name = u.username;
+  d.username = u.username.toLowerCase().replace(/\s+/g, '');
+  d.initials = u.username.slice(0, 2).toUpperCase();
+  d.title = u.title; d.tier = u.tier; d.cardId = u.cardId;
+  d.level = u.level; d.nextLevel = u.level + 1;
+  d.xp = u.xp; d.xpToNextLevel = u.xpToNextLevel;
+  d.currentStreak = u.currentStreak; d.longestStreak = u.longestStreak;
+  d.completedActivities = done; d.totalTasks = log.length;
+  d.completionRate = log.length ? Math.round(done / log.length * 100) : 0;
+  d.consistency = d.completionRate;
+  return d;
+}
+const CARD_DATA = buildCardData();
 // =========================================================
 // SETTINGS
 // =========================================================
@@ -163,7 +181,7 @@ function applyCardTheme(theme) {
     btn.setAttribute("aria-pressed", String(active));
   });
 
-  localStorage.setItem(CARD_THEME_KEY, safeTheme);
+  localStorage.setItem(CARD_THEME_STORAGE_KEY, safeTheme);
 }
 
 function setupCardThemes() {
@@ -1089,7 +1107,10 @@ function setupFlip() {
   );
 }
 
-
+document.getElementById('flipInner').addEventListener('click', (e) => {
+  if (e.target.closest('a, button')) return;
+  document.getElementById('flipCardBtn').click();
+});
 function updateFlipButton(isBack) {
 
   const button =
