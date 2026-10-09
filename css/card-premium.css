@@ -1,0 +1,558 @@
+/* ASCENDENT — PREMIUM CARD (load AFTER card-themes.css) */
+
+.player-card {
+    --p: var(--theme-primary, #8dfcff);
+    --s: var(--theme-secondary, #b28cff);
+    --a: var(--theme-accent, #ff8de8);
+}
+
+/* ---------- decoration layers ---------- */
+.player-card .pc-orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0 !important;
+    filter: blur(38px);
+    opacity: .55;
+}
+
+.player-card .pc-orb-1 {
+    width: 230px;
+    height: 230px;
+    top: -70px;
+    right: -60px;
+    background: radial-gradient(circle, var(--p), transparent 70%);
+}
+
+.player-card .pc-orb-2 {
+    width: 200px;
+    height: 200px;
+    bottom: -70px;
+    left: -60px;
+    background: radial-gradient(circle, var(--s), transparent 70%);
+    opacity: .4;
+}
+
+.player-card .pc-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0 !important;
+    opacity: .13;
+    background-image:
+        linear-gradient(var(--p) 1px, transparent 1px),
+        linear-gradient(90deg, var(--p) 1px, transparent 1px);
+    background-size: 26px 26px;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 18%, #000 0%, transparent 62%);
+    mask-image: radial-gradient(ellipse at 50% 18%, #000 0%, transparent 62%);
+}
+
+.player-card .pc-watermark {
+    position: absolute;
+    right: -26px;
+    bottom: 70px;
+    z-index: 0 !important;
+    font-size: 230px;
+    line-height: 1;
+    color: var(--p);
+    opacity: .05;
+    pointer-events: none;
+    transform: rotate(-12deg);
+}
+
+/* ---------- layout rhythm ---------- */
+.player-card .tilt-wrapper {
+    gap: 0;
+}
+
+.player-card .card-top-row {
+    padding: 22px 26px 0;
+}
+
+.player-card .identity-label {
+    color: var(--p);
+    letter-spacing: 2px;
+    opacity: .9;
+}
+
+/* ---------- hero ---------- */
+.player-card .pc-hero {
+    padding: 18px 26px 0;
+    gap: 16px;
+}
+
+.player-card .pc-avatar-wrap {
+    position: relative;
+    width: 92px;
+    height: 92px;
+    flex-shrink: 0;
+}
+
+.player-card .pc-ring {
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--p), var(--s), var(--a), var(--p));
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+    animation: pcSpin 7s linear infinite;
+    filter: drop-shadow(0 0 8px var(--p));
+}
+
+@keyframes pcSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.player-card .pc-avatar-wrap .card-avatar {
+    width: 92px;
+    height: 92px;
+    min-width: 92px;
+    font-size: 28px;
+    letter-spacing: 1px;
+    border: 2px solid rgba(255, 255, 255, .18);
+    background: linear-gradient(145deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .03)), #11131a;
+    box-shadow: 0 0 28px color-mix(in srgb, var(--p) 35%, transparent), inset 0 0 18px rgba(255, 255, 255, .06);
+}
+
+.player-card .pc-lvl-hex {
+    position: absolute;
+    right: -10px;
+    bottom: -6px;
+    width: 40px;
+    height: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+    background: linear-gradient(160deg, var(--p), var(--s));
+    color: #0a0a12;
+    line-height: 1;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .5));
+}
+
+.player-card .pc-lvl-hex b {
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.player-card .pc-lvl-hex small {
+    font-size: 7px;
+    font-weight: 800;
+    letter-spacing: .6px;
+    margin-top: 1px;
+}
+
+.player-card .pc-hero-text {
+    min-width: 0;
+    flex: 1;
+}
+
+.player-card .pc-hero-text .card-name {
+    font-size: 23px;
+}
+
+.player-card .pc-hero-text .card-username {
+    margin-top: 5px;
+}
+
+.player-card .pc-hero-text .card-title-pill {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--p) 22%, transparent), color-mix(in srgb, var(--s) 18%, transparent));
+    border: 1px solid color-mix(in srgb, var(--p) 45%, transparent);
+    color: #fff;
+    letter-spacing: .8px;
+}
+
+/* ---------- xp ---------- */
+.player-card .pc-xp {
+    padding: 20px 26px 0;
+}
+
+.player-card .pc-xp-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.player-card .pc-xp .card-level-num {
+    font-size: 15px;
+    letter-spacing: 1.5px;
+    color: #fff;
+}
+
+.player-card .pc-xp .card-level-next {
+    font-size: 10px;
+    color: var(--p);
+    opacity: .85;
+}
+
+.player-card .pc-xp .card-xp-bar-track {
+    width: 100%;
+    height: 12px;
+    margin: 8px 0 0;
+    background: rgba(255, 255, 255, .07);
+    position: relative;
+}
+
+.player-card .pc-xp .card-xp-bar-fill {
+    position: relative;
+    background: linear-gradient(90deg, var(--s), var(--p), #fff);
+    box-shadow: 0 0 16px var(--p);
+}
+
+.player-card .pc-xp .card-xp-bar-fill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .55) 50%, transparent 70%);
+    background-size: 220% 100%;
+    animation: pcShimmer 2.4s ease-in-out infinite;
+}
+
+@keyframes pcShimmer {
+    from {
+        background-position: 180% 0;
+    }
+
+    to {
+        background-position: -80% 0;
+    }
+}
+
+.player-card .pc-xp-foot {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 10px;
+    color: rgba(255, 255, 255, .5);
+    letter-spacing: .4px;
+}
+
+/* ---------- stats ---------- */
+.player-card .pc-stats {
+    padding: 16px 26px 0;
+    gap: 8px;
+}
+
+.player-card .pc-stats .card-stat-tile {
+    min-height: 0;
+    padding: 10px 6px 9px;
+    border-radius: 14px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, color-mix(in srgb, var(--p) 14%, transparent), rgba(255, 255, 255, .025));
+    border: 1px solid color-mix(in srgb, var(--p) 28%, transparent);
+}
+
+.player-card .pc-stats .card-stat-tile::before {
+    content: "";
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    top: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--p), transparent);
+}
+
+.player-card .pc-stat-ico {
+    font-size: 15px;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.player-card .pc-stats .stat-big {
+    font-size: 22px;
+    line-height: 1.05;
+}
+
+.player-card .pc-stats .stat-small {
+    font-size: 8.5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 3px;
+    opacity: .65;
+}
+
+/* ---------- weekly chart ---------- */
+.player-card .pc-week {
+    margin: 14px 26px 0;
+    padding: 10px 12px 8px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, .035);
+    border: 1px solid rgba(255, 255, 255, .07);
+}
+
+.player-card .pc-week-title {
+    display: flex;
+    justify-content: space-between;
+    font-size: 8.5px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+    color: rgba(255, 255, 255, .5);
+}
+
+.player-card .pc-week-title span:last-child {
+    color: var(--p);
+}
+
+.player-card .pc-week-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 7px;
+    height: 52px;
+    margin-top: 8px;
+}
+
+.player-card .wk-col {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 4px;
+}
+
+.player-card .wk-bar {
+    width: 100%;
+    height: 0;
+    border-radius: 4px 4px 2px 2px;
+    min-height: 0;
+    background: linear-gradient(180deg, var(--s), color-mix(in srgb, var(--s) 30%, transparent));
+    animation: pcGrow .7s cubic-bezier(.22, 1, .36, 1) forwards;
+    animation-delay: var(--d);
+}
+
+.player-card .wk-bar.wk-today {
+    background: linear-gradient(180deg, #fff, var(--p));
+    box-shadow: 0 0 12px var(--p);
+}
+
+@keyframes pcGrow {
+    to {
+        height: calc(var(--h) * .68);
+    }
+}
+
+.player-card .wk-col span {
+    font-size: 8px;
+    color: rgba(255, 255, 255, .4);
+    font-weight: 700;
+}
+
+/* ---------- badges ---------- */
+.player-card .badge-preview-row {
+    padding: 14px 26px 0;
+    gap: 8px;
+    justify-content: flex-start;
+}
+
+.player-card .badge-circle {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+    background: radial-gradient(circle at 30% 25%, rgba(255, 255, 255, .18), rgba(255, 255, 255, .03));
+    border: 1px solid color-mix(in srgb, var(--p) 35%, transparent);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--p) 18%, transparent);
+}
+
+/* ---------- footer ---------- */
+.player-card .pc-footer {
+    margin-top: auto;
+    padding: 0 26px 20px;
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+}
+
+.player-card .pc-challenge {
+    flex: 1;
+    min-width: 0;
+}
+
+.player-card .pc-ch-top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 8.5px;
+    letter-spacing: 1.2px;
+    font-weight: 800;
+    color: rgba(255, 255, 255, .5);
+}
+
+.player-card .pc-ch-top b {
+    color: #fff;
+}
+
+.player-card .pc-ch-track {
+    height: 6px;
+    border-radius: 99px;
+    margin-top: 6px;
+    background: rgba(255, 255, 255, .08);
+    overflow: hidden;
+}
+
+.player-card .pc-ch-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--a), var(--p));
+    box-shadow: 0 0 10px var(--a);
+}
+
+.player-card .pc-serial {
+    text-align: right;
+}
+
+.player-card .pc-barcode {
+    display: flex;
+    align-items: flex-end;
+    gap: 1.5px;
+    height: 20px;
+    justify-content: flex-end;
+}
+
+.player-card .pc-barcode i {
+    width: 1.5px;
+    background: rgba(255, 255, 255, .55);
+    display: block;
+}
+
+.player-card .pc-serial span {
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, .45);
+}
+
+
+/* =========================================================
+   BACK SIDE (flip) — richer look
+   ========================================================= */
+.flip-back.player-card::after {
+    content: none;
+}
+
+.flip-back .tilt-wrapper::before,
+.flip-back .back-scroll::before {
+    content: none;
+}
+
+.flip-back .back-scroll {
+    padding: 22px 22px 18px !important;
+}
+
+.player-card.flip-back {
+    background-image:
+        radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--p) 22%, transparent), transparent 45%),
+        radial-gradient(circle at 0% 100%, color-mix(in srgb, var(--s) 18%, transparent), transparent 50%),
+        linear-gradient(145deg, rgba(22, 22, 28, .97), rgba(8, 8, 12, .99)) !important;
+}
+
+.flip-back .back-section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 18px 0 10px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.flip-back .back-section-title:first-child {
+    margin-top: 2px;
+}
+
+.flip-back .back-section-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--p), transparent);
+    opacity: .55;
+}
+
+.flip-back .stat-grid-item {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, color-mix(in srgb, var(--p) 13%, transparent), rgba(255, 255, 255, .02));
+    border: 1px solid color-mix(in srgb, var(--p) 25%, transparent);
+    border-left: 3px solid var(--p);
+}
+
+.flip-back .stat-grid-item b {
+    color: #fff;
+    text-shadow: 0 0 14px color-mix(in srgb, var(--p) 55%, transparent);
+}
+
+.flip-back .stat-grid-item span {
+    color: var(--p);
+    opacity: .8;
+    letter-spacing: 1px;
+}
+
+.flip-back .achievement-mini {
+    background: linear-gradient(135deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .015));
+    border: 1px solid color-mix(in srgb, var(--s) 30%, transparent);
+}
+
+.flip-back .achievement-mini-icon {
+    filter: drop-shadow(0 0 8px var(--p));
+}
+
+.flip-back .challenge-box {
+    background: linear-gradient(135deg, color-mix(in srgb, var(--a) 14%, transparent), rgba(255, 255, 255, .02));
+    border: 1px solid color-mix(in srgb, var(--a) 30%, transparent);
+}
+
+.flip-back .challenge-box .card-xp-bar-fill {
+    background: linear-gradient(90deg, var(--a), var(--p));
+    box-shadow: 0 0 12px var(--a);
+}
+
+.flip-back .future-row {
+    background: linear-gradient(90deg, color-mix(in srgb, var(--p) 14%, transparent), rgba(255, 255, 255, .02));
+    border: 1px solid color-mix(in srgb, var(--p) 28%, transparent);
+}
+
+.flip-back .future-label {
+    color: var(--p);
+}
+
+.flip-back .future-detail {
+    color: rgba(255, 255, 255, .85);
+}
+
+.flip-back .back-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--p) transparent;
+}
+
+/* ---------- card-theme button dots (HTML me the, CSS missing thi) ---------- */
+.theme-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.holographic-dot {
+    background: linear-gradient(135deg, #8dfcff, #b28cff, #ff8de8);
+}
+
+.warrior-dot {
+    background: linear-gradient(135deg, #ff4d3d, #ffd15c);
+}
+
+.cosmic-dot {
+    background: linear-gradient(135deg, #9d7cff, #42b8ff);
+}
+
+.minimal-dot {
+    background: linear-gradient(135deg, #ffffff, #707070);
+}
