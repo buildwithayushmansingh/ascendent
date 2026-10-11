@@ -1,0 +1,381 @@
+/* =========================================================
+   ASCENDENT — GAMIFY LAYER  (load AFTER style.css + sidebar.css)
+   Only uses theme variables, so all 4 themes stay pure.
+   ========================================================= */
+
+/* ---------- 0. base feel ---------- */
+::selection {
+    background: color-mix(in srgb, var(--accent-bright) 45%, transparent);
+    color: #fff;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--accent-bright) 55%, transparent) transparent;
+}
+
+::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--accent-bright) 50%, transparent);
+    border-radius: 99px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* subtle HUD grid behind everything */
+.app-layout::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: .05;
+    background-image:
+        linear-gradient(var(--accent-bright) 1px, transparent 1px),
+        linear-gradient(90deg, var(--accent-bright) 1px, transparent 1px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse at 60% 20%, #000, transparent 70%);
+    mask-image: radial-gradient(ellipse at 60% 20%, #000, transparent 70%);
+}
+
+.main-content {
+    position: relative;
+    z-index: 1;
+}
+
+.sb {
+    z-index: 2;
+}
+
+/* ---------- 1. layout: centre the content ---------- */
+.main-content {
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+/* ---------- 2. page titles ---------- */
+.content-topbar {
+    position: relative;
+    padding-bottom: 18px;
+    margin-bottom: 26px;
+}
+
+.content-topbar::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent-bright), color-mix(in srgb, var(--accent-bright) 15%, transparent) 60%, transparent);
+}
+
+.content-topbar h2 {
+    font-size: 1.7rem;
+    letter-spacing: .5px;
+    font-weight: 800;
+    background: linear-gradient(90deg, var(--text), color-mix(in srgb, var(--accent-bright) 70%, var(--text)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Log Out lives in the sidebar now (desktop) */
+.content-topbar>#logoutBtn {
+    display: none;
+}
+
+/* ---------- 3. buttons feel like buttons ---------- */
+button,
+.ghost-btn,
+.ach-tab,
+.lb-tab {
+    transition: transform .12s ease, box-shadow .2s ease, filter .2s ease, background .2s ease, border-color .2s ease;
+}
+
+button:not(:disabled):active {
+    transform: translateY(2px) scale(.97);
+    filter: brightness(.95);
+}
+
+button:focus-visible {
+    outline: 2px solid var(--accent-bright);
+    outline-offset: 2px;
+}
+
+/* ---------- 4. cards: lift + glow on hover ---------- */
+.progress-hero,
+.progress-panel,
+.ach-hero,
+.ach-badge-card,
+.lb-row-v2,
+.lb-spotlight,
+.frontier-card,
+.journal-card,
+.duel-card {
+    transition: transform .2s ease, border-color .2s ease, box-shadow .25s ease;
+}
+
+.progress-panel:hover,
+.ach-badge-card:hover,
+.lb-row-v2:hover,
+.frontier-card:hover,
+.journal-card:hover,
+.duel-card:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--accent-bright) 55%, var(--border));
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .35), 0 0 0 1px color-mix(in srgb, var(--accent-bright) 20%, transparent);
+}
+
+/* ---------- 5. progress rings: visible track + glow ---------- */
+.progress-hero-ring,
+.ach-hero-ring,
+.mini-ring,
+.hc-ring {
+    background: conic-gradient(var(--accent-bright) calc(var(--pct, 0) * 1%), color-mix(in srgb, var(--text) 13%, transparent) 0) !important;
+    filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent-bright) 40%, transparent));
+}
+
+/* ---------- 6. achievements: unlocked = shiny, rarity by order ---------- */
+.achievement-grid-v2>.ach-badge-card:nth-child(1) {
+    --rar: #9fb0c0;
+}
+
+/* common    */
+.achievement-grid-v2>.ach-badge-card:nth-child(2) {
+    --rar: #4da3ff;
+}
+
+/* rare      */
+.achievement-grid-v2>.ach-badge-card:nth-child(3) {
+    --rar: #b46cff;
+}
+
+/* epic      */
+.achievement-grid-v2>.ach-badge-card:nth-child(4) {
+    --rar: #ff8a3d;
+}
+
+/* mythic    */
+.achievement-grid-v2>.ach-badge-card:nth-child(5) {
+    --rar: #ffc94d;
+}
+
+/* legendary */
+
+.ach-badge-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.ach-badge-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 3px;
+    background: var(--rar, var(--accent-bright));
+    opacity: .35;
+}
+
+.ach-badge-card.unlocked {
+    border-color: color-mix(in srgb, var(--rar, var(--accent-bright)) 65%, transparent);
+}
+
+.ach-badge-card.unlocked::before {
+    opacity: 1;
+    box-shadow: 0 0 14px var(--rar);
+}
+
+.ach-badge-card.unlocked::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, .12) 50%, transparent 65%);
+    transform: translateX(-120%);
+    animation: gfShine 3.8s ease-in-out infinite;
+}
+
+.ach-badge-card.unlocked .ach-badge-ring {
+    box-shadow: 0 0 22px color-mix(in srgb, var(--rar, var(--accent-bright)) 55%, transparent);
+}
+
+.ach-badge-card.locked {
+    filter: grayscale(.9) brightness(.85);
+}
+
+@keyframes gfShine {
+
+    0%,
+    55% {
+        transform: translateX(-120%);
+    }
+
+    100% {
+        transform: translateX(120%);
+    }
+}
+
+/* ---------- 7. leaderboard: medals + "you" row ---------- */
+.lb-rank-num {
+    font-weight: 900;
+    min-width: 34px;
+}
+
+.lb-rank-list {
+    max-width: none;
+    width: 100%;
+}
+
+.lb-rank-list>.lb-row-v2:nth-child(1) {
+    box-shadow: inset 4px 0 0 #c9d3df;
+}
+
+/* #2 silver */
+.lb-rank-list>.lb-row-v2:nth-child(2) {
+    box-shadow: inset 4px 0 0 #d08a4a;
+}
+
+/* #3 bronze */
+.lb-rank-list>.lb-row-v2:nth-child(1) .lb-rank-num {
+    color: #c9d3df;
+}
+
+.lb-rank-list>.lb-row-v2:nth-child(2) .lb-rank-num {
+    color: #d08a4a;
+}
+
+.lb-row-v2.is-you {
+    background: linear-gradient(90deg, color-mix(in srgb, var(--accent-bright) 20%, transparent), transparent 80%);
+    border-color: var(--accent-bright);
+    box-shadow: 0 0 22px color-mix(in srgb, var(--accent-bright) 25%, transparent);
+}
+
+.lb-spotlight {
+    box-shadow: 0 0 40px color-mix(in srgb, var(--accent-bright) 22%, transparent);
+}
+
+.lb-crown {
+    animation: gfFloat 2.6s ease-in-out infinite;
+    filter: drop-shadow(0 4px 10px rgba(255, 200, 60, .55));
+}
+
+@keyframes gfFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+/* ---------- 8. dashboard: HUD touches ---------- */
+.frontier-dial-wrap,
+.frontier-dial {
+    filter: drop-shadow(0 0 22px color-mix(in srgb, var(--accent-bright) 30%, transparent));
+}
+
+.frontier-stat-pill {
+    transition: transform .18s ease, border-color .18s ease;
+}
+
+.frontier-stat-pill:hover {
+    transform: translateX(4px);
+    border-color: var(--accent-bright);
+}
+
+.activity-buttons button {
+    font-weight: 800;
+}
+
+/* ---------- 9. sidebar extras ---------- */
+.sb-avatar {
+    animation: gfPulse 3s ease-in-out infinite;
+}
+
+@keyframes gfPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-bright) 45%, transparent);
+    }
+
+    50% {
+        box-shadow: 0 0 0 6px transparent;
+    }
+}
+
+.sb-xp-fill {
+    background: repeating-linear-gradient(45deg, rgba(255, 255, 255, .22) 0 6px, transparent 6px 12px), var(--sb-accent) !important;
+    background-size: 24px 24px, auto !important;
+    animation: gfStripes 1s linear infinite;
+}
+
+@keyframes gfStripes {
+    to {
+        background-position: 24px 0, 0 0;
+    }
+}
+
+/* Log Out item (global `button` style leaks in, so reset it) */
+.sb .sb-logout {
+    background: transparent;
+    box-shadow: none;
+    text-shadow: none;
+    text-transform: none;
+    letter-spacing: normal;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    border: 0;
+    margin-top: 2px;
+    width: 100%;
+    cursor: pointer;
+    font-family: inherit;
+    color: var(--text-secondary);
+}
+
+.sb .sb-logout:hover {
+    background: color-mix(in srgb, #ff6b81 10%, transparent);
+    color: #ff6b81;
+    transform: none;
+}
+
+@media (max-width: 760px) {
+    .content-topbar>#logoutBtn {
+        display: inline-flex;
+    }
+
+    /* mobile has no sidebar logout */
+    .sb-logout {
+        display: none;
+    }
+
+    .main-content {
+        max-width: 100%;
+    }
+}
+
+/* ---------- accessibility: respect "reduce motion" ---------- */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}

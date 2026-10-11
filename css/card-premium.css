@@ -891,3 +891,95 @@
 .ctl-grid .action-box .ca-sub {
     font-family: inherit;
 }
+
+/* =========================================================
+   ONE-FRAME LAYOUT (desktop): card on the left, controls on the right
+   No scrolling — everything fits in the window.
+   ========================================================= */
+@media (min-width: 900px) {
+
+    html,
+    body {
+        overflow-x: hidden;
+    }
+
+    .card-page {
+        min-height: 100vh;
+        padding: 18px 0 18px;
+    }
+
+    .card-page-header {
+        margin-bottom: 14px;
+    }
+
+    .card-main {
+        display: grid;
+        grid-template-columns: 400px 440px;
+        gap: 52px;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        padding-top: 0;
+        flex: 1;
+    }
+
+    .card-main .flip-container {
+        margin: 0;
+        width: 400px;
+        max-width: none;
+    }
+
+    .card-controls {
+        max-width: 440px;
+        margin: 0;
+        gap: 12px;
+    }
+
+    .ctl-panel {
+        padding: 14px;
+    }
+
+    .ctl-title {
+        margin-bottom: 10px;
+    }
+
+    /* 2 x 2 boxes inside each panel */
+    .ctl-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .tb-preview {
+        height: 54px;
+    }
+
+    .ctl-grid .action-box {
+        flex-direction: row;
+        align-items: center;
+        gap: 11px;
+        padding: 12px;
+    }
+
+    .ctl-title small {
+        display: none;
+    }
+}
+
+/* small laptop screens: shrink the whole stage a little so it still fits */
+@media (min-width: 900px) and (max-height: 760px) {
+    .card-main {
+        zoom: .88;
+    }
+}
+
+@media (min-width: 900px) and (max-height: 680px) {
+    .card-main {
+        zoom: .78;
+    }
+}
+
+@media (min-width: 900px) and (max-height: 600px) {
+    .card-main {
+        zoom: .68;
+    }
+}

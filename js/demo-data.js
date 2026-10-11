@@ -155,4 +155,4 @@ function addGlobalProfileAvatar() {
 
 
 // Page load hote hi avatar add karo
-addGlobalProfileAvatar();
+// addGlobalProfileAvatar();
