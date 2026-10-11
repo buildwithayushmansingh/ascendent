@@ -884,9 +884,18 @@ function updateFlipButton(isBack) {
     return;
   }
 
-  button.innerHTML = isBack
-    ? "↩️ Back to Player Card"
-    : "🔮 View Future Self";
+  const icon = button.querySelector(".ca-icon");
+  const title = button.querySelector(".ca-title");
+  const sub = button.querySelector(".ca-sub");
+
+  if (!icon || !title || !sub) {
+    button.textContent = isBack ? "↩️ Back to Player Card" : "🔮 View Future Self";
+    return;
+  }
+
+  icon.textContent = isBack ? "↩️" : "🔮";
+  title.textContent = isBack ? "Player Card" : "Future Self";
+  sub.textContent = isBack ? "Flip back to front" : "Flip the card";
 }
 
 

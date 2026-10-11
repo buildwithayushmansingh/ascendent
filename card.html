@@ -29,33 +29,6 @@
         ← Back to Dashboard
       </a>
 
-      <section class="card-theme-section">
-        <span class="card-theme-label">CARD THEME</span>
-
-        <div class="card-theme-selector" id="cardThemeSelector">
-
-          <button type="button" class="card-theme-btn" data-card-theme="holographic">
-            <span class="theme-dot holographic-dot"></span>
-            Holographic
-          </button>
-
-          <button type="button" class="card-theme-btn" data-card-theme="warrior">
-            <span class="theme-dot warrior-dot"></span>
-            Warrior
-          </button>
-
-          <button type="button" class="card-theme-btn" data-card-theme="cosmic">
-            <span class="theme-dot cosmic-dot"></span>
-            Cosmic
-          </button>
-
-          <button type="button" class="card-theme-btn" data-card-theme="minimal">
-            <span class="theme-dot minimal-dot"></span>
-            Minimal
-          </button>
-
-        </div>
-      </section>
 
     </div>
 
@@ -73,23 +46,76 @@
         </div>
       </div>
 
-      <div class="card-actions">
+      <div class="card-controls">
 
-        <button id="flipCardBtn" class="card-action-btn primary-card-btn">
-          🔮 View Future Self
-        </button>
+        <!-- CARD THEME -->
+        <section class="ctl-panel">
+          <div class="ctl-title"><span>Card Theme</span><small>Pick a style for your card</small></div>
 
-        <button id="shareCardBtn" class="ghost-btn">
-          🔗 Share Card
-        </button>
+          <div class="ctl-grid" id="cardThemeSelector">
 
-        <button id="downloadCardBtn" class="ghost-btn">
-          ↓ Download Card
-        </button>
+            <button type="button" class="card-theme-btn theme-box" data-card-theme="holographic" aria-pressed="false">
+              <span class="tb-preview tb-holographic"><i></i><b></b><b></b></span>
+              <span class="tb-name">Holographic</span>
+              <span class="tb-desc">Glass &amp; rainbow shine</span>
+              <span class="tb-check">✓</span>
+            </button>
 
-        <button id="profileLinkBtn" class="ghost-btn">
-          👤 Profile Link
-        </button>
+            <button type="button" class="card-theme-btn theme-box" data-card-theme="warrior" aria-pressed="false">
+              <span class="tb-preview tb-warrior"><i></i><b></b><b></b></span>
+              <span class="tb-name">Warrior</span>
+              <span class="tb-desc">Fiery &amp; bold</span>
+              <span class="tb-check">✓</span>
+            </button>
+
+            <button type="button" class="card-theme-btn theme-box" data-card-theme="cosmic" aria-pressed="false">
+              <span class="tb-preview tb-cosmic"><i></i><b></b><b></b></span>
+              <span class="tb-name">Cosmic</span>
+              <span class="tb-desc">Deep space glow</span>
+              <span class="tb-check">✓</span>
+            </button>
+
+            <button type="button" class="card-theme-btn theme-box" data-card-theme="minimal" aria-pressed="false">
+              <span class="tb-preview tb-minimal"><i></i><b></b><b></b></span>
+              <span class="tb-name">Minimal</span>
+              <span class="tb-desc">Clean monochrome</span>
+              <span class="tb-check">✓</span>
+            </button>
+
+          </div>
+        </section>
+
+        <!-- ACTIONS -->
+        <section class="ctl-panel">
+          <div class="ctl-title"><span>Actions</span><small>Flip, share or save your card</small></div>
+
+          <div class="ctl-grid">
+
+            <button id="flipCardBtn" type="button" class="action-box action-primary">
+              <span class="ca-icon">🔮</span>
+              <span class="ca-text"><b class="ca-title">Future Self</b><small class="ca-sub">Flip the
+                  card</small></span>
+            </button>
+
+            <button id="shareCardBtn" type="button" class="action-box">
+              <span class="ca-icon">🔗</span>
+              <span class="ca-text"><b class="ca-title">Share Card</b><small class="ca-sub">Send to
+                  friends</small></span>
+            </button>
+
+            <button id="downloadCardBtn" type="button" class="action-box">
+              <span class="ca-icon">⬇️</span>
+              <span class="ca-text"><b class="ca-title">Download</b><small class="ca-sub">Save as image</small></span>
+            </button>
+
+            <button id="profileLinkBtn" type="button" class="action-box">
+              <span class="ca-icon">👤</span>
+              <span class="ca-text"><b class="ca-title">Profile Link</b><small class="ca-sub">Copy your
+                  link</small></span>
+            </button>
+
+          </div>
+        </section>
 
       </div>
 

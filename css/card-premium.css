@@ -556,3 +556,338 @@
 .minimal-dot {
     background: linear-gradient(135deg, #ffffff, #707070);
 }
+
+/* =========================================================
+   CONTROLS UNDER THE CARD  (Card Theme boxes + Action boxes)
+   Page chrome follows the APP theme; previews show CARD themes.
+   ========================================================= */
+
+.card-controls {
+    width: 100%;
+    max-width: 660px;
+    margin: 26px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.ctl-panel {
+    padding: 16px;
+    border-radius: 20px;
+    background: color-mix(in srgb, var(--surface) 78%, transparent);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.ctl-title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 4px 12px;
+}
+
+.ctl-title span {
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text);
+}
+
+.ctl-title span::before {
+    content: "◆ ";
+    color: var(--accent-bright);
+}
+
+.ctl-title small {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.ctl-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+/* ---------- theme boxes ---------- */
+.ctl-grid .theme-box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 3px;
+    padding: 10px 10px 11px;
+    margin: 0;
+    min-width: 0;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 14px;
+    font: inherit;
+    background: color-mix(in srgb, var(--text) 4%, transparent);
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.ctl-grid .theme-box:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--accent-bright) 55%, var(--border));
+}
+
+.ctl-grid .theme-box.active {
+    border-color: var(--accent-bright);
+    background: color-mix(in srgb, var(--accent-bright) 12%, transparent);
+}
+
+.theme-box .tb-name {
+    font-size: 12.5px;
+    font-weight: 800;
+    margin-top: 7px;
+    color: var(--text);
+}
+
+.theme-box .tb-desc {
+    font-size: 10px;
+    line-height: 1.3;
+    color: var(--text-secondary);
+}
+
+.theme-box .tb-check {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    font-weight: 900;
+    line-height: 1;
+    background: var(--accent-bright);
+    color: var(--bg);
+    transform: scale(0);
+    transition: transform .2s cubic-bezier(.3, 1.6, .5, 1);
+}
+
+.theme-box.active .tb-check {
+    transform: scale(1);
+}
+
+/* mini card preview */
+.tb-preview {
+    position: relative;
+    display: block;
+    height: 62px;
+    border-radius: 9px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .14);
+}
+
+.tb-preview i {
+    position: absolute;
+    left: 8px;
+    top: 9px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .85);
+    box-shadow: 0 0 10px rgba(255, 255, 255, .5);
+}
+
+.tb-preview b {
+    position: absolute;
+    left: 8px;
+    height: 4px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, .55);
+}
+
+.tb-preview b:nth-of-type(1) {
+    top: 33px;
+    width: 55%;
+}
+
+.tb-preview b:nth-of-type(2) {
+    top: 43px;
+    width: 35%;
+    opacity: .6;
+}
+
+.tb-holographic {
+    background: linear-gradient(125deg, #0e1a24 0%, #1d3a55 35%, #5b3b8c 65%, #7a2c78 100%);
+}
+
+.tb-holographic::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 20%, rgba(141, 252, 255, .35) 45%, rgba(255, 141, 232, .3) 60%, transparent 80%);
+}
+
+.tb-warrior {
+    background: linear-gradient(135deg, #2a0a08 0%, #7a1a10 55%, #d9531e 100%);
+}
+
+.tb-cosmic {
+    background: radial-gradient(circle at 70% 25%, #4a3fd1 0%, #1a1450 50%, #070720 100%);
+}
+
+.tb-cosmic::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(#fff 1px, transparent 1.5px);
+    background-size: 14px 14px;
+    opacity: .35;
+}
+
+.tb-minimal {
+    background: linear-gradient(135deg, #202020, #0b0b0b);
+}
+
+/* ---------- action boxes ---------- */
+.ctl-grid .action-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 13px 12px;
+    min-width: 0;
+    margin: 0;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--text) 4%, transparent);
+    border: 1.5px solid var(--border);
+    color: var(--text);
+    transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.ctl-grid .action-box:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--accent-bright) 60%, var(--border));
+    background: color-mix(in srgb, var(--accent-bright) 8%, transparent);
+}
+
+.ctl-grid .action-box:active {
+    transform: translateY(0) scale(.98);
+}
+
+.action-box .ca-icon {
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+    border-radius: 11px;
+    background: color-mix(in srgb, var(--accent-bright) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent-bright) 28%, transparent);
+}
+
+.action-box .ca-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.action-box .ca-title {
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--text);
+    white-space: nowrap;
+}
+
+.action-box .ca-sub {
+    font-size: 10px;
+    color: var(--text-secondary);
+}
+
+.action-primary .ca-icon {
+    background: var(--accent-bright);
+    border-color: transparent;
+}
+
+.ctl-grid button:focus-visible {
+    outline: 2px solid var(--accent-bright);
+    outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+    .card-controls {
+        max-width: 420px;
+        padding: 0 4px;
+    }
+
+    .ctl-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ctl-title small {
+        display: none;
+    }
+}
+
+/* ---------- override old/global button rules
+   (style.css `button`, card.css #flipCardBtn, .card-theme-btn) ---------- */
+.ctl-grid .theme-box,
+.ctl-grid .action-box {
+    height: auto;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    letter-spacing: normal;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+.ctl-grid .theme-box {
+    display: flex;
+    padding: 10px 10px 11px;
+    border-radius: 14px;
+    font-size: 12px;
+}
+
+.ctl-grid .theme-box:hover {
+    color: var(--text);
+}
+
+.ctl-grid .theme-box.active {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-bright) 18%, transparent), 0 8px 22px rgba(0, 0, 0, .35);
+}
+
+.ctl-grid .action-box {
+    display: flex;
+    width: 100%;
+    padding: 13px 12px;
+    justify-content: flex-start;
+}
+
+.ctl-grid #flipCardBtn.action-box {
+    margin: 0;
+    min-width: 0;
+    z-index: auto;
+    padding: 13px 12px;
+    background: linear-gradient(150deg, color-mix(in srgb, var(--accent-bright) 26%, transparent), color-mix(in srgb, var(--accent) 12%, transparent));
+    border: 1.5px solid var(--accent-bright);
+    color: var(--text);
+    font-size: inherit;
+    box-shadow: 0 6px 22px color-mix(in srgb, var(--accent-bright) 22%, transparent);
+}
+
+.ctl-grid #flipCardBtn.action-box:hover {
+    background: linear-gradient(150deg, color-mix(in srgb, var(--accent-bright) 36%, transparent), color-mix(in srgb, var(--accent) 18%, transparent));
+    transform: translateY(-3px);
+}
+
+.ctl-grid .action-box .ca-title,
+.ctl-grid .action-box .ca-sub {
+    font-family: inherit;
+}
