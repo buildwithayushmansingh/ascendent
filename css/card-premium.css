@@ -914,8 +914,8 @@
 
     .card-main {
         display: grid;
-        grid-template-columns: 400px 440px;
-        gap: 52px;
+        grid-template-columns: 400px 420px;
+        gap: 200px;
         align-items: center;
         justify-content: center;
         align-content: center;
