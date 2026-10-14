@@ -1,0 +1,156 @@
+/* =========================================================
+   card-3d.css — lighting, edges, shadow, idle float
+   Load AFTER card.css / card-themes.css / card-premium.css
+   ========================================================= */
+
+.flip-container {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+}
+
+.flip-inner.c3d {
+    --c3d-t: 8px;
+    --c3d-r: 24px;
+    transition: none !important;
+    /* NOTE: never put `opacity` in will-change here — it flattens preserve-3d and breaks the faces */
+    will-change: transform;
+    /* the faces hide their own backs; if the wrapper hid its back too the whole
+     card would vanish once it is rotated 180deg */
+    backface-visibility: visible !important;
+    -webkit-backface-visibility: visible !important;
+}
+
+/* ---------- idle float (compositor only, starts after the entrance) ---------- */
+.flip-container.c3d-float {
+    animation: c3dFloat 7s ease-in-out infinite;
+}
+
+@keyframes c3dFloat {
+
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0) rotateZ(0deg);
+    }
+
+    50% {
+        transform: translate3d(0, -9px, 0) rotateZ(.3deg);
+    }
+}
+
+/* ---------- lighting on each face ---------- */
+.c3d-fx {
+    --gp: 50%;
+    --gx: 50%;
+    --gy: 30%;
+    --hv: 0;
+    --mv: .15;
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at var(--gx) var(--gy), rgba(255, 255, 255, calc(var(--hv) * .20)), transparent 46%),
+        linear-gradient(105deg,
+            transparent calc(var(--gp) - 16%),
+            rgba(255, 255, 255, calc(.20 * var(--mv))) calc(var(--gp) - 4%),
+            rgba(255, 255, 255, calc(.36 * var(--mv))) var(--gp),
+            rgba(255, 255, 255, calc(.10 * var(--mv))) calc(var(--gp) + 6%),
+            transparent calc(var(--gp) + 18%));
+}
+
+.c3d-shade {
+    position: absolute;
+    inset: 0;
+    z-index: 31;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(90deg, #000, rgba(0, 0, 0, .55));
+    opacity: 0;
+}
+
+/* ---------- card thickness (4 edge strips) ---------- */
+.c3d-edge {
+    position: absolute;
+    pointer-events: none;
+    backface-visibility: visible !important;
+    background: linear-gradient(180deg, #4b5068, #1a1c27 50%, #4b5068);
+}
+
+.c3d-edge.e-l,
+.c3d-edge.e-r {
+    top: var(--c3d-r);
+    bottom: var(--c3d-r);
+    width: var(--c3d-t);
+    margin-left: calc(var(--c3d-t) / -2);
+    transform: rotateY(90deg);
+}
+
+.c3d-edge.e-l {
+    left: 0;
+}
+
+.c3d-edge.e-r {
+    left: 100%;
+}
+
+.c3d-edge.e-t,
+.c3d-edge.e-b {
+    left: var(--c3d-r);
+    right: var(--c3d-r);
+    height: var(--c3d-t);
+    margin-top: calc(var(--c3d-t) / -2);
+    transform: rotateX(90deg);
+}
+
+.c3d-edge.e-t {
+    top: 0;
+}
+
+.c3d-edge.e-b {
+    top: 100%;
+}
+
+/* edge colour follows the selected card theme */
+body[data-card-theme="holographic"] .c3d-edge {
+    background: linear-gradient(180deg, #8dfcff, #5b3b8c 50%, #b28cff);
+}
+
+body[data-card-theme="warrior"] .c3d-edge {
+    background: linear-gradient(180deg, #ffd15c, #b03a14 50%, #ff7a2f);
+}
+
+body[data-card-theme="cosmic"] .c3d-edge {
+    background: linear-gradient(180deg, #7b6cff, #1a1450 50%, #42b8ff);
+}
+
+body[data-card-theme="minimal"] .c3d-edge {
+    background: linear-gradient(180deg, #8a8a8a, #1c1c1c 50%, #8a8a8a);
+}
+
+/* ---------- ground shadow ---------- */
+.c3d-shadow {
+    position: absolute;
+    left: 11%;
+    bottom: -46px;
+    width: 78%;
+    height: 34px;
+    pointer-events: none;
+    z-index: -1;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, .65), transparent 70%);
+    filter: blur(10px);
+    opacity: 0;
+    transform-origin: center;
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .flip-container.c3d-float {
+        animation: none;
+    }
+
+    .c3d-shadow {
+        display: none;
+    }
+}

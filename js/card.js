@@ -1320,9 +1320,13 @@ function initializeCard() {
 
   setupCardThemes();
 
-  attachTilt();
-
-  setupFlip();
+  // 3D entrance / flip / hover handled by card-3d.js (falls back to the old logic)
+  if (window.Card3D) {
+    Card3D.init();
+  } else {
+    attachTilt();
+    setupFlip();
+  }
 
   setupLogout();
 
@@ -1336,7 +1340,9 @@ function initializeCard() {
 
   setupKeyboardControls();
 
-
+  if (window.Card3D) {
+    return;
+  }
   const flipInner =
     document.getElementById(
       "flipInner"
