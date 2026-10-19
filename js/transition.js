@@ -39,14 +39,22 @@
     const colorAccent = rootStyle.getPropertyValue('--accent-bright').trim() || '#c084fc';
     const colorAccentDim = rootStyle.getPropertyValue('--accent').trim() || '#8b5cf6';
 
-    function hexToRgb(hex) {
-        hex = hex.replace('#', '');
-        if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
-        const num = parseInt(hex, 16);
-        return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
+    // accepts "#c084fc", "#c8f" or "rgb(192, 132, 252)"; never returns NaN
+    function hexToRgb(value, fallback) {
+        const v = (value || '').trim();
+        let m = v.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+        if (m) {
+            let h = m[1];
+            if (h.length === 3) h = h.split('').map(c => c + c).join('');
+            const num = parseInt(h, 16);
+            return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
+        }
+        m = v.match(/^rgba?\(\s*(\d+)[\s,]+(\d+)[\s,]+(\d+)/i);
+        if (m) return { r: +m[1], g: +m[2], b: +m[3] };
+        return fallback || { r: 192, g: 132, b: 252 };
     }
-    const accentRGB = hexToRgb(colorAccent);
-    const accentDimRGB = hexToRgb(colorAccentDim);
+    const accentRGB = hexToRgb(colorAccent, { r: 192, g: 132, b: 252 });
+    const accentDimRGB = hexToRgb(colorAccentDim, { r: 139, g: 92, b: 246 });
     function rgba(rgb, alpha) { return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`; }
 
     // ---- Ambient background particle field (fills empty space) ----

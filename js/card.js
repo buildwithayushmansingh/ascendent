@@ -137,10 +137,7 @@ const IS_COARSE_POINTER =
 // =========================================================
 
 const CARD_THEMES = [
-  "holographic",
-  "warrior",
-  "cosmic",
-  "minimal"
+  "arcade", "realm", "cyber", "legend"
 ];
 
 const CARD_THEME_STORAGE_KEY =
@@ -155,7 +152,7 @@ function getSavedCardTheme() {
 
   return CARD_THEMES.includes(savedTheme)
     ? savedTheme
-    : "holographic";
+    : "arcade";
 }
 
 function applyCardTheme(theme) {
@@ -1319,7 +1316,7 @@ function initializeCard() {
   renderBack();
 
   setupCardThemes();
-
+  if (window.CardThemeDeco) CardThemeDeco.build();
   // 3D entrance / flip / hover handled by card-3d.js (falls back to the old logic)
   if (window.Card3D) {
     Card3D.init();
