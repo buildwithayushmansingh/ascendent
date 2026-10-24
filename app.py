@@ -1,62 +1,83 @@
-# app.py — Ascendent server (the ONLY backend file you need right now)
+# app.py — Ascendent server
 #
-# Run:   python3 app.py
-# Open:  http://localhost:5001
-#
-# It serves the frontend files AND the /api/login endpoint.
-# CORS headers are added, so login also works if you open the frontend
-# from another port (for example `python3 -m http.server 5500`).
-#
-# Credentials can be changed with environment variables:
-#   ASCENDENT_USER, ASCENDENT_PASS
-# TODO (Phase 2/3): replace the fixed user with real accounts in MongoDB
-# and store a hashed password (never a plain-text one).
+# First time setup:
+#   1) pip install -r requirements.txt
+#   2) copy .env.example to .env and fill in MONGO_URI and SECRET_KEY
+# Run:
+#   python3 app.py          then open  http://localhost:5001
 
-import os
-from flask import Flask, request, jsonify, send_from_directory
+import sys
+from flask import Flask, jsonify, send_from_directory, abort
 
-app = Flask(__name__, static_folder='.', static_url_path='')
+import config
+import database
+from routes.auth_routes import auth_bp
 
-FIXED_USERNAME = os.environ.get('ASCENDENT_USER', 'ayushman')
-FIXED_PASSWORD = os.environ.get('ASCENDENT_PASS', 'password123')
+# Only these folders (and the .html pages in the main folder) are public.
+# This keeps .env, app.py, database.py ... private.
+PUBLIC_FOLDERS = ('css/', 'js/', 'assets/')
 
 
-@app.after_request
-def add_cors_headers(response):
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-    response.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-    return response
+def create_app():
+    # static_folder=None -> Flask will NOT serve every file by itself
+    app = Flask(__name__, static_folder=None)
+    app.config['SECRET_KEY'] = config.SECRET_KEY
+    app.register_blueprint(auth_bp)
+
+    @app.after_request
+    def add_cors_headers(response):
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+        return response
+
+    @app.route('/api/health')
+    def health():
+        return jsonify({'ok': True, 'database': database.ping_db()})
+
+    @app.route('/')
+    def serve_index():
+        return send_from_directory('.', 'index.html')
+
+    @app.route('/<path:filename>')
+    def serve_static(filename):
+        parts = filename.split('/')
+        # Block "..", hidden files (.env), backslashes and empty parts
+        if '' in parts or '..' in parts or '\\' in filename or any(p.startswith('.') for p in parts):
+            abort(404)
+        is_page = filename.endswith('.html') and len(parts) == 1
+        if not (is_page or filename.startswith(PUBLIC_FOLDERS)):
+            abort(404)
+        return send_from_directory('.', filename)
+
+    return app
 
 
-@app.route('/')
-def serve_index():
-    return send_from_directory('.', 'index.html')
+app = create_app()
 
 
-@app.route('/<path:filename>')
-def serve_static(filename):
-    return send_from_directory('.', filename)
+def check_setup():
+    problems = []
+    if not config.MONGO_URI:
+        problems.append('MONGO_URI is missing in your .env file')
+    if not config.SECRET_KEY:
+        problems.append('SECRET_KEY is missing in your .env file')
+    if problems:
+        print('\n❌ Setup problem:')
+        for p in problems:
+            print('   -', p)
+        print('   Copy .env.example to .env and fill it in.\n')
+        sys.exit(1)
 
-
-@app.route('/api/login', methods=['POST'])
-def login():
-    data = request.get_json(silent=True) or {}
-    username = data.get('username', '')
-    password = data.get('password', '')
-
-    if username == FIXED_USERNAME and password == FIXED_PASSWORD:
-        return jsonify({
-            "success": True,
-            "message": "Login successful",
-            "username": username
-        }), 200
-
-    return jsonify({
-        "success": False,
-        "message": "Invalid username or password"
-    }), 401
+    try:
+        database.init_db()
+        print('✅ Connected to MongoDB Atlas')
+    except Exception as err:
+        print('\n❌ Could not connect to MongoDB Atlas:', err)
+        print('   Check: MONGO_URI/password in .env, and Atlas > Network Access allows your IP.\n')
+        sys.exit(1)
 
 
 if __name__ == '__main__':
+    check_setup()
     app.run(debug=True, port=5001)

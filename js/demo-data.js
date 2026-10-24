@@ -188,7 +188,8 @@ function missHabit(user, habit, reason, useShield) {
 // (habits, XP, level, notes, settings). Only the "who's logged in" flag
 // is removed, so the next login skips onboarding and keeps everything.
 function logoutUser() {
-  localStorage.removeItem('ascendent_username');
+  if (typeof clearSession === 'function') clearSession();   // removes the login token
+  else localStorage.removeItem('ascendent_username');
   window.location.href = 'index.html';
 }
 // Custom avatar image (base64), stored separately from the main user object.

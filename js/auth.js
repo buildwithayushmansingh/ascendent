@@ -1,9 +1,6 @@
-// auth.js — Handles login/signup forms
-// Login talks to the Flask backend (app.py, port 5001).
-// If this page is served by Flask (port 5001) we use a relative URL;
-// if it is served from another port (e.g. python3 -m http.server 5500)
-// we call the Flask server directly. app.py allows this with CORS.
-const API_BASE = window.location.port === '5001' ? '' : 'http://localhost:5001';
+// auth.js — login / signup forms (uses api.js)
+// Real accounts now: the Flask backend stores users in MongoDB Atlas.
+
 const authShell = document.getElementById('authShell');
 
 function goToRegister(e) {
@@ -20,56 +17,74 @@ document.getElementById('showSignup').addEventListener('click', goToRegister);
 document.getElementById('showLoginBtn').addEventListener('click', goToLogin);
 document.getElementById('showLoginInline').addEventListener('click', goToLogin);
 
+// Already logged in? Skip the login page.
+if (getToken()) {
+  const u = getDemoUser();
+  const next = (u.habits && u.habits.length > 0) ? 'dashboard.html' : 'onboarding.html';
+  window.location.replace(next);
+}
+
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const username = document.getElementById('email').value.trim();
+  const msg = document.getElementById('authMessage');
+  const username = document.getElementById('email').value.trim();   // username or email
   const password = document.getElementById('password').value;
 
   if (!username || !password) {
-    document.getElementById('authMessage').textContent = 'Please enter both fields.';
+    msg.textContent = 'Please enter both fields.';
     return;
   }
 
+  msg.textContent = 'Logging in...';
   try {
-    const res = await fetch(API_BASE + '/api/login', {
+    const { ok, data } = await apiFetch('/api/auth/login', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
     });
-    const data = await res.json();
 
-    if (!data.success) {
-      document.getElementById('authMessage').textContent = data.message;
+    if (!ok) {
+      msg.textContent = data.message || 'Login failed.';
       return;
     }
 
-    localStorage.setItem('ascendent_username', data.username);
+    setSession(data.token, data.user.username, false);
 
     const user = getDemoUser();
     const target = (user.habits && user.habits.length > 0) ? 'dashboard.html' : 'onboarding.html';
     window.location.href = 'transition.html?next=' + target;
   } catch (err) {
-    document.getElementById('authMessage').textContent = 'Could not reach the server. Run: python3 app.py';
+    msg.textContent = 'Could not reach the server. Run: python3 app.py';
   }
 });
 
-document.getElementById('signupForm').addEventListener('submit', (e) => {
+document.getElementById('signupForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const username = document.getElementById('signupUsername').value;
+  const msg = document.getElementById('authMessageRegister');
+  const username = document.getElementById('signupUsername').value.trim();
+  const email = document.getElementById('signupEmail').value.trim();
   const password = document.getElementById('signupPassword').value;
   const confirmPassword = document.getElementById('signupConfirmPassword').value;
 
-  if (!username) {
-    document.getElementById('authMessageRegister').textContent = 'Please enter a username.';
-    return;
-  }
-
   if (password !== confirmPassword) {
-    document.getElementById('authMessageRegister').textContent = 'Passwords do not match.';
+    msg.textContent = 'Passwords do not match.';
     return;
   }
 
-  // Signup stays frontend-only for now (no backend account creation yet)
-  localStorage.setItem('ascendent_username', username);
-  window.location.href = 'transition.html?next=onboarding.html';
+  msg.textContent = 'Creating your account...';
+  try {
+    const { ok, data } = await apiFetch('/api/auth/register', {
+      method: 'POST',
+      body: JSON.stringify({ username, email, password })
+    });
+
+    if (!ok) {
+      msg.textContent = data.message || 'Could not create the account.';
+      return;
+    }
+
+    setSession(data.token, data.user.username, true);   // true = brand new account
+    window.location.href = 'transition.html?next=onboarding.html';
+  } catch (err) {
+    msg.textContent = 'Could not reach the server. Run: python3 app.py';
+  }
 });
