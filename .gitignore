@@ -17,3 +17,6 @@ __pycache__/
 
 # Python logs
 *.log
+
+# Backups
+*.bak

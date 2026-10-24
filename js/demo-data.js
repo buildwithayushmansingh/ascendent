@@ -64,38 +64,125 @@ function getTitleForLevel(level) {
   return title;
 }
 
-// Simulates logging an activity as complete or missed.
-// This is where the real version will POST to /api/activity/log instead.
-function logDemoActivity(status) {
-  const user = getDemoUser();
-  let xpEarned = 0;
+// ---------------------------------------------------------------
+// Shared helpers (used by habits.js AND activity.js so the dashboard
+// quick-log and the Quests page always behave the same way)
+// ---------------------------------------------------------------
 
-  if (status === 'completed') {
-    const multiplier = 1 + Math.min(user.currentStreak * 0.1, 1);
-    xpEarned = Math.round(100 * multiplier);
+// Escapes text before it is put inside innerHTML (stops HTML injection)
+function escapeHTML(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
-    user.xp += xpEarned;
-    user.currentStreak += 1;
-    user.longestStreak = Math.max(user.longestStreak, user.currentStreak);
+// Local-date key like "2026-10-21"
+function todayKey(date = new Date()) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
 
-    while (user.xp >= user.xpToNextLevel) {
-      user.xp -= user.xpToNextLevel;
-      user.level += 1;
-      user.xpToNextLevel = Math.round(user.xpToNextLevel * 1.2);
-    }
-  } else if (status === 'missed') {
-    if (user.streakShields > 0) {
-      user.streakShields -= 1;
-    } else {
-      user.currentStreak = 0;
-    }
+function yesterdayKey() {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  return todayKey(d);
+}
+
+// Streaks count DAYS, not clicks:
+//  - already counted today  -> unchanged
+//  - last done yesterday    -> +1
+//  - older / never          -> starts again at 1
+function nextStreak(current, lastKey) {
+  if (!lastKey) return (current || 0) + 1;      // also handles older saved data
+  if (lastKey === todayKey()) return current;
+  if (lastKey === yesterdayKey()) return current + 1;
+  return 1;
+}
+
+function isHabitDoneToday(habit) {
+  return habit.lastCompletedDate === todayKey();
+}
+
+// Completes a habit for today. Returns what happened so the page can
+// show the right animation. A habit can only be completed once per day.
+function completeHabitToday(user, habit) {
+  if (isHabitDoneToday(habit)) return { alreadyDone: true };
+
+  const oldTier = user.tier;
+  const today = todayKey();
+
+  // --- habit level ---
+  habit.xp += habit.xpPerComplete;
+  habit.streak = nextStreak(habit.streak, habit.lastCompletedDate);
+  habit.lastCompletedDate = today;
+  habit.completed = true;
+  while (habit.xp >= habit.xpToNextLevel) {
+    habit.xp -= habit.xpToNextLevel;
+    habit.level += 1;
+    habit.xpToNextLevel = Math.round(habit.xpToNextLevel * 1.15);
+  }
+
+  // --- player level / overall streak ---
+  user.xp += habit.xpPerComplete;
+  user.currentStreak = nextStreak(user.currentStreak, user.lastCompletedDate);
+  user.lastCompletedDate = today;
+  user.longestStreak = Math.max(user.longestStreak, user.currentStreak);
+
+  let playerLeveledUp = false;
+  while (user.xp >= user.xpToNextLevel) {
+    user.xp -= user.xpToNextLevel;
+    user.level += 1;
+    user.xpToNextLevel = Math.round(user.xpToNextLevel * 1.2);
+    playerLeveledUp = true;
   }
 
   user.tier = getTierForLevel(user.level);
   user.title = getTitleForLevel(user.level);
+  const tierChanged = user.tier !== oldTier;
 
-  saveDemoUser(user);
-  return { user, xpEarned };
+  user.activityLog = user.activityLog || [];
+  user.activityLog.push({
+    date: new Date().toISOString(),
+    category: habit.name,
+    status: 'completed',
+    xpEarned: habit.xpPerComplete
+  });
+
+  if (tierChanged) {
+    user.tierHistory = user.tierHistory || [];
+    user.tierHistory.push({ tier: user.tier, level: user.level, date: new Date().toISOString() });
+  }
+
+  return { alreadyDone: false, xpEarned: habit.xpPerComplete, playerLeveledUp, tierChanged };
+}
+
+// Logs a missed habit. With a shield the streak is kept; without it, reset.
+function missHabit(user, habit, reason, useShield) {
+  habit.missedReasons = habit.missedReasons || [];
+  habit.missedReasons.push({ reason: reason || '', date: new Date().toISOString() });
+
+  user.activityLog = user.activityLog || [];
+  user.activityLog.push({
+    date: new Date().toISOString(),
+    category: habit.name,
+    status: 'missed',
+    reason: reason || ''
+  });
+
+  let shieldUsed = false;
+  if (useShield && user.streakShields > 0) {
+    user.streakShields -= 1;
+    shieldUsed = true;
+    // The shield "covers" the missed day, so the streak can continue tomorrow
+    if (habit.lastCompletedDate !== todayKey()) habit.lastCompletedDate = yesterdayKey();
+    if (user.lastCompletedDate !== todayKey()) user.lastCompletedDate = yesterdayKey();
+  } else {
+    habit.streak = 0;
+    user.currentStreak = 0;
+  }
+  return { shieldUsed };
 }
 // logoutUser() — logs the user out WITHOUT erasing their saved progress
 // (habits, XP, level, notes, settings). Only the "who's logged in" flag

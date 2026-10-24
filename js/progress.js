@@ -83,7 +83,7 @@ function renderProgress() {
       <p>✨ <b>+${weeklyXP} XP</b> this week</p>
       <p>🎯 <b>${completedThisWeek.length}</b> activities completed</p>
       <p>🏔️ <b>${user.longestStreak} day</b> best streak</p>
-      <p>💡 Most active: <b>${topCategory[0]}</b> (${topCategory[1]}x)</p>
+      <p>💡 Most active: <b>${escapeHTML(topCategory[0])}</b> (${topCategory[1]}x)</p>
     `;
   }
 
@@ -99,7 +99,7 @@ function renderProgress() {
               <div class="mini-ring-inner">${pct}%</div>
             </div>
             <div class="ring-course-info">
-              <div class="ring-course-name">${h.icon} ${h.name}</div>
+              <div class="ring-course-name">${escapeHTML(h.icon)} ${escapeHTML(h.name)}</div>
               <div class="ring-course-level">Level ${h.level}</div>
             </div>
           </div>
@@ -112,8 +112,8 @@ function renderProgress() {
     ? `<p class="subtext">No missed days yet — keep it up!</p>`
     : excuses.slice(0, 8).map(e => `
         <div class="excuse-row">
-          <span>${e.category}</span>
-          <span class="excuse-reason">${e.reason || 'No reason given'}</span>
+          <span>${escapeHTML(e.category)}</span>
+          <span class="excuse-reason">${escapeHTML(e.reason || 'No reason given')}
           <span class="excuse-date">${new Date(e.date).toLocaleDateString()}</span>
         </div>
       `).join('');
@@ -122,7 +122,7 @@ function renderProgress() {
   const tierHistory = user.tierHistory || [];
   document.getElementById('cardEvolution').innerHTML = tierHistory.map(t => `
     <div class="evolution-row">
-      <span class="evolution-tier">${t.tier}</span>
+      <span class="evolution-tier">${escapeHTML(t.tier)}</span>
       <span class="subtext">reached at Level ${t.level} — ${new Date(t.date).toLocaleDateString()}</span>
     </div>
   `).join('');

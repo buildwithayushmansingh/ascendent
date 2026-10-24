@@ -71,14 +71,14 @@ function buildTargetInputs() {
     container.innerHTML = '';
 
     selectedHabits.forEach((habit) => {
-        const tile = document.querySelector(`.habit-tile[data-habit="${habit}"]`);
+        const tile = document.querySelector(`.habit-tile[data-habit="${CSS.escape(habit)}"]`);
         const icon = tile ? tile.dataset.icon : '⭐';
 
         const row = document.createElement('div');
         row.className = 'target-row';
         row.dataset.habit = habit;
         row.innerHTML = `
-      <div class="target-row-label">${icon} ${habit}</div>
+      <div class="target-row-label">${escapeHTML(icon)} ${escapeHTML(habit)}</div>
       <div class="target-row-inputs">
         <input type="number" class="target-minutes" min="5" value="30" />
         <span class="target-suffix">min/day</span>
@@ -102,7 +102,7 @@ document.querySelectorAll('.difficulty-card').forEach((card) => {
 // Step 5: finalize and enter dashboard
 document.getElementById('enterDashboardBtn').addEventListener('click', () => {
     const habits = Array.from(document.querySelectorAll('.target-row')).map((row) => {
-        const tile = document.querySelector(`.habit-tile[data-habit="${row.dataset.habit}"]`);
+        const tile = document.querySelector(`.habit-tile[data-habit="${CSS.escape(row.dataset.habit)}"]`);
         return {
             id: row.dataset.habit.toLowerCase(),
             name: row.dataset.habit,

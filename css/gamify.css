@@ -379,3 +379,10 @@ button:focus-visible {
         transition: none !important;
     }
 }
+
+/* Habit already completed today */
+.hc-action-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    filter: grayscale(0.4);
+}

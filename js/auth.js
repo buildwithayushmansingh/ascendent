@@ -1,7 +1,9 @@
 // auth.js — Handles login/signup forms
-// Login talks to the real Flask backend at /api/login (same server now,
-// no CORS needed since everything runs from one Flask app).
-
+// Login talks to the Flask backend (app.py, port 5001).
+// If this page is served by Flask (port 5001) we use a relative URL;
+// if it is served from another port (e.g. python3 -m http.server 5500)
+// we call the Flask server directly. app.py allows this with CORS.
+const API_BASE = window.location.port === '5001' ? '' : 'http://localhost:5001';
 const authShell = document.getElementById('authShell');
 
 function goToRegister(e) {
@@ -29,7 +31,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
   }
 
   try {
-    const res = await fetch('/api/login', {
+    const res = await fetch(API_BASE + '/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
@@ -47,7 +49,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const target = (user.habits && user.habits.length > 0) ? 'dashboard.html' : 'onboarding.html';
     window.location.href = 'transition.html?next=' + target;
   } catch (err) {
-    document.getElementById('authMessage').textContent = 'Could not reach the server.';
+    document.getElementById('authMessage').textContent = 'Could not reach the server. Run: python3 app.py';
   }
 });
 

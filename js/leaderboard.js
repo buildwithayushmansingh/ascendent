@@ -18,9 +18,9 @@ function renderLeaderboard() {
   document.getElementById('lbSpotlight').innerHTML = `
     <div class="lb-crown">👑</div>
     <div class="lb-spotlight-avatar ${champion.isCurrentPlayer ? 'is-you' : ''}">
-      ${champion.name.slice(0, 2).toUpperCase()}
+     ${escapeHTML(champion.name.slice(0, 2).toUpperCase())}
     </div>
-    <div class="lb-spotlight-name">${champion.name}${champion.isCurrentPlayer ? ' <span class="you-tag">YOU</span>' : ''}</div>
+    <div class="lb-spotlight-name">${escapeHTML(champion.name)}${champion.isCurrentPlayer ? ' <span class="you-tag">YOU</span>' : ''}</div>
     <div class="lb-spotlight-title">Rank #1 · Level ${champion.level}</div>
     <div class="lb-spotlight-stats">
       <div><span>${champion.xp.toLocaleString()}</span><small>XP</small></div>
@@ -35,9 +35,9 @@ function renderLeaderboard() {
     return `
       <div class="lb-row-v2 ${player.isCurrentPlayer ? 'is-you' : ''}" style="animation-delay:${i * 60}ms;">
         <span class="lb-rank-num">#${rank}</span>
-        <div class="lb-avatar-v2">${player.name.slice(0, 2).toUpperCase()}</div>
+        <div class="lb-avatar-v2">${escapeHTML(player.name.slice(0, 2).toUpperCase())}</div>
         <div class="lb-row-info">
-          <div class="lb-row-name">${player.name}${player.isCurrentPlayer ? ' <span class="you-tag">YOU</span>' : ''}</div>
+          <div class="lb-row-name${escapeHTML(player.name)}${player.isCurrentPlayer ? ' <span class="you-tag">YOU</span>' : ''}</div>
           <div class="lb-row-meta">
             <span class="lb-level-badge ${levelBadgeColor(player.level)}">Lv.${player.level}</span>
             <span class="lb-streak-chip">🔥 ${player.streak}d</span>

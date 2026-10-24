@@ -2,42 +2,42 @@
 
 function buildFrontHTML(data, xpPercent, previewBadges, extraCount) {
 
-    // last 7 days activity (real log if available, else sample)
-    let week = [3, 2, 4, 1, 5, 4, 3];
-    try {
-        if (typeof getDemoUser === 'function') {
-            const log = getDemoUser().activityLog || [];
-            if (log.length) {
-                const counts = Array(7).fill(0);
-                const today = new Date(); today.setHours(0, 0, 0, 0);
-                log.forEach(a => {
-                    if (a.status !== 'completed') return;
-                    const d = new Date(a.date); d.setHours(0, 0, 0, 0);
-                    const diff = Math.round((today - d) / 86400000);
-                    if (diff >= 0 && diff < 7) counts[6 - diff]++;
-                });
-                week = counts;
-            }
-        }
-    } catch (e) { }
+  // last 7 days activity (real log if available, else sample)
+  let week = [3, 2, 4, 1, 5, 4, 3];
+  try {
+    if (typeof getDemoUser === 'function') {
+      const log = getDemoUser().activityLog || [];
+      if (log.length) {
+        const counts = Array(7).fill(0);
+        const today = new Date(); today.setHours(0, 0, 0, 0);
+        log.forEach(a => {
+          if (a.status !== 'completed') return;
+          const d = new Date(a.date); d.setHours(0, 0, 0, 0);
+          const diff = Math.round((today - d) / 86400000);
+          if (diff >= 0 && diff < 7) counts[6 - diff]++;
+        });
+        week = counts;
+      }
+    }
+  } catch (e) { }
 
-    const maxDay = Math.max(1, ...week);
-    const dayNames = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-    const todayIdx = (new Date().getDay() + 6) % 7;
-    const weekHTML = week.map((v, i) => `
+  const maxDay = Math.max(1, ...week);
+  const dayNames = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  const todayIdx = (new Date().getDay() + 6) % 7;
+  const weekHTML = week.map((v, i) => `
       <div class="wk-col">
         <div class="wk-bar ${i === 6 ? 'wk-today' : ''}"
              style="--h:${Math.max(12, Math.round(v / maxDay * 100))}%;--d:${300 + i * 60}ms"></div>
         <span>${dayNames[(todayIdx - 6 + i + 7) % 7]}</span>
       </div>`).join('');
 
-    const xpLeft = Math.max(0, data.xpToNextLevel - data.xp);
-    const chPct = Math.round(data.challengeCurrent / data.challengeTotal * 100);
+  const xpLeft = Math.max(0, data.xpToNextLevel - data.xp);
+  const chPct = Math.round(data.challengeCurrent / data.challengeTotal * 100);
 
-    const bars = Array.from({ length: 26 }, (_, i) =>
-        `<i style="height:${6 + ((i * 7 + 3) % 5) * 3}px"></i>`).join('');
+  const bars = Array.from({ length: 26 }, (_, i) =>
+    `<i style="height:${6 + ((i * 7 + 3) % 5) * 3}px"></i>`).join('');
 
-    return `
+  return `
   <div class="tilt-wrapper">
 
     <!-- decoration layers -->
@@ -70,8 +70,8 @@ function buildFrontHTML(data, xpPercent, previewBadges, extraCount) {
         <div class="pc-lvl-hex"><b>${data.level}</b><small>LVL</small></div>
       </div>
       <div class="pc-hero-text">
-        <div class="card-name">${data.name}</div>
-        <div class="card-username">@${data.username}</div>
+        <div class="card-name">${escapeHTML(data.name)}</div>
+        <div class="card-username">@${escapeHTML(data.username)}</div>
         <div class="card-title-pill">⚔ ${data.title}</div>
       </div>
     </div>

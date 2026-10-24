@@ -38,29 +38,31 @@ function renderHabitList() {
 
     container.innerHTML = user.habits.map((habit) => {
         const xpPercent = Math.min(100, Math.round((habit.xp / habit.xpToNextLevel) * 100));
+        const doneToday = isHabitDoneToday(habit);
+        habit.completed = doneToday;   // "completed" now means "completed TODAY"
+        const id = escapeHTML(habit.id);
         return `
       <div class="habit-card-v2">
         <div class="hc-top">
           <div class="hc-ring" style="--pct:${xpPercent};">
-            <div class="hc-ring-inner">${habit.icon || '⭐'}</div>
+            <div class="hc-ring-inner">${escapeHTML(habit.icon || '⭐')}</div>
           </div>
-          <button class="hc-icon-btn hc-edit" data-id="${habit.id}" title="Edit">✏️</button>
-          <button class="hc-icon-btn hc-delete" data-id="${habit.id}" title="Delete">🗑️</button>
+          <button class="hc-icon-btn hc-edit" data-id="${id}" title="Edit">✏️</button>
+          <button class="hc-icon-btn hc-delete" data-id="${id}" title="Delete">🗑️</button>
         </div>
 
-        <div class="hc-name">${habit.name}</div>
+        <div class="hc-name">${escapeHTML(habit.name)}</div>
         <div class="hc-meta">Lv.${habit.level} • ${habit.target}min • ${habit.frequency}x/wk</div>
 
         <div class="hc-streak-chip">🔥 ${habit.streak} day streak</div>
 
         <div class="hc-actions">
-          <button class="hc-action-btn hc-complete" data-id="${habit.id}">✅</button>
-          <button class="hc-action-btn hc-miss" data-id="${habit.id}">❌</button>
+          <button class="hc-action-btn hc-complete" data-id="${id}" ${doneToday ? 'disabled title="Already completed today"' : ''}>${doneToday ? '✔ Done' : '✅'}</button>
+          <button class="hc-action-btn hc-miss" data-id="${id}">❌</button>
         </div>
       </div>
     `;
     }).join('');
-
     document.querySelectorAll('.hc-complete').forEach(btn =>
         btn.addEventListener('click', () => openCompleteModal(btn.dataset.id)));
     document.querySelectorAll('.hc-miss').forEach(btn =>
@@ -80,8 +82,8 @@ function openCompleteModal(id) {
     activeHabitId = id;
     const habit = getHabit(id);
     document.getElementById('completeModalBody').innerHTML = `
-    <p style="font-size:1.1rem; margin-bottom:4px;">${habit.icon} <b>${habit.name}</b></p>
-    <p class="subtext">${habit.target} minutes • ${habit.difficulty} difficulty</p>
+    <p style="font-size:1.1rem; margin-bottom:4px;">${escapeHTML(habit.icon)} <b>${escapeHTML(habit.name)}</b></p>
+    <p class="subtext">${habit.target} minutes • ${escapeHTML(habit.difficulty)} difficulty</p>
     <p style="color:var(--accent-bright); font-size:1.3rem; font-family:'Cinzel',serif; margin-top:12px;">+${habit.xpPerComplete} XP</p>
   `;
     document.getElementById('completeModal').classList.add('open');
@@ -92,58 +94,23 @@ document.getElementById('confirmCompleteBtn').addEventListener('click', () => {
     const habit = user.habits.find(h => h.id === activeHabitId);
     if (!habit) return;
 
-    const oldTier = user.tier;
-
-    habit.xp += habit.xpPerComplete;
-    habit.streak += 1;
-    habit.completed = true;
-
-    while (habit.xp >= habit.xpToNextLevel) {
-        habit.xp -= habit.xpToNextLevel;
-        habit.level += 1;
-        habit.xpToNextLevel = Math.round(habit.xpToNextLevel * 1.15);
-    }
-
-    // Reflect into the overall player card too
-    user.xp += habit.xpPerComplete;
-    user.currentStreak += 1;
-    user.longestStreak = Math.max(user.longestStreak, user.currentStreak);
-
-    let playerLeveledUp = false;
-    while (user.xp >= user.xpToNextLevel) {
-        user.xp -= user.xpToNextLevel;
-        user.level += 1;
-        user.xpToNextLevel = Math.round(user.xpToNextLevel * 1.2);
-        playerLeveledUp = true;
-    }
-    user.tier = getTierForLevel(user.level);
-    user.title = getTitleForLevel(user.level);
-    const tierChanged = user.tier !== oldTier;
-
-    user.activityLog = user.activityLog || [];
-    user.activityLog.push({
-        date: new Date().toISOString(),
-        category: habit.name,
-        status: 'completed',
-        xpEarned: habit.xpPerComplete
-    });
-
-    if (tierChanged) {
-        user.tierHistory = user.tierHistory || [];
-        user.tierHistory.push({ tier: user.tier, level: user.level, date: new Date().toISOString() });
+    const result = completeHabitToday(user, habit);
+    if (result.alreadyDone) {
+        closeModals();
+        showToast('Already completed today ✅ Come back tomorrow.');
+        return;
     }
 
     saveDemoUser(user);
     checkAchievements(user);
 
-    const confirmBtn = document.getElementById('confirmCompleteBtn');
-    spawnFloatingXP(habit.xpPerComplete, confirmBtn);
+    spawnFloatingXP(result.xpEarned, document.getElementById('confirmCompleteBtn'));
     closeModals();
 
     // Layered reward feedback — each one is short and non-blocking
-    showToast(`STREAK +1 🔥 (${habit.streak} days)`);
-    if (playerLeveledUp) setTimeout(() => showLevelUpOverlay(user.level), 300);
-    if (tierChanged) setTimeout(() => showTierUpgradeOverlay(user.tier), playerLeveledUp ? 2100 : 300);
+    showToast(`STREAK 🔥 (${habit.streak} days)`);
+    if (result.playerLeveledUp) setTimeout(() => showLevelUpOverlay(user.level), 300);
+    if (result.tierChanged) setTimeout(() => showTierUpgradeOverlay(user.tier), result.playerLeveledUp ? 2100 : 300);
 
     renderHabitList();
 });

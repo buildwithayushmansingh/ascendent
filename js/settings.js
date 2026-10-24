@@ -259,11 +259,6 @@ function applyTheme(theme) {
         document.documentElement.removeAttribute('data-theme');
     }
 }
-const s = getSettings();
-s.accent = 'none'; s.accentCustom = false;
-localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
-window.AscendentTheme.clearAccent();
-updateAccentSelection('none');
 // Apply immediately on load too (theme.js already did this before paint,
 // this just keeps settings.js consistent if it ever runs standalone)
 applyTheme(getCurrentTheme());

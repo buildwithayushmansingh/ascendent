@@ -17,9 +17,10 @@ function loadMiniCard() {
   applyAvatarImage('#heroAvatar');
   document.getElementById('ringLevel').textContent = user.level;
 
-  const circumference = 2 * Math.PI * 34;
   const percent = Math.min(100, Math.round((user.xp / user.xpToNextLevel) * 100));
   const ringFill = document.getElementById('xpRingFill');
+  // Read the real radius from the SVG so the maths can never go out of sync again
+  const circumference = 2 * Math.PI * ringFill.r.baseVal.value;
   ringFill.style.strokeDasharray = `${circumference}`;
   ringFill.style.strokeDashoffset = `${circumference * (1 - percent / 100)}`;
 
