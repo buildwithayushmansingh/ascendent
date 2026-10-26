@@ -48,6 +48,8 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     }
 
     setSession(data.token, data.user.username, false);
+    msg.textContent = 'Loading your data...';
+    await syncOnLogin();   // bring this browser up to date with the saved data
 
     const user = getDemoUser();
     const target = (user.habits && user.habits.length > 0) ? 'dashboard.html' : 'onboarding.html';

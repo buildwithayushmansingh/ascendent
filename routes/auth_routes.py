@@ -38,7 +38,8 @@ def register():
         'email_lower': email.lower(),
         'password_hash': generate_password_hash(password),  # never store the real password
         'created_at': datetime.now(timezone.utc).isoformat(),
-        'game': None,   # Phase 2: the player's game data will be saved here
+        'game': None,          # the player's saved game data (see routes/state_routes.py)
+        'state_version': 0,    # goes up by 1 on every save
     }
 
     try:

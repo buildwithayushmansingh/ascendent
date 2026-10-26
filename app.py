@@ -12,7 +12,7 @@ from flask import Flask, jsonify, send_from_directory, abort
 import config
 import database
 from routes.auth_routes import auth_bp
-
+from routes.state_routes import state_bp
 # Only these folders (and the .html pages in the main folder) are public.
 # This keeps .env, app.py, database.py ... private.
 PUBLIC_FOLDERS = ('css/', 'js/', 'assets/')
@@ -22,7 +22,13 @@ def create_app():
     # static_folder=None -> Flask will NOT serve every file by itself
     app = Flask(__name__, static_folder=None)
     app.config['SECRET_KEY'] = config.SECRET_KEY
+    app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024   # 3 MB max request
     app.register_blueprint(auth_bp)
+    app.register_blueprint(state_bp)
+
+    @app.errorhandler(413)
+    def too_large(e):
+        return jsonify({'success': False, 'message': 'That is too much data to save.'}), 413 
 
     @app.after_request
     def add_cors_headers(response):

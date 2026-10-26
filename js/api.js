@@ -21,6 +21,7 @@ function setSession(token, username, isNewAccount) {
     const switched = owner && owner !== username.toLowerCase();
 
     if (isNewAccount || switched) {
+        localStorage.removeItem(TOKEN_KEY);   // so clearing the old data is never synced to the server
         Object.keys(localStorage)
             .filter((k) => k.startsWith('ascendent_'))
             .forEach((k) => localStorage.removeItem(k));
@@ -37,7 +38,14 @@ function clearSession() {
     localStorage.removeItem('ascendent_username');
     sessionStorage.removeItem(VERIFIED_KEY);
 }
-
+// Removes everything this site saved in the browser (used on logout, after the
+// data is safely stored on the server).
+function wipeLocalData() {
+    Object.keys(localStorage)
+        .filter((k) => k.startsWith('ascendent_'))
+        .forEach((k) => localStorage.removeItem(k));
+    sessionStorage.removeItem(VERIFIED_KEY);
+}
 // fetch() helper: adds the token, returns { ok, status, data }.
 // If the server says the token is no longer valid, the user goes back to login.
 async function apiFetch(path, options = {}) {

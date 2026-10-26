@@ -187,9 +187,16 @@ function missHabit(user, habit, reason, useShield) {
 // logoutUser() — logs the user out WITHOUT erasing their saved progress
 // (habits, XP, level, notes, settings). Only the "who's logged in" flag
 // is removed, so the next login skips onboarding and keeps everything.
-function logoutUser() {
-  if (typeof clearSession === 'function') clearSession();   // removes the login token
+async function logoutUser() {
+  // 1) make sure everything is saved on the server
+  try { if (typeof syncNow === 'function') await syncNow(); } catch (e) { /* offline */ }
+  const unsaved = localStorage.getItem('ascendent_state_dirty') === '1';
+
+  // 2) log out; clean this browser only if nothing is left unsaved
+  if (typeof clearSession === 'function') clearSession();
   else localStorage.removeItem('ascendent_username');
+  if (!unsaved && typeof wipeLocalData === 'function') wipeLocalData();
+
   window.location.href = 'index.html';
 }
 // Custom avatar image (base64), stored separately from the main user object.

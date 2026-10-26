@@ -294,18 +294,46 @@ document.getElementById('avatarUploadBtn').addEventListener('click', () => {
     document.getElementById('avatarFileInput').click();
 });
 
+// Shrinks the chosen photo to a small square, so it is quick to save on the server
+function resizeImageToDataUrl(file, size, callback) {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        // crop the centre square, then scale it to size x size
+        const side = Math.min(img.width, img.height);
+        const sx = (img.width - side) / 2;
+        const sy = (img.height - side) / 2;
+        canvas.getContext('2d').drawImage(img, sx, sy, side, side, 0, 0, size, size);
+        URL.revokeObjectURL(url);
+        callback(canvas.toDataURL('image/jpeg', 0.85));
+    };
+    img.onerror = () => {
+        URL.revokeObjectURL(url);
+        callback(null);
+    };
+    img.src = url;
+}
+
 document.getElementById('avatarFileInput').addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    if (!file.type.startsWith('image/')) {
+        showToast('Please choose an image file');
+        return;
+    }
 
-    const reader = new FileReader();
-    reader.onload = () => {
-        saveAvatarImage(reader.result);
+    resizeImageToDataUrl(file, 256, (dataUrl) => {
+        if (!dataUrl) {
+            showToast('Could not read that image');
+            return;
+        }
+        saveAvatarImage(dataUrl);
         applyAvatarImage('.u-avatar, .dash-avatar, .card-avatar');
         showToast('📷 Profile photo updated');
-    };
-    reader.readAsDataURL(file);
+    });
 });
-
 // Apply saved avatar on this page load too
 applyAvatarImage('.u-avatar');
