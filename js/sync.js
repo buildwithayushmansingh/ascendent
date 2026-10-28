@@ -87,7 +87,14 @@
         if (r.ok) {
             setVersion(r.data.version);
             // Only mark as saved if nothing changed while we were sending
-            if (JSON.stringify(collectLocalState()) === sent) setDirty(false);
+            if (JSON.stringify(collectLocalState()) === sent) {
+                setDirty(false);
+                // The server keeps XP, level and streaks for itself: take its version of the player
+                if (r.data.user && JSON.stringify(r.data.user) !== JSON.stringify(state.user)) {
+                    applying = true;
+                    try { rawSet.call(localStorage, STATE_KEYS.user, JSON.stringify(r.data.user)); } finally { applying = false; }
+                }
+            }
             return 'ok';
         }
         if (r.status === 409) return 'conflict';
@@ -152,7 +159,16 @@
             }
         } catch (e) { /* server offline: keep the local data */ }
     };
-
+    // After the server changed the player (complete / miss a habit): store its answer
+    window.syncApplyUser = function (user, version) {
+        applying = true;
+        try {
+            rawSet.call(localStorage, STATE_KEYS.user, JSON.stringify(user));
+            setVersion(version);
+        } finally {
+            applying = false;
+        }
+    };
     // Before logout: make sure everything is saved (waits at most 4 seconds)
     window.syncNow = async function () {
         clearTimeout(timer);

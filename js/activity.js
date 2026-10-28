@@ -1,54 +1,61 @@
 // activity.js — Handles the Mark Complete / Mark Missed buttons on the
 // dashboard's quick-log widget. Uses the same reward engine as habits.js
 // (see js/rewards.js) so feedback feels consistent across the app.
+let logInProgress = false;
 
-function logActivity(status) {
-  const user = getDemoUser();
-  const oldTier = user.tier;
-  let xpEarned = 0;
-  let playerLeveledUp = false;
+async function logActivity(status) {
+  if (logInProgress) return;
+  const habit = getSelectedHabit(getDemoUser());
 
-  if (status === 'completed') {
-    const multiplier = 1 + Math.min(user.currentStreak * 0.1, 1);
-    xpEarned = Math.round(100 * multiplier);
-
-    user.xp += xpEarned;
-    user.currentStreak += 1;
-    user.longestStreak = Math.max(user.longestStreak, user.currentStreak);
-
-    while (user.xp >= user.xpToNextLevel) {
-      user.xp -= user.xpToNextLevel;
-      user.level += 1;
-      user.xpToNextLevel = Math.round(user.xpToNextLevel * 1.2);
-      playerLeveledUp = true;
-    }
-  } else if (status === 'missed') {
-    if (user.streakShields > 0) {
-      user.streakShields -= 1;
-    } else {
-      user.currentStreak = 0;
-    }
+  if (!habit) {
+    showToast('Add a habit in Quests first.');
+    return;
   }
 
-  user.tier = getTierForLevel(user.level);
-  user.title = getTitleForLevel(user.level);
-  const tierChanged = user.tier !== oldTier;
-
-  saveDemoUser(user);
+  logInProgress = true;
   document.getElementById('excuseBox').style.display = 'none';
 
-  if (status === 'completed') {
-    spawnFloatingXP(xpEarned, document.getElementById('markComplete'));
-    showToast(`STREAK +1 🔥 (${user.currentStreak} days)`);
-    if (playerLeveledUp) setTimeout(() => showLevelUpOverlay(user.level), 300);
-    if (tierChanged) setTimeout(() => showTierUpgradeOverlay(user.tier), playerLeveledUp ? 2100 : 300);
-    document.getElementById('dashboardMessage').textContent = '';
-  } else {
-    showToast('Logged as missed.');
-    document.getElementById('dashboardMessage').textContent = '';
-  }
+  try {
+    if (status === 'completed') {
+      const result = await completeHabitOnServer(habit.id);
+      if (!result.ok) { showToast(result.message); return; }
+      if (result.alreadyDone) { showToast(`${habit.name} is already done today ✅`); return; }
 
-  loadMiniCard();
+      const user = getDemoUser();   // now holds the server's answer
+      spawnFloatingXP(result.xpEarned, document.getElementById('markComplete'));
+      showToast(`STREAK 🔥 (${user.currentStreak} days)`);
+      if (result.playerLeveledUp) setTimeout(() => showLevelUpOverlay(user.level), 300);
+      if (result.tierChanged) setTimeout(() => showTierUpgradeOverlay(user.tier), result.playerLeveledUp ? 2100 : 300);
+      showNewAchievements(result.newAchievements);
+    } else {
+      const reasonInput = document.getElementById('excuseReason');
+      const reason = reasonInput.value.trim();
+      const result = await missHabitOnServer(habit.id, reason, getDemoUser().streakShields > 0);
+      if (!result.ok) { showToast(result.message); return; }
+      reasonInput.value = '';
+
+      showToast(result.shieldUsed
+        ? '🛡 Streak Shield used — your streak is safe.'
+        : 'Logged as missed. Streak reset.');
+      showNewAchievements(result.newAchievements);
+    }
+
+    document.getElementById('dashboardMessage').textContent = '';
+    loadMiniCard();
+  } finally {
+    logInProgress = false;
+  }
+}
+showToast(`STREAK +1 🔥 (${user.currentStreak} days)`);
+if (playerLeveledUp) setTimeout(() => showLevelUpOverlay(user.level), 300);
+if (tierChanged) setTimeout(() => showTierUpgradeOverlay(user.tier), playerLeveledUp ? 2100 : 300);
+document.getElementById('dashboardMessage').textContent = '';
+  } else {
+  showToast('Logged as missed.');
+  document.getElementById('dashboardMessage').textContent = '';
+}
+
+loadMiniCard();
 }
 
 document.getElementById('markComplete').addEventListener('click', () => {

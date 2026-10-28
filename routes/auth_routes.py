@@ -86,3 +86,20 @@ def login():
 @login_required
 def me():
     return jsonify({'success': True, 'user': public_user(g.user)}), 200
+
+
+@auth_bp.route('/me', methods=['DELETE'])
+@login_required
+def delete_me():
+    """Permanently deletes the account (the password must be typed again)."""
+    data = request.get_json(silent=True) or {}
+    if not check_password_hash(g.user['password_hash'], str(data.get('password', ''))):
+        return _fail('Wrong password.', 403)
+
+    users = database.get_db().users
+    try:
+        users.delete_one({'_id': g.user['_id']})
+        users.update_many({'friends': g.user['_id']}, {'$pull': {'friends': g.user['_id']}})
+    except PyMongoError:
+        return _fail('Database error. Please try again.', 503)
+    return jsonify({'success': True})

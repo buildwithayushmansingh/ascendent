@@ -1,8 +1,7 @@
 // achievements.js — Phase 5: Achievement definitions + unlock checking
 
-// checkAchievements() is called from habits.js after every completed quest.
-// It's safe to call from anywhere — it just checks conditions and unlocks
-// anything newly earned.
+// ACHIEVEMENT_LIST is used to DISPLAY achievements. The unlocking itself is
+// done by the server (game_rules.py) - keep both lists in the same order.
 
 const ACHIEVEMENT_LIST = [
     {
@@ -56,33 +55,8 @@ function getAchievementStats(user) {
     };
 }
 
+// The SERVER unlocks achievements (see game_rules.py) after every completed or
+// missed habit. This function is kept so older code still works; it does nothing.
 function checkAchievements(user) {
-    const stats = getAchievementStats(user);
-
-    user.unlockedAchievements = user.unlockedAchievements || [];
-
-    let newlyUnlocked = false;
-
-    ACHIEVEMENT_LIST.forEach((ach) => {
-        const alreadyUnlocked =
-            user.unlockedAchievements.includes(ach.id);
-
-        if (!alreadyUnlocked && ach.check(user, stats)) {
-            user.unlockedAchievements.push(ach.id);
-
-            newlyUnlocked = true;
-
-            if (typeof showAchievementToast === 'function') {
-                setTimeout(() => {
-                    showAchievementToast(ach.name);
-                }, 600);
-            }
-        }
-    });
-
-    if (newlyUnlocked) {
-        saveDemoUser(user);
-    }
-
     return user;
 }

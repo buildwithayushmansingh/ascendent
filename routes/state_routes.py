@@ -11,6 +11,8 @@ from flask import Blueprint, request, jsonify, g
 from pymongo.errors import PyMongoError
 
 import database
+import game_rules
+import game_store
 from auth_utils import login_required
 
 state_bp = Blueprint('state', __name__, url_prefix='/api/state')
@@ -123,17 +125,21 @@ def put_state():
     if error:
         return jsonify({'success': False, 'message': error}), 400
 
-    new_version = current + 1
+    # The browser may edit names, notes, settings ... but XP, level, streaks, shields,
+    # achievements and logs always keep the values the SERVER has.
     try:
-        database.get_db().users.update_one(
-            {'_id': g.user['_id']},
-            {'$set': {
-                'game': cleaned,
-                'state_version': new_version,
-                'game_updated_at': datetime.now(timezone.utc).isoformat(),
-            }},
-        )
+        merged = game_rules.merge_client_state(g.user.get('game'), cleaned, g.user['username'])
+    except ValueError as err:
+        return jsonify({'success': False, 'message': str(err)}), 400
+
+    try:
+        new_version = game_store.save_game(g.user, merged)
     except PyMongoError:
         return jsonify({'success': False, 'message': 'Database error. Please try again.'}), 503
 
-    return jsonify({'success': True, 'version': new_version})
+    if new_version is None:     # someone else saved at the same moment
+        latest = database.get_db().users.find_one({'_id': g.user['_id']}) or {}
+        return jsonify({'success': False, 'message': 'Your data was changed on another device.',
+                        'version': latest.get('state_version', 0)}), 409
+
+    return jsonify({'success': True, 'version': new_version, 'user': merged.get('user')})

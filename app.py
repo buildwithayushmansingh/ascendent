@@ -13,6 +13,8 @@ import config
 import database
 from routes.auth_routes import auth_bp
 from routes.state_routes import state_bp
+from routes.game_routes import game_bp
+from routes.social_routes import social_bp
 # Only these folders (and the .html pages in the main folder) are public.
 # This keeps .env, app.py, database.py ... private.
 PUBLIC_FOLDERS = ('css/', 'js/', 'assets/')
@@ -25,6 +27,8 @@ def create_app():
     app.config['MAX_CONTENT_LENGTH'] = 3 * 1024 * 1024   # 3 MB max request
     app.register_blueprint(auth_bp)
     app.register_blueprint(state_bp)
+    app.register_blueprint(game_bp)
+    app.register_blueprint(social_bp)
 
     @app.errorhandler(413)
     def too_large(e):
@@ -78,6 +82,9 @@ def check_setup():
     try:
         database.init_db()
         print('✅ Connected to MongoDB Atlas')
+        updated = database.backfill_stats()
+        if updated:
+            print(f'✅ Leaderboard numbers added for {updated} existing player(s)')
     except Exception as err:
         print('\n❌ Could not connect to MongoDB Atlas:', err)
         print('   Check: MONGO_URI/password in .env, and Atlas > Network Access allows your IP.\n')

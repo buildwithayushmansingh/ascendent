@@ -1,6 +1,6 @@
 # database.py — MongoDB Atlas connection (one shared client for the whole app)
 
-from pymongo import MongoClient, ASCENDING
+from pymongo import MongoClient, ASCENDING, DESCENDING
 from pymongo.errors import PyMongoError
 
 import config
@@ -23,7 +23,8 @@ def init_db():
     db = get_db()
     db.command('ping')  # fails fast if the URI / password / network is wrong
     db.users.create_index([('username_lower', ASCENDING)], unique=True)
-    db.users.create_index([('email_lower', ASCENDING)], unique=True)
+    db.users.create_index([('stats.score', DESCENDING)])   # leaderboard
+    db.users.create_index('friends')
 
 
 def ping_db():
@@ -32,3 +33,16 @@ def ping_db():
         return True
     except PyMongoError:
         return False
+    
+
+def backfill_stats():
+    """Players saved before Phase 3 have no leaderboard numbers yet: calculate them once."""
+    import game_rules
+    users = get_db().users
+    done = 0
+    for doc in users.find({'stats': {'$exists': False}}):
+        user = (doc.get('game') or {}).get('user')
+        if isinstance(user, dict):
+            users.update_one({'_id': doc['_id']}, {'$set': {'stats': game_rules.compute_stats(user)}})
+            done += 1
+    return done

@@ -232,10 +232,26 @@ document.getElementById('changePasswordBtn').addEventListener('click', () => {
     showToast('Password change requires backend — coming later');
 });
 
-document.getElementById('deleteAccountBtn').addEventListener('click', () => {
-    if (confirm('This will erase all local demo data. Continue?')) {
-        localStorage.clear();
+document.getElementById('deleteAccountBtn').addEventListener('click', async () => {
+    if (!confirm('This will permanently delete your account and ALL your data. This cannot be undone. Continue?')) return;
+
+    const password = prompt('Type your password to confirm:');
+    if (!password) return;
+
+    try {
+        const { ok, data } = await apiFetch('/api/auth/me', {
+            method: 'DELETE',
+            body: JSON.stringify({ password })
+        });
+        if (!ok) {
+            showToast(data.message || 'Could not delete the account.');
+            return;
+        }
+        clearSession();
+        wipeLocalData();
         window.location.href = 'index.html';
+    } catch (e) {
+        showToast('Could not reach the server. Try again.');
     }
 });
 

@@ -31,7 +31,13 @@
                 <button class="lb-tab" data-tab="friends">👥 Friends</button>
                 <button class="lb-tab" data-tab="squad">⚔️ Squad</button>
             </div>
-
+            <!-- Add a friend (shown on the Friends tab) -->
+            <div id="friendBar" class="lb-friend-bar" style="display:none;">
+                <input id="friendInput" type="text" maxlength="20" autocomplete="off"
+                    placeholder="Add a friend by username">
+                <button id="friendAddBtn" type="button" class="lb-friend-btn">Add</button>
+                <span id="friendMessage" class="lb-friend-msg"></span>
+            </div>
             <!-- Rank-1 spotlight -->
             <section class="lb-spotlight" id="lbSpotlight"></section>
 

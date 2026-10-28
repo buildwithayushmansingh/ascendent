@@ -89,30 +89,41 @@ function openCompleteModal(id) {
     document.getElementById('completeModal').classList.add('open');
 }
 
-document.getElementById('confirmCompleteBtn').addEventListener('click', () => {
-    const user = getDemoUser();
-    const habit = user.habits.find(h => h.id === activeHabitId);
-    if (!habit) return;
+document.getElementById('confirmCompleteBtn').addEventListener('click', async () => {
+    const button = document.getElementById('confirmCompleteBtn');
+    if (button.disabled || !activeHabitId) return;
+    button.disabled = true;                         // no double clicks while the server answers
 
-    const result = completeHabitToday(user, habit);
-    if (result.alreadyDone) {
+    try {
+        const result = await completeHabitOnServer(activeHabitId);
+        if (!result.ok) {
+            closeModals();
+            showToast(result.message);
+            return;
+        }
+        if (result.alreadyDone) {
+            closeModals();
+            showToast('Already completed today ✅ Come back tomorrow.');
+            renderHabitList();
+            return;
+        }
+
+        const user = getDemoUser();                 // now holds the server's answer
+        const habit = user.habits.find(h => h.id === activeHabitId);
+
+        spawnFloatingXP(result.xpEarned, button);
         closeModals();
-        showToast('Already completed today ✅ Come back tomorrow.');
-        return;
+
+        // Layered reward feedback — each one is short and non-blocking
+        showToast(`STREAK 🔥 (${habit ? habit.streak : user.currentStreak} days)`);
+        if (result.playerLeveledUp) setTimeout(() => showLevelUpOverlay(user.level), 300);
+        if (result.tierChanged) setTimeout(() => showTierUpgradeOverlay(user.tier), result.playerLeveledUp ? 2100 : 300);
+        showNewAchievements(result.newAchievements);
+
+        renderHabitList();
+    } finally {
+        button.disabled = false;
     }
-
-    saveDemoUser(user);
-    checkAchievements(user);
-
-    spawnFloatingXP(result.xpEarned, document.getElementById('confirmCompleteBtn'));
-    closeModals();
-
-    // Layered reward feedback — each one is short and non-blocking
-    showToast(`STREAK 🔥 (${habit.streak} days)`);
-    if (result.playerLeveledUp) setTimeout(() => showLevelUpOverlay(user.level), 300);
-    if (result.tierChanged) setTimeout(() => showTierUpgradeOverlay(user.tier), result.playerLeveledUp ? 2100 : 300);
-
-    renderHabitList();
 });
 
 // ---- Missed Activity modal ----
@@ -142,34 +153,26 @@ document.querySelectorAll('.reason-tile').forEach((tile) => {
     });
 });
 
-function finalizeMiss(useShield) {
-    const user = getDemoUser();
-    const habit = user.habits.find(h => h.id === activeHabitId);
-    if (!habit) return;
+let missInProgress = false;
 
-    habit.missedReasons = habit.missedReasons || [];
-    habit.missedReasons.push({ reason: selectedMissReason, date: new Date().toISOString() });
-
-    user.activityLog = user.activityLog || [];
-    user.activityLog.push({
-        date: new Date().toISOString(),
-        category: habit.name,
-        status: 'missed',
-        reason: selectedMissReason
-    });
-
-    if (useShield && user.streakShields > 0) {
-        user.streakShields -= 1;
-        showToast('🛡 Streak Shield used — your streak is safe.');
-    } else {
-        habit.streak = 0;
-        user.currentStreak = 0;
-        showToast('Streak reset. Tomorrow is a new quest.');
+async function finalizeMiss(useShield) {
+    if (missInProgress || !activeHabitId) return;
+    missInProgress = true;
+    try {
+        const result = await missHabitOnServer(activeHabitId, selectedMissReason, useShield);
+        closeModals();
+        if (!result.ok) {
+            showToast(result.message);
+            return;
+        }
+        showToast(result.shieldUsed
+            ? '🛡 Streak Shield used — your streak is safe.'
+            : 'Streak reset. Tomorrow is a new quest.');
+        showNewAchievements(result.newAchievements);
+        renderHabitList();
+    } finally {
+        missInProgress = false;
     }
-
-    saveDemoUser(user);
-    closeModals();
-    renderHabitList();
 }
 document.getElementById('useShieldBtn').addEventListener('click', () => finalizeMiss(true));
 document.getElementById('confirmMissBtn').addEventListener('click', () => finalizeMiss(false));

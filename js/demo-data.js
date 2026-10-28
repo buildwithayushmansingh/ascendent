@@ -79,111 +79,25 @@ function escapeHTML(value) {
     .replace(/'/g, '&#39;');
 }
 
-// Local-date key like "2026-10-21"
+// The app's "day". The SERVER decides streak days in this timezone, so the browser
+// only uses it to show things like the "Done" button (same default as the server).
+const APP_TIMEZONE = 'Asia/Kolkata';
+
+// Date key like "2026-10-21" in the app timezone
 function todayKey(date = new Date()) {
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  return date.toLocaleDateString('en-CA', { timeZone: APP_TIMEZONE });
 }
 
 function yesterdayKey() {
-  const d = new Date();
-  d.setDate(d.getDate() - 1);
-  return todayKey(d);
-}
-
-// Streaks count DAYS, not clicks:
-//  - already counted today  -> unchanged
-//  - last done yesterday    -> +1
-//  - older / never          -> starts again at 1
-function nextStreak(current, lastKey) {
-  if (!lastKey) return (current || 0) + 1;      // also handles older saved data
-  if (lastKey === todayKey()) return current;
-  if (lastKey === yesterdayKey()) return current + 1;
-  return 1;
+  return todayKey(new Date(Date.now() - 24 * 60 * 60 * 1000));
 }
 
 function isHabitDoneToday(habit) {
   return habit.lastCompletedDate === todayKey();
 }
 
-// Completes a habit for today. Returns what happened so the page can
-// show the right animation. A habit can only be completed once per day.
-function completeHabitToday(user, habit) {
-  if (isHabitDoneToday(habit)) return { alreadyDone: true };
-
-  const oldTier = user.tier;
-  const today = todayKey();
-
-  // --- habit level ---
-  habit.xp += habit.xpPerComplete;
-  habit.streak = nextStreak(habit.streak, habit.lastCompletedDate);
-  habit.lastCompletedDate = today;
-  habit.completed = true;
-  while (habit.xp >= habit.xpToNextLevel) {
-    habit.xp -= habit.xpToNextLevel;
-    habit.level += 1;
-    habit.xpToNextLevel = Math.round(habit.xpToNextLevel * 1.15);
-  }
-
-  // --- player level / overall streak ---
-  user.xp += habit.xpPerComplete;
-  user.currentStreak = nextStreak(user.currentStreak, user.lastCompletedDate);
-  user.lastCompletedDate = today;
-  user.longestStreak = Math.max(user.longestStreak, user.currentStreak);
-
-  let playerLeveledUp = false;
-  while (user.xp >= user.xpToNextLevel) {
-    user.xp -= user.xpToNextLevel;
-    user.level += 1;
-    user.xpToNextLevel = Math.round(user.xpToNextLevel * 1.2);
-    playerLeveledUp = true;
-  }
-
-  user.tier = getTierForLevel(user.level);
-  user.title = getTitleForLevel(user.level);
-  const tierChanged = user.tier !== oldTier;
-
-  user.activityLog = user.activityLog || [];
-  user.activityLog.push({
-    date: new Date().toISOString(),
-    category: habit.name,
-    status: 'completed',
-    xpEarned: habit.xpPerComplete
-  });
-
-  if (tierChanged) {
-    user.tierHistory = user.tierHistory || [];
-    user.tierHistory.push({ tier: user.tier, level: user.level, date: new Date().toISOString() });
-  }
-
-  return { alreadyDone: false, xpEarned: habit.xpPerComplete, playerLeveledUp, tierChanged };
-}
-
-// Logs a missed habit. With a shield the streak is kept; without it, reset.
-function missHabit(user, habit, reason, useShield) {
-  habit.missedReasons = habit.missedReasons || [];
-  habit.missedReasons.push({ reason: reason || '', date: new Date().toISOString() });
-
-  user.activityLog = user.activityLog || [];
-  user.activityLog.push({
-    date: new Date().toISOString(),
-    category: habit.name,
-    status: 'missed',
-    reason: reason || ''
-  });
-
-  let shieldUsed = false;
-  if (useShield && user.streakShields > 0) {
-    user.streakShields -= 1;
-    shieldUsed = true;
-    // The shield "covers" the missed day, so the streak can continue tomorrow
-    if (habit.lastCompletedDate !== todayKey()) habit.lastCompletedDate = yesterdayKey();
-    if (user.lastCompletedDate !== todayKey()) user.lastCompletedDate = yesterdayKey();
-  } else {
-    habit.streak = 0;
-    user.currentStreak = 0;
-  }
-  return { shieldUsed };
-}
+// NOTE: completing / missing a habit (XP, levels, streaks, shields, achievements)
+// is calculated on the SERVER. See js/game-api.js.
 // logoutUser() — logs the user out WITHOUT erasing their saved progress
 // (habits, XP, level, notes, settings). Only the "who's logged in" flag
 // is removed, so the next login skips onboarding and keeps everything.

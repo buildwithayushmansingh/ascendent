@@ -386,3 +386,66 @@ button:focus-visible {
     cursor: not-allowed;
     filter: grayscale(0.4);
 }
+
+/* ---------- Leaderboard: friends bar, remove button, empty message ---------- */
+.lb-friend-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 0 0 18px;
+}
+
+.lb-friend-bar input {
+    flex: 1 1 220px;
+    max-width: 320px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.15));
+    background: var(--surface, rgba(255, 255, 255, 0.05));
+    color: var(--text, inherit);
+    font: inherit;
+}
+
+.lb-friend-bar input:focus {
+    outline: 2px solid var(--accent-bright);
+    outline-offset: 1px;
+}
+
+.lb-friend-btn {
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: 1px solid var(--accent-bright);
+    background: transparent;
+    color: var(--accent-bright);
+    font: inherit;
+    cursor: pointer;
+}
+
+.lb-friend-msg {
+    color: var(--text-secondary, #aaa);
+    font-size: 0.9rem;
+}
+
+.lb-remove {
+    margin-left: 6px;
+    padding: 0 7px;
+    border-radius: 6px;
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.2));
+    background: transparent;
+    color: var(--text-secondary, #aaa);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.lb-remove:hover {
+    color: var(--danger, #ff5c5c);
+    border-color: var(--danger, #ff5c5c);
+}
+
+.lb-empty {
+    padding: 28px 16px;
+    text-align: center;
+    color: var(--text-secondary, #aaa);
+}
